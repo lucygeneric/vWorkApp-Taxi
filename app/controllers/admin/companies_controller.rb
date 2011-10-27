@@ -1,4 +1,4 @@
-class CompaniesController < ApplicationController
+class Admin::CompaniesController < ApplicationController
   # GET /companies
   # GET /companies.json
   def index
@@ -44,7 +44,7 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       if @company.save
-        format.html { redirect_to @company, :notice => 'Company was successfully created.' }
+        format.html { redirect_to [:admin, @company], :notice => 'Company was successfully created.' }
         format.json { render :json => @company, :status => :created, :location => @company }
       else
         format.html { render :action => "new" }
@@ -60,7 +60,7 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       if @company.update_attributes(params[:company])
-        format.html { redirect_to @company, :notice => 'Company was successfully updated.' }
+        format.html { redirect_to [:admin, @company], :notice => 'Company was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render :action => "edit" }
@@ -76,7 +76,7 @@ class CompaniesController < ApplicationController
     @company.destroy
 
     respond_to do |format|
-      format.html { redirect_to companies_url }
+      format.html { redirect_to admin_companies_url }
       format.json { head :ok }
     end
   end

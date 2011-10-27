@@ -45,7 +45,9 @@ class BookingsController < ApplicationController
   end
 
   def set_api_key
-    @company = Company.where(:subdomain => params.delete(:company)).first
+    @company = Company.where(:subdomain => request.subdomain).first
+    
+    # @company = Company.where(:subdomain => params.delete(:company)).first
     VWorkApp.api_key = @company.api_key
   end
   

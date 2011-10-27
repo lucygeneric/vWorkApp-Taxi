@@ -1,6 +1,15 @@
 VWorkAppTaxi::Application.routes.draw do
-  resources :companies
+  
+  namespace :admin do
+    resources :companies
+  end
+  
+  # resources :companies
   resources :bookings
+
+  match '/' => 'bookings#index', :constraints => { :subdomain => /.+/ }
+
+  root :to => "home#show"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
