@@ -1,0 +1,129 @@
+<!DOCTYPE html> 
+<html> 
+  <head> 
+  <title>Page Title</title> 
+  
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+  
+  <script src="http://code.jquery.com/jquery-1.4.3.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.js"></script>
+ 
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+  <script type="text/javascript" src="js/jquery.fn.gmap.min.js"></script>
+  <script type="text/javascript" src="js/jquery.ui.map.extensions.js"></script>
+  
+   <script type="text/javascript">
+
+        $(function() {
+			
+			$('#map_canvas').gmap().bind('init', function(ev, map) {
+
+				return;
+				$('#map_canvas').gmap('addMarker', { 'position': '57.7973333,12.0502107', 'bounds': true }).click(function() {
+					$('#map_canvas').gmap('openInfoWindow', { 'content': 'Hello World!' }, this);
+				});
+			});
+			
+        });
+
+    </script>
+  
+</head> 
+<body> 
+ 
+<div data-role="page" id="home">
+ 
+   
+	<div data-role="content">
+		
+		<img src="images/taxi.jpg" />	
+		 
+	    <h2 style="padding: 1em 0;">Booking Details:</h2>
+			
+		<ul data-role="listview" data-inset="true">
+			<li>
+				<a href="#pickup">Pickup</a>
+				<p id="pickup_button" class="split_button_text">blah</p>	
+			</li>
+			<li>
+				<a href="#gps_map">GPS Map</a>
+			</li>
+		</ul>
+		
+	</div>
+	 
+</div>
+
+
+<div id="pickup" data-role="page" data-theme="b" class="page-map" style="width:100%; height:100%;">
+	
+	<div data-role="header"><h1>Map Page</h1></div>
+	
+	<div data-role="content" class="item"> 
+		<div id="map_canvas"></div>
+	</div>
+	
+</div>
+
+
+
+<script type="text/javascript">
+
+	function updateLocationValues(){
+		$('#pickup_button').text('ass');
+	}
+	
+	function getGeoData(marker) {
+        $('#map_canvas').gmap('search', { 'location': marker.getPosition() }, function(found, results) {
+            if ( found ) {
+                var addr = found[0].formatted_address.split(', ', 4);
+                $('#pickup_button').text(addr[0] + ', ' + addr[1] + ', ' + addr[2] + ', ' + addr[3]);                         
+            } else {
+                alert('Unable to get GeoSearch data.');
+            }
+        });
+    }
+
+	$('#pickup').live("pageshow", function() {
+		$('#map_canvas').gmap('refresh');
+	});
+	
+	$('#pickup').live("pagecreate", function() {
+	
+		$('#map_canvas').gmap({'center': '59.3426606750, 18.0736160278', 'mapTypeId': 'terrain'}).bind('init', function(evt, map) {
+
+			$('#map_canvas').gmap('watchPosition', function(position, status) {
+
+				if ( status === 'OK' ) {
+					
+					var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+										
+					var marker = $('#map_canvas').gmap('get', 'markers > client' );
+					
+					if ( !marker ) {
+						$('#map_canvas').gmap('addMarker', { 'id': 'client', 'position': latlng, 'bounds': true });
+					} else {
+						marker.setPosition(latlng);
+						map.panTo(latlng);
+						getGeoData(marker);
+					}
+					
+					
+				}
+			});
+		});
+	});
+	
+	$('#pickup').live("pagehide", function() {
+		$('#map_canvas').gmap('clearWatch');
+	});
+</script>
+
+
+
+ 
+</body>
+</html>
