@@ -11,8 +11,7 @@ class BookingsController < ApplicationController
 
   # http://localhost:3000/bookings/237580.xml?company=joes-taxi
   def show
-    job = VWorkApp::Job.show(params[:id])
-    @booking = Booking.from_job(job)
+    @booking = Booking.from_job(params[:id])
     respond_with(@booking)
   end
 
@@ -46,8 +45,6 @@ class BookingsController < ApplicationController
 
   def set_api_key
     @company = Company.where(:subdomain => request.subdomain).first
-    
-    # @company = Company.where(:subdomain => params.delete(:company)).first
     VWorkApp.api_key = @company.api_key
   end
   

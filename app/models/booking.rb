@@ -3,6 +3,7 @@ class Booking
   include ActiveModel::Serializers::Xml
 
   attr_accessor :id, :pick_up_address, :pick_up_lat, :pick_up_lng, :drop_off_address, :drop_off_lat, :drop_off_lng, :when, :contact_number
+  attr_accessor :status, :driver_lat, :driver_lng
   
   def initialize(attributes = {})  
     attributes.each do |name, value|  
@@ -10,8 +11,9 @@ class Booking
     end  
   end  
   
-  def self.from_job(job)
-    self.new(
+  def self.from_job(id)
+    job = VWorkApp::Job.show(id)    
+    booking = self.new(
       :id => job.id,
       :pick_up_address => job.steps.first.location.formatted_address,
       :pick_up_lat => job.steps.first.location.lat, 
@@ -22,8 +24,23 @@ class Booking
       :when => job.planned_start_at,
       :contact_number => job.custom_fields.find {|a| a.name == "Contact" }.try(:value)
     )
+    
+    booking.status = case job.progress_state
+      when "not_started"
+        job.assigned_to.nil? ? "With Dispatcher" : "With Driver"
+      when "started"
+        "On Route"
+      when "completed"
+        "Complete"
+    end
+    
+    if job.assigned_to && (loc = job.assigned_to.latest_telemetry)
+      booking.driver_lat = loc.lat
+      booking.driver_lng = loc.lng
+    end
+    booking
   end
-  
+    
   def attributes
     {
       'id' => id, 
@@ -34,7 +51,10 @@ class Booking
       'drop_off_lat' => drop_off_lat, 
       'drop_off_lng' => drop_off_lng, 
       'when' => self.when,
-      'contact_number' => contact_number, 
+      'contact_number' => contact_number,
+      'status' => status,
+      'driver_lat' => driver_lat,
+      'driver_lng' => driver_lng
     }
   end
 
@@ -53,5 +73,7 @@ class Booking
       ]
     )
   end
+  
+  private 
   
 end
