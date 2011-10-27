@@ -29,12 +29,12 @@
 			
 		<ul data-role="listview" data-inset="true">
 			<li>
-				<a href="#pickup">Pickup:</a>
-				<p id="pickup_button" class="split_button_text">Finding Address..</p>	
+				<a href="#pick_up">Pickup:</a>
+				<p id="pick_up_button" class="split_button_text">Finding Address..</p>	
 			</li>
 			<li>
 				<a href="#drop_off">Drop Off:</a>
-				<p id="dropoff_button" class="split_button_text"></p>	
+				<p id="drop_off_button" class="split_button_text"></p>	
 			</li>
 			<li>
 				<a href="#time">When:</a>
@@ -47,18 +47,33 @@
 </div>
 
 
+<div data-role="page" id="pick_up">
+
+	<div data-role="header"><h1 id="status">Pick-up Location</h1></div>
+	
+	<div data-role="content"> 
+		
+		<label for="pick_up_address">Enter your pick-up location</label>
+		<input type="text" name="pick_up_address" id="pick_up_address_input" value=""  />
+		
+		<div id="pick_up_addresses" class="inset_list"></div>
+
+	</div>	
+	
+</div>
+
+
+
 <div data-role="page" id="drop_off">
 
 	<div data-role="header"><h1 id="status">Drop-off Location</h1></div>
 	
 	<div data-role="content"> 
 		
-		<label for="address">Enter your drop off location</label>
-		<input type="text" name="address" id="dropoff_address_input" value=""  />
+		<label for="drop_off_address">Enter your drop-off location</label>
+		<input type="text" name="drop_off_address" id="drop_off_address_input" value=""  />
 		
-		<div id="drop_off_addresses" class="inset_list">
-		</div>
-					
+		<div id="drop_off_addresses" class="inset_list"></div>
 
 	</div>	
 	
@@ -79,93 +94,154 @@
 
 <script type="text/javascript">
 
-	var geocoder = new google.maps.Geocoder();
+var vWorkTaxico = vWorkTaxico || {};
 
-	function lookupDropoffAddress(address){
+(function() {
+
+	this.lookup = function(address,target, callback){
+
+		var geocoder = new google.maps.Geocoder();
+		var addressList = '<p>Please broaden your search</p>';
 
 		if (geocoder) {
 			geocoder.geocode({ 'address': address }, function (results, status) {
 				if (status == google.maps.GeocoderStatus.OK) {
-					
-					var addressList = '<ul id="drop_off_address_list" data-role="listview" data-inset="true"	data-theme="c" data-dividertheme="d">'; 
+									
+					addressList = '<ul id="'+target+'" data-role="listview" data-inset="true" data-theme="c" data-dividertheme="d">'; 
 					var result;
 					
 					for (var i = 0; i < results.length; i++){
-						addressList +=	'<li>'+results[i].formatted_address+'</li>';
+						addressList +=	'<li><a href="#home">'+results[i].formatted_address+'</a></li>';
 					};
 					
-					$("#drop_off_addresses").append(addressList);
-					$("#drop_off_address_list").listview();
+					addressList += "</ul>";	
 
 				}
-				else {
-					// fail silently. 
-				}
+				callback(addressList);
 			});
-		}    
+		}
+		
+	}
+
+	this.drop_off_lookup = function(address){
+	
+		$("#drop_off_addresses").empty();
+		
+		vWorkTaxico.lookup(address, 'drop_off_address_list',
+			function(result){
+				$("#drop_off_addresses").append(result);
+				$("#drop_off_address_list").listview();
+				
+				$("#drop_off_address_list").click(function(event){
+				console.log(event);
+					$("#drop_off_button").text(event.target.textContent);
+				});
+			}
+		);
 	}
 	
-	function getGeoData(marker) {
-        $('#map_canvas').gmap('search', { 'location': marker.getPosition() }, function(found, results) {
-            if ( found ) {
-                var addr = found[0].formatted_address.split(', ', 4);
-                $('#pickup_button').text(addr[0] + ', ' + addr[1] + ', ' + addr[2] + ', ' + addr[3]);                         
-            } else {
-                alert('Unable to get GeoSearch data.');
-            }
-        });
-    }
+	this.pick_up_lookup = function(address){
+	
+		$("#pick_up_addresses").empty();
+		
+		vWorkTaxico.lookup(address, 'pick_up_address_list',
+			function(result){
+				$("#pick_up_addresses").append(result);
+				$("#pick_up_address_list").listview();
+				
+				$("#pick_up_address_list").click(function(event){
+					$("#pick_up_button").text(event.target.textContent);
+				});
+			}
+		);
+	}
+	
+	
+}).apply(vWorkTaxico);
+		
+	
+$('#drop_off_address_input').data('timeout', null).keyup(function(){
+
+    clearTimeout($(this).data('timeout'));
+
+    $(this).data('timeout', setTimeout(function(){
+        vWorkTaxico.drop_off_lookup($('#drop_off_address_input').val());
+
+    }, 1000));
+
+}); 
+
+$('#pick_up_address_input').data('timeout', null).keyup(function(){
+
+    clearTimeout($(this).data('timeout'));
+
+    $(this).data('timeout', setTimeout(function(){
+        vWorkTaxico.pick_up_lookup($('#pick_up_address_input').val());
+
+    }, 1000));
+
+}); 
+
+	
+	
+// BELOW THIS LINE: unsorted geo-bric-a-brac ---------------------------------------------------------------------------------------------------------
+	
+	
+function getGeoData(marker) {
     
-    $('#dropoff_address_input').data('timeout', null).keyup(function(){
-	    clearTimeout($(this).data('timeout'));
-	    $(this).data('timeout', setTimeout(function(){
-	        lookupDropoffAddress($('#dropoff_address_input').val());
-	    }, 1000));
-	}); 
-	
-	
-	
-	
-	
-	
-	
-	
+    $('#map_canvas').gmap('search', { 'location': marker.getPosition() }, function(found, results) {
+        if ( found ) {
+            var addr = found[0].formatted_address.split(', ', 4);
+            $('#pick_up_button').text(addr[0] + ', ' + addr[1] + ', ' + addr[2] + ', ' + addr[3]);                         
+        } else {
+            alert('Unable to get GeoSearch data.');
+        }
+    });
+}
 
-	$('#tracking').live("pageshow", function() {
-		$('#map_canvas').gmap('refresh');
-	});
-	
-	$('#tracking').live("pagecreate", function() {
-	
-		$('#map_canvas').gmap({'center': '59.3426606750, 18.0736160278', 'mapTypeId':  google.maps.MapTypeId.ROADMAP}).bind('init', function(evt, map) {
 
-			$('#map_canvas').gmap('watchPosition', function(position, status) {
 
-				if ( status === 'OK' ) {
-					
-					var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-										
-					var marker = $('#map_canvas').gmap('get', 'markers > client' );
-					if ( !marker ) {
-						$('#map_canvas').gmap('addMarker', { 'id': 'client', 'position': latlng, 'bounds': true });
-					} else {
-						marker.setPosition(latlng);
-						map.panTo(latlng);
-						getGeoData(marker);
-					}
-					
-					
-				}
-			});
+
+
+$('#home').live("pageshow", function() {
+	$('#map_canvas').gmap('refresh');
+});
+
+$('#home').live("pagecreate", function() {
+
+	$('#map_canvas').gmap({'center': '59.3426606750, 18.0736160278', 'mapTypeId':  google.maps.MapTypeId.ROADMAP}).bind('init', function(evt, map) {
+		$('#map_canvas').gmap('watchPosition', function(position, status) {
 			
+			console.log('watch position has status '+status);
+			
+			if ( status === 'OK' ) {
+				var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+									
+				var marker = $('#map_canvas').gmap('get', 'markers > client' );
+				if ( !marker ) {
+					$('#map_canvas').gmap('addMarker', { 'id': 'client', 'position': latlng, 'bounds': true });
+				} else {
+					marker.setPosition(latlng);
+					map.panTo(latlng);
+					getGeoData(marker);
+				}					
+			}
 		});
 		
-		
 	});
 	
-	$('#tracking').live("pagehide", function() {
-		$('#map_canvas').gmap('clearWatch');
-	});
+	
+});
+
+$('#home').live("pagehide", function() {
+	$('#map_canvas').gmap('clearWatch');
+});
+	
+	
+	
+	
+
+	
 </script>
 
 
