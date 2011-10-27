@@ -10,32 +10,16 @@
   
   <script src="http://code.jquery.com/jquery-1.4.3.min.js"></script>
   <script src="http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.js"></script>
- 
+  
   <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
   <script type="text/javascript" src="js/jquery.fn.gmap.min.js"></script>
   <script type="text/javascript" src="js/jquery.ui.map.extensions.js"></script>
   
-   <script type="text/javascript">
-
-        $(function() {
-			
-			$('#map_canvas').gmap().bind('init', function(ev, map) {
-
-				return;
-				$('#map_canvas').gmap('addMarker', { 'position': '57.7973333,12.0502107', 'bounds': true }).click(function() {
-					$('#map_canvas').gmap('openInfoWindow', { 'content': 'Hello World!' }, this);
-				});
-			});
-			
-        });
-
-    </script>
-  
 </head> 
 <body> 
- 
+
+
 <div data-role="page" id="home">
- 
    
 	<div data-role="content">
 		
@@ -45,11 +29,16 @@
 			
 		<ul data-role="listview" data-inset="true">
 			<li>
-				<a href="#pickup">Pickup</a>
-				<p id="pickup_button" class="split_button_text">blah</p>	
+				<a href="#pickup">Pickup:</a>
+				<p id="pickup_button" class="split_button_text">Finding Address..</p>	
 			</li>
 			<li>
-				<a href="#gps_map">GPS Map</a>
+				<a href="#drop_off">Drop Off:</a>
+				<p id="dropoff_button" class="split_button_text"></p>	
+			</li>
+			<li>
+				<a href="#time">When:</a>
+				<p id="dropoff_button" class="split_button_text"></p>
 			</li>
 		</ul>
 		
@@ -58,17 +47,25 @@
 </div>
 
 
-<div id="pickup" data-role="page" data-theme="b" class="page-map" style="width:100%; height:100%;">
+<div data-role="page" id="home">
+   
+	<div data-role="content">
 	
-	<div data-role="header"><h1>Map Page</h1></div>
+	</div>
+	
+</div>
+
+
+
+<div id="tracking" data-role="page" data-theme="b" class="page-map" style="width:100%; height:100%;">
+	
+	<div data-role="header"><h1 id="status">Status: With Dispatcher</h1></div>
 	
 	<div data-role="content" class="item"> 
 		<div id="map_canvas"></div>
 	</div>
 	
 </div>
-
-
 
 <script type="text/javascript">
 
@@ -87,11 +84,11 @@
         });
     }
 
-	$('#pickup').live("pageshow", function() {
+	$('#tracking').live("pageshow", function() {
 		$('#map_canvas').gmap('refresh');
 	});
 	
-	$('#pickup').live("pagecreate", function() {
+	$('#tracking').live("pagecreate", function() {
 	
 		$('#map_canvas').gmap({'center': '59.3426606750, 18.0736160278', 'mapTypeId': 'terrain'}).bind('init', function(evt, map) {
 
@@ -117,7 +114,7 @@
 		});
 	});
 	
-	$('#pickup').live("pagehide", function() {
+	$('#tracking').live("pagehide", function() {
 		$('#map_canvas').gmap('clearWatch');
 	});
 </script>
