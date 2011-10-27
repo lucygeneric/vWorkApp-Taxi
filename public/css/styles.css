@@ -1,3 +1,10 @@
+
+body {
+	background-image: url('images/background.png');
+	margin:0;
+	padding:0;
+}
+
 .split_button_text {
 	position:absolute; 
 	display:block; 
@@ -18,4 +25,10 @@
 
 .inset_list {
 	padding:0;
+}
+
+#logo {
+	position: relative;
+	display: block;
+	background-position: center;
 }

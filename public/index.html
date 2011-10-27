@@ -6,6 +6,7 @@
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
   
   <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.css" />
+  <link rel="stylesheet" href="css/mobiscroll-1.5.2.css" type="text/css" />
   <link rel="stylesheet" href="css/styles.css" />
   
   <script src="http://code.jquery.com/jquery-1.4.3.min.js"></script>
@@ -15,15 +16,19 @@
   <script type="text/javascript" src="js/jquery.fn.gmap.min.js"></script>
   <script type="text/javascript" src="js/jquery.ui.map.extensions.js"></script>
   
+  <script type="text/javascript" src="js/mobiscroll-1.5.2.js"></script>
+	
+  
 </head> 
 <body> 
 
+<img src="images/background.png" id="backgroundImage" />
 
-<div data-role="page" id="home">
+<div data-role="page" id="home" data-theme="g" >
    
 	<div data-role="content">
 		
-		<img src="images/taxi.jpg" />	
+		<img src="pretend_logo_resource/taxico.png" id="logo" />	
 		 
 	    <h2 style="padding: 1em 0;">Booking Details:</h2>
 			
@@ -37,9 +42,10 @@
 				<p id="drop_off_button" class="split_button_text"></p>	
 			</li>
 			<li>
-				<a href="#time">When:</a>
+				<a href="#when">When:</a>
 				<p id="when_button" class="split_button_text"></p>
 			</li>
+			
 		</ul>
 		
 	</div>
@@ -80,6 +86,21 @@
 </div>
 
 
+<div data-role="page" id="when">
+
+	<div data-role="header"><h1 id="status">Pick-up time</h1></div>
+	
+	<div data-role="content"> 
+		
+		<div data-role="fieldcontain">
+            <label for="date3">Datetime</label>
+            <input type="text" name="date3" id="date3" class="mobiscroll" />
+        </div>
+		
+		
+	</div>	
+	
+</div>
 
 <div id="tracking" data-role="page" data-theme="b" class="page-map" style="width:100%; height:100%;">
 	
@@ -156,7 +177,16 @@ var vWorkTaxico = vWorkTaxico || {};
 		);
 	}
 	
+	this.initalise = function(){
+		$("#logo").width($(window).width() - 60);
+		$("#backgroundImage").width($(window).width());
+	}
 	
+	this.setDefaults = function(){
+		$('#when_button').text('Right Now');		
+	}
+	
+		
 }).apply(vWorkTaxico);
 		
 	
@@ -182,32 +212,19 @@ $('#pick_up_address_input').data('timeout', null).keyup(function(){
 
 }); 
 
-	
-	
-// BELOW THIS LINE: unsorted geo-bric-a-brac ---------------------------------------------------------------------------------------------------------
-	
-	
-function getGeoData(marker) {
-    
-    $('#map_canvas').gmap('search', { 'location': marker.getPosition() }, function(found, results) {
-        if ( found ) {
-            var addr = found[0].formatted_address.split(', ', 4);
-            $('#pick_up_button').text(addr[0] + ', ' + addr[1] + ', ' + addr[2] + ', ' + addr[3]);                         
-        } else {
-            alert('Unable to get GeoSearch data.');
-        }
-    });
-}
-
-
 
 
 
 $('#home').live("pageshow", function() {
-	$('#map_canvas').gmap('refresh');
+	//$('#map_canvas').gmap('refresh');
+	vWorkTaxico.setDefaults();
+	vWorkTaxico.initalise();
+	//$('#date3').scroller();
 });
 
+
 $('#home').live("pagecreate", function() {
+	
 
 	$('#map_canvas').gmap({'center': '59.3426606750, 18.0736160278', 'mapTypeId':  google.maps.MapTypeId.ROADMAP}).bind('init', function(evt, map) {
 		$('#map_canvas').gmap('watchPosition', function(position, status) {
@@ -235,7 +252,37 @@ $('#home').live("pagecreate", function() {
 
 $('#home').live("pagehide", function() {
 	$('#map_canvas').gmap('clearWatch');
-});
+})
+
+
+
+
+
+
+
+	
+	
+// BELOW THIS LINE: unsorted geo-bric-a-brac ---------------------------------------------------------------------------------------------------------
+	
+	
+function getGeoData(marker) {
+    
+    $('#map_canvas').gmap('search', { 'location': marker.getPosition() }, function(found, results) {
+        if ( found ) {
+            var addr = found[0].formatted_address.split(', ', 4);
+            $('#pick_up_button').text(addr[0] + ', ' + addr[1] + ', ' + addr[2] + ', ' + addr[3]);                         
+        } else {
+            alert('Unable to get GeoSearch data.');
+        }
+    });
+}
+
+
+
+
+
+
+;
 	
 	
 	
