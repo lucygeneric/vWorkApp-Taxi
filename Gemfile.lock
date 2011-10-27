@@ -1,5 +1,6 @@
-PATH
-  remote: /Users/aishfenton/Documents/vWorkApp/Src/vworkapp_ruby
+GIT
+  remote: git://github.com/visfleet/vworkapp_ruby.git
+  revision: 87ef33b6b4326bf64b3838d962792352c6187835
   specs:
     vworkapp_ruby (0.0.1)
       gcoder
