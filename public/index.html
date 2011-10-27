@@ -6,14 +6,14 @@
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
   
   <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.css" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="../css/styles.css" />
   
   <script src="http://code.jquery.com/jquery-1.4.3.min.js"></script>
   <script src="http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.js"></script>
   
   <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
-  <script type="text/javascript" src="js/jquery.fn.gmap.min.js"></script>
-  <script type="text/javascript" src="js/jquery.ui.map.extensions.js"></script>
+  <script type="text/javascript" src="../js/jquery.fn.gmap.min.js"></script>
+  <script type="text/javascript" src="../js/jquery.ui.map.extensions.js"></script>
   
 </head> 
 <body> 
@@ -95,14 +95,16 @@
 
 	function lookupDropoffAddress(address){
 
+		alert(address);
 	   	var address = '12 Heather Street, NZ';
 	
 		if (geocoder) {
 			geocoder.geocode({ 'address': address }, function (results, status) {
 				if (status == google.maps.GeocoderStatus.OK) {
-					
-					var addressList;
-					for (result in results){
+					console.log(results);
+					var addressList; var result;
+					for (var i; = 0; i < results.length; i++){
+						result = results[i];
 						addressList += '<li>';
 						addressList += result.formatted_address;
 						addressList += '</li>';
@@ -132,9 +134,17 @@
     $('#dropoff_address_input').data('timeout', null).keyup(function(){
 	    clearTimeout($(this).data('timeout'));
 	    $(this).data('timeout', setTimeout(function(){
-	        lookupDropoffAddress('ass');
+	        lookupDropoffAddress($('#dropoff_address_input').val());
 	    }, 1000));
 	}); 
+	
+	
+	
+	
+	
+	
+	
+	
 
 	$('#tracking').live("pageshow", function() {
 		$('#map_canvas').gmap('refresh');
@@ -151,12 +161,9 @@
 					var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 										
 					var marker = $('#map_canvas').gmap('get', 'markers > client' );
-					alert('ass');
 					if ( !marker ) {
-						alert('ass2');
 						$('#map_canvas').gmap('addMarker', { 'id': 'client', 'position': latlng, 'bounds': true });
 					} else {
-						alert('ass3');
 						marker.setPosition(latlng);
 						map.panTo(latlng);
 						getGeoData(marker);
