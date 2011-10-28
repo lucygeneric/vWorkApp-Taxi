@@ -1,6 +1,5 @@
 
 body {
-	background-image: url('images/background.png');
 	margin:0;
 	padding:0;
 }
@@ -27,8 +26,13 @@ body {
 	padding:0;
 }
 
+.indented_heading {
+	margin-left:15px;
+}
+
 #logo {
-	position: relative;
 	display: block;
-	background-position: center;
+    margin-left: auto;
+    margin-right: auto;
+	width:200px;
 }
