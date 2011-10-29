@@ -6,7 +6,6 @@
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
   
   <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.css" />
-  <link rel="stylesheet" href="css/mobiscroll-1.5.2.css" type="text/css" />
   <link rel="stylesheet" href="css/styles.css" />
   
   <!-- remote -->
@@ -16,16 +15,14 @@
   <!-- vendor -->
   <script type="text/javascript" src="js/vendor/jquery.fn.gmap.min.js"></script>
   <script type="text/javascript" src="js/vendor/jquery.ui.map.extensions.js"></script>
-  <script type="text/javascript" src="js/vendor/mobiscroll-1.5.2.js"></script>
   <!-- vWorkApp -->
   <script type="text/javascript" src="js/vWorkApp/vWorkAppGeo-1.0.0.js"></script>
-  <script type="text/javascript" src="js/vWorkApp/vWorkAppUI-1.0.0.js"></script>
   
 </head> 
 <body> 
 
 
-<div id="tracking" data-role="page" data-theme="b" class="page-map" style="width:100%; height:100%;">
+<div id="tracking" data-role="page" data-theme="b" class="page-map" >
 	
 	<div data-role="header"><h1 id="status">Status: With Dispatcher</h1></div>
 	
@@ -33,12 +30,16 @@
 		<div id="map_canvas"></div>
 	</div>
 	
+	<div data-role="footer" class="ui-bar" data-position="fixed"> 
+		<a href="index.html" data-icon='alert' class="ui-btn-right" id="date_submit" data-role="button" >Cancel Booking</a>
+	</div>
+	
 </div>
 
 
 <script type="text/javascript">
 
-$('#home').live("pagecreate", function() {
+$('#tracking').live("pagecreate", function() {
 	
 
 	$('#map_canvas').gmap({'center': '59.3426606750, 18.0736160278', 'mapTypeId':  google.maps.MapTypeId.ROADMAP}).bind('init', function(evt, map) {
@@ -65,7 +66,7 @@ $('#home').live("pagecreate", function() {
 	
 });
 
-$('#home').live("pagehide", function() {
+$('#tracking').live("pagehide", function() {
 	$('#map_canvas').gmap('clearWatch');
 })
 

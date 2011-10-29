@@ -36,3 +36,8 @@ body {
     margin-right: auto;
 	width:200px;
 }
+
+.center-button {
+	margin: 0 auto;
+	padding: 10px;
+}

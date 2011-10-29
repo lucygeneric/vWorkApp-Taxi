@@ -20,12 +20,7 @@ var vWorkTaxico = vWorkTaxico || {};
 		if (drop_off_coordinates == null)
 			return "Oops, I can't seem to find your desired destination.<br/><br/>Try choosing a different placemark near to where you wish to go.<br/><br/>You will be able to notify the driver of your intended route on pick-up";
 		
-		var d = new Date();
-		
-		console.log("cacluated now "+d.getTime());
-		console.log("pickup_time   "+pickup_time.getTime());
-		console.log("first calc    "+(d.getTime() - pickup_time.getTime()));
-		
+		var d = new Date();		
 		if ((d.getTime() - pickup_time.getTime()) > 600000)
 			return "Hmm.. the pick-up time you have specified seems to be in the past.<br/><br/>We are sorry but our drivers are not equipped to travel at 88mph";
         
