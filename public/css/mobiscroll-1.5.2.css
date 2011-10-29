@@ -346,6 +346,7 @@
 }
 /* iOS Skin */
 .ios {
+    font-family: Helvetica, sans-serif;
     padding: 40px 10px 10px 10px;
     border: 1px solid #2d3034;
     background: #50515d;

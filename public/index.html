@@ -1,7 +1,7 @@
 <!DOCTYPE html> 
 <html> 
   <head> 
-  <title>Page Title</title> 
+  <title>vWorkApp &bull; Taxi Booking Prototype</title> 
   
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
   
@@ -20,6 +20,7 @@
   <!-- vWorkApp -->
   <script type="text/javascript" src="js/vWorkApp/vWorkAppGeo-1.0.0.js"></script>
   <script type="text/javascript" src="js/vWorkApp/vWorkAppUI-1.0.0.js"></script>
+  <script type="text/javascript" src="js/vWorkApp/vWorkAppData-1.0.0.js"></script>
   
 </head> 
 <body> 
@@ -42,11 +43,13 @@
 				<p id="drop_off_button" class="split_button_text"></p>	
 			</li>
 			<li>
-				<a href="#when">When:</a>
-				<p id="when_button" class="split_button_text">Right Now.</p>
+				<a href="#when">Date:</a>
+				<p id="when_button" class="split_button_text">Today</p>
 			</li>
 			
 		</ul>
+		
+		<a href="map.html" id="request_submit" data-role="button">Book Now!</a>
 		
 	</div>
 	 
@@ -85,21 +88,31 @@
 </div>
 
 
-<div data-role="page" id="when">
+<div data-role="page" id="when" data-add-back-btn="true">
 
 	<div data-role="header"><h1 id="status">Pick-up time</h1></div>
 	
 	<div data-role="content"> 
 		
 		<div data-role="fieldcontain">
-            <label for="date_entry">Enter your preferred pick up time and date:</label>
-            <input type="text" name="date_entry" id="date_entry" class="mobiscroll" />
+            
+            <label for="date_entry">Enter your preferred pick up date:</label>
+            <input type="text" name="date_entry" id="date_entry" class="mobiscroll" value="Today" />            
+            
+            <label for="time_entry">Enter your preferred pick up time:</label>
+            <input type="text" name="time_entry" id="time_entry" class="mobiscroll" value="Right now" />
+            
+            <br /><br />
+            
+            <a href="#home" id="date_submit" data-role="button">Use these times</a>
+            
         </div>
 		
 		
 	</div>	
 	
 </div>
+
 
 
 <script type="text/javascript">
@@ -125,10 +138,39 @@
 	    }, 1000));
 	
 	}); 
+			
+	$('#when').live("pagecreate", function() {
+		
+		$('#time_entry').scroller({ preset: 'time', theme: 'ios' });
+		$('#date_entry').scroller({ preset: 'date', theme: 'ios' });
+		
+		$('#date_submit').click(function() {
+			var date = vWorkTaxico.getCurrentDateFromDateTimeEntry($('#date_entry'),$('#time_entry'));
+			$(document).data('pickup_time', date);
+			$('#when_button').text(date.toString('dddd, MMMM ,yyyy'));
+		});
+		
+	});
 	
-	$('#home').live("pageshow", function() {
-		$('#date_entry').scroller({ preset: 'datetime', theme: 'ios' });
-	})
+	$('#home').live("pagecreate", function() {
+	
+		$('#request_submit').click(function(event) {
+			
+			var e = vWorkTaxico.validateBookingModel();
+
+			if (e != null){
+				vWorkTaxico.dialog(e);
+				event.preventDefault();
+				event.stopImmediatePropagation();
+			}
+			
+			//vWorkTaxico.commitBooking();
+			
+			
+		});	
+		
+	});
+	
 
 </script>
 
