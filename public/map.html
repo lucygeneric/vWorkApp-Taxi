@@ -35,38 +35,27 @@
 		<a href="index.html" data-icon='alert' class="ui-btn-right" id="date_submit" data-role="button" >Cancel Booking</a>
 	</div>
 	
+	<script type="text/javascript">
+		$('#tracking').live("pageinit", function() {
+			vWorkTaxico.generateBaseMap($('#map_canvas'));
+		});
+	</script>
+
+	
 </div>
 
 
 <script type="text/javascript">
 
-$('#tracking').live("pagecreate", function() {
-	vWorkTaxico.generateBaseMap($('#map_canvas'));
-});
+
 
 $('#tracking').live("pageshow", function() {
-	vWorkTaxico.watchMap();
+	vWorkTaxico.watchMap($('#map_canvas'));
 });
 
 $('#tracking').live("pagehide", function() {
 	vWorkTaxico.unWatchMap();
 })
-
-	
-// BELOW THIS LINE: unsorted geo-bric-a-brac ---------------------------------------------------------------------------------------------------------
-	
-	
-function getGeoData(marker) {
-    
-    $('#map_canvas').gmap('search', { 'location': marker.getPosition() }, function(found, results) {
-        if ( found ) {
-            var addr = found[0].formatted_address.split(', ', 4);
-            $('#pick_up_button').text(addr[0] + ', ' + addr[1] + ', ' + addr[2] + ', ' + addr[3]);                         
-        } else {
-            alert('Unable to get GeoSearch data.');
-        }
-    });
-}
 
 
 </script>

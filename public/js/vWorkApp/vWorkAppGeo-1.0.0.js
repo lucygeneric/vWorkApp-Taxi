@@ -9,11 +9,17 @@ var vWorkTaxico = vWorkTaxico || {};
 	
 	this.generateBaseMap = function(elm){
 	
-		var latlng = $.cookie('last_lat_lng');
-		if (latlng == null)
-			latlng = '37.753296, 122.447447';
+		//var latlng = $.cookie('last_lat_lng');
+		//if (latlng == null)
+			var latlng = new google.maps.LatLng('37.752296', '-122.447447');
 	
 		$(elm).gmap({'center': latlng, 'mapTypeId':  google.maps.MapTypeId.ROADMAP, 'zoom': 8});
+		
+		$(elm).gmap().bind('init', function(ev, map) {
+	        $(elm).gmap('addMarker', { 'position': latlng, 'bounds': true }).click(function() {
+	            $(elm).gmap('openInfoWindow', { 'content': 'Me!' }, this);
+	        });
+	    });
 		
 	}
 	
@@ -22,6 +28,14 @@ var vWorkTaxico = vWorkTaxico || {};
 	*/
 	
 	this.watchMap = function(elm){
+	
+		
+		 google.maps.event.trigger(elm, 'resize');
+		 console.log('watching map');
+	
+			return;
+
+	
 		$(elm).gmap('watchPosition', function(position, status) {
 			console.log('Watch position has status '+status);
 			if ( status === 'OK' ) {
@@ -59,7 +73,7 @@ var vWorkTaxico = vWorkTaxico || {};
 				},
 				function(error){
 					// REMOVE ME!!! !!! !!!
-					var latlng = new google.maps.LatLng('37.75329600', '122.44744700');
+					var latlng = new google.maps.LatLng('37.75329600', '-122.44744700');
 					callback(latlng);
 				},
 				{timeout:10000}

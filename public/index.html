@@ -167,9 +167,12 @@
 			//vWorkTaxico.commitBooking();	
 		});
 		
-		
 		vWorkTaxico.getCurrentAddress(function(result){
 			$('#pick_up_button').text(result);
+		});
+		
+		vWorkTaxico.getMobileLatLng(function(result){
+			$(document).data('pick_up_location', result);
 		});
 		
 	});
