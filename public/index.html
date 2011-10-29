@@ -164,12 +164,16 @@
 				event.stopImmediatePropagation();
 			}
 			
-			//vWorkTaxico.commitBooking();
-			
-			
-		});	
+			//vWorkTaxico.commitBooking();	
+		});
+		
+		
+		vWorkTaxico.getCurrentAddress(function(result){
+			$('#pick_up_button').text(result);
+		});
 		
 	});
+	
 	
 
 </script>

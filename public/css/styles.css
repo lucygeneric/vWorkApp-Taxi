@@ -9,7 +9,10 @@ body {
 	display:block; 
 	right:40px; 
 	top:20px; 
+	max-width: 150px;
 	color:grey;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 #map_canvas { 
