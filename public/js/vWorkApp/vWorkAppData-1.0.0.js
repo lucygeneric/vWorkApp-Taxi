@@ -29,8 +29,20 @@ var vWorkTaxico = vWorkTaxico || {};
         if ((d.getTime() - pickup_time.getTime()) < -1209600000)
 			return "Hmm.. the pick-up time you have specified seems to be more than three days in the future.<br/><br/>We are hoping to have perfected teleportation by then, making your request redundant.<br/><br/>Try again with a shorter time frame.";
 			
-		
-			
     };
+    
+    this.commitBooking = function(){
+    	this.buildURL();
+    	
+    	
+    }
+    
+    this.bookingURL = function(){
+  		// durr we are on this domain
+    	//var re = new RegExp("/(?:http://)?(?:([^.]+)\.)?lvh.me", "g");
+    	//var subDomain = re.exec(window.location)[1].replace("/","");
+    	return window.location.origin + "/bookings/";
+    	
+    }
     
 }).apply(vWorkTaxico);
