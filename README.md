@@ -22,7 +22,7 @@ Returns a completed booking along with its ID.
 
 ### [GET] /bookings/[id].json
 
-Returns the booking matching the given ID.
+Returns the booking matching the given ID. The returned booking also includes the bookings status, and the driver, along with his lat/lng, if assigned.
 
 ## Company
 
