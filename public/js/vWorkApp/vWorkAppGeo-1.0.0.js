@@ -65,6 +65,13 @@ var vWorkTaxico = vWorkTaxico || {};
 	**/
 	
 	this.getMobileLatLng = function(callback){
+	
+		// REMOVE ME!!! !!! !!!
+		var latlng = new google.maps.LatLng('37.75329600', '-122.44744700');
+		callback(latlng);		
+		return;
+		// END REMOVE ME !!!!!!
+	
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(
 				function(position){
@@ -72,9 +79,7 @@ var vWorkTaxico = vWorkTaxico || {};
 					callback(latlng);
 				},
 				function(error){
-					// REMOVE ME!!! !!! !!!
-					var latlng = new google.maps.LatLng('37.75329600', '-122.44744700');
-					callback(latlng);
+					
 				},
 				{timeout:10000}
 			);

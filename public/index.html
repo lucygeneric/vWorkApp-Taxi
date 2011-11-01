@@ -164,7 +164,7 @@
 				event.stopImmediatePropagation();
 			}
 			
-			//vWorkTaxico.commitBooking();	
+			vWorkTaxico.commitBooking();	
 		});
 		
 		vWorkTaxico.getCurrentAddress(function(result){
@@ -173,6 +173,15 @@
 		
 		vWorkTaxico.getMobileLatLng(function(result){
 			$(document).data('pick_up_location', result);
+		});
+		
+		
+		vWorkTaxico.getCurrentAddress(function(result){
+			$('#drop_off_button').text(result);
+		});
+		
+		vWorkTaxico.getMobileLatLng(function(result){
+			$(document).data('drop_off_location', result);
 		});
 		
 	});
