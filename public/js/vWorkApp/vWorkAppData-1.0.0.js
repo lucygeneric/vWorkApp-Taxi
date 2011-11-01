@@ -32,17 +32,51 @@ var vWorkTaxico = vWorkTaxico || {};
     };
     
     this.commitBooking = function(){
-    	this.buildURL();
-    	
-    	
+    
+    	var pickUpLocation 	= $(document).data('pick_up_location');
+    	var pickUpAddress 	= $(document).data('pick_up_address');
+    	var dropOffLocation = $(document).data('drop_off_location');
+    	var dropOffAddress  = $(document).data('drop_off_address');
+    	var when			= $(document).data('pick_up_time');
+    		when 			= this.ISODateString(when); 
+    
+    	var payload = {
+    		booking: {
+				'drop-off-address': dropOffAddress,
+				'drop-off-lat': dropOffLocation.lat,
+				'pick-up-lat': pickUpLocation.lat,
+				'pick-up-address': pickUpAddress,
+				'when': when,
+				'drop-off-lng': dropOffLocation.lng,
+				'pick-up-lng': pickUpLocation.lng
+			}	
+		};
+		
+		console.log(url);
+		console.log(payload);
+		
+		var url = this.bookingURL();
+		this.postAsJSON(url, payload);
+		    	
     }
     
     this.bookingURL = function(){
   		// durr we are on this domain
     	//var re = new RegExp("/(?:http://)?(?:([^.]+)\.)?lvh.me", "g");
     	//var subDomain = re.exec(window.location)[1].replace("/","");
-    	return window.location.origin + "/bookings/";
-    	
+    	return window.location.origin + "/bookings/";	
     }
+    
+    this.postAsJSON = function(url, payload, method) {
+		if (method == null)
+			method = 'post';
+		var args = this.generateRequestHeader(
+			method, {			
+				payload: JSON.stringify(payload),
+				contentType: "application/json; charset=UTF-8"
+			}
+		);
+		UrlFetchApp.fetch(url, args);
+	};
     
 }).apply(vWorkTaxico);

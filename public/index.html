@@ -21,6 +21,7 @@
   <script type="text/javascript" src="js/vWorkApp/vWorkAppGeo-1.0.0.js"></script>
   <script type="text/javascript" src="js/vWorkApp/vWorkAppUI-1.0.0.js"></script>
   <script type="text/javascript" src="js/vWorkApp/vWorkAppData-1.0.0.js"></script>
+  <script type="text/javascript" src="js/vWorkApp/vWorkAppUtils-1.0.0.js"></script>
   
 </head> 
 <body> 
@@ -168,14 +169,14 @@
 		});
 		
 		vWorkTaxico.getCurrentAddress(function(result){
-			$('#pick_up_button').text(result);
+			$('#pick_up_button').text(result); 
 		});
 		
 		vWorkTaxico.getMobileLatLng(function(result){
 			$(document).data('pick_up_location', result);
 		});
 		
-		
+		/* TEMP FOR TESTING */
 		vWorkTaxico.getCurrentAddress(function(result){
 			$('#drop_off_button').text(result);
 		});
@@ -183,6 +184,7 @@
 		vWorkTaxico.getMobileLatLng(function(result){
 			$(document).data('drop_off_location', result);
 		});
+		/* END TEMP */
 		
 	});
 	
