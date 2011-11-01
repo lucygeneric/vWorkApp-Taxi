@@ -52,13 +52,11 @@ var vWorkTaxico = vWorkTaxico || {};
 				pick_up_lng: pickUpLocation.lng()
 			}	
 		};
-		
-		
-		console.log(payload);
-		
 		var url = this.bookingURL();
 		console.log(url);
-		this.postAsJSON(url, payload);
+		this.postAsJSON(url, payload, function(result){
+			console.log(result);
+		});
 		    	
     }
     
@@ -69,9 +67,9 @@ var vWorkTaxico = vWorkTaxico || {};
     	return window.location.origin + "/bookings/";	
     }
     
-    this.postAsJSON = function(url, payload) {
+    this.postAsJSON = function(url, payload, callback) {
 		$.post(url, payload, function(data) {
-			$('.result').html(data);
+			callback(data);
 		});
 	};
 	

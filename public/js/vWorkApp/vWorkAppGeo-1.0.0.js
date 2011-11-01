@@ -118,7 +118,6 @@ var vWorkTaxico = vWorkTaxico || {};
 	Returns an array of addresses matched to partial entry.
 	NOTE: Google abhors a partial address.
 	*/
-
 	this.partialAddressGeocode = function(address, callback){
 
 		var geocoder = new google.maps.Geocoder();
