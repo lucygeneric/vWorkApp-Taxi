@@ -38,24 +38,26 @@ var vWorkTaxico = vWorkTaxico || {};
     	var dropOffLocation = $(document).data('drop_off_location');
     	var dropOffAddress  = $(document).data('drop_off_address');
     	var when			= $(document).data('pick_up_time');
+    	console.log(pickUpLocation);
     		when 			= this.ISODateString(when); 
     
     	var payload = {
     		booking: {
-				'drop-off-address': dropOffAddress,
-				'drop-off-lat': dropOffLocation.lat,
-				'pick-up-lat': pickUpLocation.lat,
-				'pick-up-address': pickUpAddress,
-				'when': when,
-				'drop-off-lng': dropOffLocation.lng,
-				'pick-up-lng': pickUpLocation.lng
+				drop_off_address: dropOffAddress,
+				drop_off_lat: dropOffLocation.lat(),
+				pick_up_lat: pickUpLocation.lat(),
+				pick_up_address: pickUpAddress,
+				when: when,
+				drop_off_lng: dropOffLocation.lng(),
+				pick_up_lng: pickUpLocation.lng()
 			}	
 		};
 		
-		console.log(url);
+		
 		console.log(payload);
 		
 		var url = this.bookingURL();
+		console.log(url);
 		this.postAsJSON(url, payload);
 		    	
     }
@@ -67,16 +69,12 @@ var vWorkTaxico = vWorkTaxico || {};
     	return window.location.origin + "/bookings/";	
     }
     
-    this.postAsJSON = function(url, payload, method) {
-		if (method == null)
-			method = 'post';
-		var args = this.generateRequestHeader(
-			method, {			
-				payload: JSON.stringify(payload),
-				contentType: "application/json; charset=UTF-8"
-			}
-		);
-		UrlFetchApp.fetch(url, args);
+    this.postAsJSON = function(url, payload) {
+		$.post(url, payload, function(data) {
+			$('.result').html(data);
+		});
 	};
+	
+
     
 }).apply(vWorkTaxico);

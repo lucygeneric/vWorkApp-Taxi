@@ -147,13 +147,15 @@
 		
 		$('#date_submit').click(function() {
 			var date = vWorkTaxico.getCurrentDateFromDateTimeEntry($('#date_entry'),$('#time_entry'));
-			$(document).data('pickup_time', date);
+			$(document).data('pick_up_time', date);
 			$('#when_button').text(date.toString('dddd, MMMM ,yyyy'));
 		});
 		
 	});
 	
 	$('#home').live("pagecreate", function() {
+	
+		$(document).data('pick_up_time', new Date());
 	
 		$('#request_submit').click(function(event) {
 			
@@ -170,6 +172,7 @@
 		
 		vWorkTaxico.getCurrentAddress(function(result){
 			$('#pick_up_button').text(result); 
+			$(document).data('pick_up_address', result);
 		});
 		
 		vWorkTaxico.getMobileLatLng(function(result){
@@ -179,6 +182,7 @@
 		/* TEMP FOR TESTING */
 		vWorkTaxico.getCurrentAddress(function(result){
 			$('#drop_off_button').text(result);
+			$(document).data('drop_off_address', result);
 		});
 		
 		vWorkTaxico.getMobileLatLng(function(result){
