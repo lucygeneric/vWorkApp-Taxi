@@ -7,16 +7,22 @@
 
 Creates a booking based on the posted JSON or XML. For example:
 
-	<booking>
-	  <drop-off-address>881 Harrison St, San Francisco, CA 94107</drop-off-address>
-	  <contact-number nil="true"/>
-	  <drop-off-lat type="decimal">37.7793881</drop-off-lat>
-	  <pick-up-lat type="decimal">37.779536</pick-up-lat>
-	  <pick-up-address>880 Harrison St, San Francisco, CA 94107</pick-up-address>
-	  <when type="datetime">2011-10-27T05:00:00Z</when>
-	  <drop-off-lng type="decimal">-122.4013562</drop-off-lng>
-	  <pick-up-lng type="decimal">-122.401503</pick-up-lng>
-	</booking>
+	{
+	  "booking":{
+	     "drop_off_address":null,
+	     "contact_number":null,
+	     "drop_off_lat":null,
+	     "pick_up_address":"Hi there you guys!",
+	     "pick_up_lat":null,
+	     "driver_lng":null,
+	     "id":null,
+	     "when":null,
+	     "drop_off_lng":null,
+	     "pick_up_lng":null,
+	     "status":null,
+	     "driver_lat":null
+	  }
+	}
 
 Returns a completed booking along with its ID.
 
