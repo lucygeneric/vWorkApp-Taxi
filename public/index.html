@@ -14,6 +14,7 @@
   <script type="text/javascript" src="http://code.jquery.com/mobile/1.0rc2/jquery.mobile-1.0rc2.min.js"></script>
   <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
   <!-- vendor -->
+  <script type="text/javascript" src="js/vendor/jquery.cookie.js"></script>
   <script type="text/javascript" src="js/vendor/jquery.fn.gmap.min.js"></script>
   <script type="text/javascript" src="js/vendor/jquery.ui.map.extensions.js"></script>
   <script type="text/javascript" src="js/vendor/mobiscroll-1.5.2.js"></script>
@@ -167,9 +168,11 @@
 				event.stopImmediatePropagation();
 			}
 			
+			vWorkTaxico.cookiefy();
 			vWorkTaxico.commitBooking();	
 		});
 		
+		// populate the users current address
 		vWorkTaxico.getCurrentAddress(function(result){
 			$('#pick_up_button').text(result); 
 			$(document).data('pick_up_address', result);
@@ -179,17 +182,11 @@
 			$(document).data('pick_up_location', result);
 		});
 		
-		/* TEMP FOR TESTING */
-		vWorkTaxico.getCurrentAddress(function(result){
-			$('#drop_off_button').text(result);
-			$(document).data('drop_off_address', result);
-		});
-		
-		vWorkTaxico.getMobileLatLng(function(result){
-			$(document).data('drop_off_location', result);
-		});
-		/* END TEMP */
-		
+		// attempt to populate the last known dropoff location
+		if ($.cookie('drop_off_address')){
+			$('#drop_off_button').text($.cookie('drop_off_address'));
+		}
+				
 	});
 	
 	

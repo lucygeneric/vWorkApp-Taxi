@@ -31,6 +31,13 @@ var vWorkTaxico = vWorkTaxico || {};
 			
     };
     
+    this.cookiefy = function() {
+    	$.cookie('pick_up_location', $(document).data('pick_up_location'));
+    	$.cookie('pick_up_address', $(document).data('pick_up_address'));
+    	$.cookie('drop_off_location', $(document).data('drop_off_location'));
+    	$.cookie('drop_off_address', $(document).data('drop_off_address'));
+    }
+    
     this.commitBooking = function(){
     
     	var pickUpLocation 	= $(document).data('pick_up_location');

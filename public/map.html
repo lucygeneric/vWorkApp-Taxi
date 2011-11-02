@@ -35,10 +35,16 @@
 		<a href="index.html" data-icon='alert' class="ui-btn-right" id="date_submit" data-role="button" >Cancel Booking</a>
 	</div>
 	
+	<!-- this had to be in the containing div..... bug in JQMobile -->
 	<script type="text/javascript">
 		$('#tracking').live("pageinit", function() {
 			vWorkTaxico.generateBaseMap($('#map_canvas'));
 		});
+		$('#tracking').live("pagecreate", function() {
+			var height = $("#tracking").height() - 85;
+			$('#map_canvas').height(height);
+			google.maps.event.trigger($('#map_canvas'), 'resize');
+ 		});
 	</script>
 
 	
@@ -48,9 +54,9 @@
 <script type="text/javascript">
 
 
-
 $('#tracking').live("pageshow", function() {
 	vWorkTaxico.watchMap($('#map_canvas'));
+	vWorkTaxico.createPickupMarker($('#map_canvas'));
 });
 
 $('#tracking').live("pagehide", function() {
