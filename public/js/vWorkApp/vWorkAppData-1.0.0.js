@@ -3,11 +3,13 @@ var vWorkTaxico = vWorkTaxico || {};
 (function() {
 
 	this.model = { 
-		pick_up_location  : ko.observable(),
-		pick_up_address   : ko.observable(),
-		pick_up_time	  : ko.observable(),
-		drop_off_location : ko.observable(),
-		drop_off_address  : ko.observable()
+		pick_up_location_lat	: ko.observable(),
+		pick_up_location_lng	: ko.observable(),
+		pick_up_address			: ko.observable(),
+		pick_up_time	  		: ko.observable(),
+		drop_off_location_lat	: ko.observable(),
+		drop_off_location_lng	: ko.observable(),
+		drop_off_address  		: ko.observable()
 	};
 	
 	this.getModel = function(){
@@ -15,35 +17,39 @@ var vWorkTaxico = vWorkTaxico || {};
 	}
 	
 	this.setModelValue = function(key, value){
-		this.model[key] = value;
+		this.model[key](value);
 	}
 	
 	this.initaliseModel = function(){
 	
 		ko.applyBindings(this.model);
 	
-		this.model.pick_up_location($.cookie('pick_up_location'));
+		this.model.pick_up_location_lat($.cookie('pick_up_location_lat'));
+		this.model.pick_up_location_lng($.cookie('pick_up_location_lng'));		
+		this.model.drop_off_location_lat($.cookie('drop_off_location_lat'));
+		this.model.drop_off_location_lng($.cookie('drop_off_location_lng'));
 		this.model.pick_up_address($.cookie('pick_up_address'));
-		this.model.drop_off_location($.cookie('drop_off_location'));
 		this.model.drop_off_address($.cookie('drop_off_address'));
 		this.model.pick_up_time(new Date());
 	}
 	
 	this.cookiefyModel = function() {
-    	$.cookie('pick_up_location', this.model.pick_up_location);
-    	$.cookie('pick_up_address', this.model.pick_up_address);
-    	$.cookie('drop_off_location', this.model.drop_off_location);
-    	$.cookie('drop_off_address', this.model.drop_off_address);
+    	$.cookie('pick_up_location_lat', this.model.pick_up_location_lat());
+    	$.cookie('pick_up_location_lng', this.model.pick_up_location_lng());
+    	$.cookie('pick_up_address', this.model.pick_up_address());
+    	$.cookie('drop_off_location_lat', this.model.drop_off_location_lat());
+    	$.cookie('drop_off_location_lng', this.model.drop_off_location_lng());
+    	$.cookie('drop_off_address', this.model.drop_off_address());
     }
 	
 	/**
 	Validate model
 	*/
 	this.validateBookingModel = function() {
-		if (this.model.pick_up_location() == null)
+		if (this.model.pick_up_location_lat() == null)
 			return "Oops, I can't seem to find your current location.<br/><br/>Try entering your current address manually.";
 
-		if (this.model.drop_off_location() == null)
+		if (this.model.drop_off_location_lat() == null)
 			return "Oops, I can't seem to find your desired destination.<br/><br/>Try choosing a different placemark near to where you wish to go.<br/><br/>You will be able to notify the driver of your intended route on pick-up";
 		
 		var d = new Date();		
@@ -55,8 +61,6 @@ var vWorkTaxico = vWorkTaxico || {};
 			
     };
     
-    
-    
     this.commitBooking = function(){
     
     	var when = this.model.pick_up_time();
@@ -65,12 +69,12 @@ var vWorkTaxico = vWorkTaxico || {};
     	var payload = {
     		booking: {
 				drop_off_address: this.model.drop_off_address(),
-				drop_off_lat: this.model.drop_off_location().lat(),
-				pick_up_lat: this.model.pick_up_location().lat(),
+				drop_off_lat: this.model.drop_off_location_lat(),
+				pick_up_lat: this.model.pick_up_location_lat(),
 				pick_up_address: this.model.pick_up_address(),
 				when: when,
-				drop_off_lng: this.model.drop_off_location().lng(),
-				pick_up_lng: this.model.pick_up_location().lng()
+				drop_off_lng: this.model.drop_off_location_lng(),
+				pick_up_lng: this.model.pick_up_location_lng()
 			}	
 		};
 		var url = this.bookingURL();

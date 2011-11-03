@@ -31,7 +31,8 @@ var vWorkTaxico = vWorkTaxico || {};
 				
 				var ind = $("#"+target+"_list li").index(this);
 				
-				vWorkTaxico.setModelValue(target+'_location', results[ind].geometry.location);
+				vWorkTaxico.setModelValue(target+'_location_lat', results[ind].geometry.location.lat());
+				vWorkTaxico.setModelValue(target+'_location_lng', results[ind].geometry.location.lng());
 				vWorkTaxico.setModelValue(target+'_address', results[ind].formatted_address);
 				
 				$.mobile.changePage("#home");					

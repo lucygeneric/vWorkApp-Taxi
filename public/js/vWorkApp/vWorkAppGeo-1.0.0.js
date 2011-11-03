@@ -24,7 +24,7 @@ var vWorkTaxico = vWorkTaxico || {};
 	*/
 	this.createPickupMarker = function(elm){
 	
-		var latlng = vWorkTaxico.model.pick_up_location();
+		var latlng = new google.maps.LatLng(vWorkTaxico.model.pick_up_location_lat(),vWorkTaxico.model.pick_up_location_lng());
 		
 		var marker = $(elm).gmap('get', 'markers > client');	
 		console.log(latlng);
