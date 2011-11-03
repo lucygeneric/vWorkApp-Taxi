@@ -24,7 +24,7 @@ var vWorkTaxico = vWorkTaxico || {};
 	*/
 	this.createPickupMarker = function(elm){
 	
-		var latlng = $(document).data('pick_up_location');
+		var latlng = vWorkTaxico.model.pick_up_location();
 		
 		var marker = $(elm).gmap('get', 'markers > client');	
 		console.log(latlng);

@@ -28,11 +28,11 @@ var vWorkTaxico = vWorkTaxico || {};
 			$("#"+target+"_list").listview();
 			
 			$("#"+target+"_list li").click(function(event){
+				
 				var ind = $("#"+target+"_list li").index(this);
-				console.log(results[ind]);
-				$(document).data(target+'_location', results[ind].geometry.location);
-				$(document).data(target+'_address', results[ind].formatted_address);
-				$("#"+target+"_button").text($(this).text());
+				
+				vWorkTaxico.setModelValue(target+'_location', results[ind].geometry.location);
+				vWorkTaxico.setModelValue(target+'_address', results[ind].formatted_address);
 				
 				$.mobile.changePage("#home");					
 			});

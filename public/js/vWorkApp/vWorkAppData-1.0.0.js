@@ -2,61 +2,75 @@ var vWorkTaxico = vWorkTaxico || {};
 
 (function() {
 
+	this.model = { 
+		pick_up_location  : ko.observable(),
+		pick_up_address   : ko.observable(),
+		pick_up_time	  : ko.observable(),
+		drop_off_location : ko.observable(),
+		drop_off_address  : ko.observable()
+	};
+	
+	this.getModel = function(){
+		return model;
+	}
+	
+	this.setModelValue = function(key, value){
+		this.model[key] = value;
+	}
+	
+	this.initaliseModel = function(){
+	
+		ko.applyBindings(this.model);
+	
+		this.model.pick_up_location($.cookie('pick_up_location'));
+		this.model.pick_up_address($.cookie('pick_up_address'));
+		this.model.drop_off_location($.cookie('drop_off_location'));
+		this.model.drop_off_address($.cookie('drop_off_address'));
+		this.model.pick_up_time(new Date());
+	}
+	
+	this.cookiefyModel = function() {
+    	$.cookie('pick_up_location', this.model.pick_up_location);
+    	$.cookie('pick_up_address', this.model.pick_up_address);
+    	$.cookie('drop_off_location', this.model.drop_off_location);
+    	$.cookie('drop_off_address', this.model.drop_off_address);
+    }
+	
 	/**
-	Basic model methods
+	Validate model
 	*/
-
 	this.validateBookingModel = function() {
-		
-		var pick_up_coordinates = $(document).data('pick_up_location');
-		var drop_off_coordinates = $(document).data('drop_off_location');
-		var pickup_time = $(document).data('pickup_time');
-		if (pickup_time == null)
-			pickup_time = new Date();
-		
-		if (pick_up_coordinates == null)
+		if (this.model.pick_up_location() == null)
 			return "Oops, I can't seem to find your current location.<br/><br/>Try entering your current address manually.";
 
-		if (drop_off_coordinates == null)
+		if (this.model.drop_off_location() == null)
 			return "Oops, I can't seem to find your desired destination.<br/><br/>Try choosing a different placemark near to where you wish to go.<br/><br/>You will be able to notify the driver of your intended route on pick-up";
 		
 		var d = new Date();		
-		if ((d.getTime() - pickup_time.getTime()) > 600000)
+		if ((d.getTime() - this.model.pick_up_time().getTime()) > 600000)
 			return "Hmm.. the pick-up time you have specified seems to be in the past.<br/><br/>We are sorry but our drivers are not equipped to travel at 88mph";
         
-        console.log((d.getTime() - pickup_time.getTime()));
-        
-        if ((d.getTime() - pickup_time.getTime()) < -1209600000)
+        if ((d.getTime() - this.model.pick_up_time().getTime()) < -1209600000)
 			return "Hmm.. the pick-up time you have specified seems to be more than three days in the future.<br/><br/>We are hoping to have perfected teleportation by then, making your request redundant.<br/><br/>Try again with a shorter time frame.";
 			
     };
     
-    this.cookiefy = function() {
-    	$.cookie('pick_up_location', $(document).data('pick_up_location'));
-    	$.cookie('pick_up_address', $(document).data('pick_up_address'));
-    	$.cookie('drop_off_location', $(document).data('drop_off_location'));
-    	$.cookie('drop_off_address', $(document).data('drop_off_address'));
-    }
+    
     
     this.commitBooking = function(){
     
-    	var pickUpLocation 	= $(document).data('pick_up_location');
-    	var pickUpAddress 	= $(document).data('pick_up_address');
-    	var dropOffLocation = $(document).data('drop_off_location');
-    	var dropOffAddress  = $(document).data('drop_off_address');
-    	var when			= $(document).data('pick_up_time');
-    	console.log(pickUpLocation);
-    		when 			= this.ISODateString(when); 
+    	var when = this.model.pick_up_time();
+    		when = this.ISODateString(when); 
     
     	var payload = {
     		booking: {
-				drop_off_address: dropOffAddress,
-				drop_off_lat: dropOffLocation.lat(),
-				pick_up_lat: pickUpLocation.lat(),
-				pick_up_address: pickUpAddress,
+				drop_off_address: this.model.drop_off_address(),
+				drop_off_lat: this.model.drop_off_location().lat(),
+				pick_up_lat: this.model.pick_up_location().lat(),
+				pick_up_address: this.model.pick_up_address(),
 				when: when,
-				drop_off_lng: dropOffLocation.lng(),
-				pick_up_lng: pickUpLocation.lng()
+				drop_off_lng: this.model.drop_off_location().lng(),
+				pick_up_lng: this.model.pick_up_location().lng()
 			}	
 		};
 		var url = this.bookingURL();

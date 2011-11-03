@@ -18,6 +18,7 @@
   <script type="text/javascript" src="js/vendor/jquery.fn.gmap.min.js"></script>
   <script type="text/javascript" src="js/vendor/jquery.ui.map.extensions.js"></script>
   <script type="text/javascript" src="js/vendor/mobiscroll-1.5.2.js"></script>
+  <script type="text/javascript" src="js/vendor/knockout-1.2.1.js"></script>
   <!-- vWorkApp -->
   <script type="text/javascript" src="js/vWorkApp/vWorkAppGeo-1.0.0.js"></script>
   <script type="text/javascript" src="js/vWorkApp/vWorkAppUI-1.0.0.js"></script>
@@ -38,15 +39,15 @@
 		<ul data-role="listview" data-inset="true">
 			<li>
 				<a href="#pick_up">Pickup:</a>
-				<p id="pick_up_button" class="split_button_text">Finding Address..</p>	
+				<p id="pick_up_button" class="split_button_text" data-bind="text: pick_up_address"></p>	
 			</li>
 			<li>
 				<a href="#drop_off">Drop Off:</a>
-				<p id="drop_off_button" class="split_button_text"></p>	
+				<p id="drop_off_button" class="split_button_text" data-bind="text: drop_off_address"></p>	
 			</li>
 			<li>
 				<a href="#when">Date:</a>
-				<p id="when_button" class="split_button_text">Today</p>
+				<p id="when_button" class="split_button_text" data-bind="text: pick_up_time">Today</p>
 			</li>
 			
 		</ul>
@@ -65,7 +66,7 @@
 	<div data-role="content"> 
 		
 		<label for="pick_up_address">Enter your pick-up location</label>
-		<input type="text" name="pick_up_address" id="pick_up_address_input" value=""  />
+		<input type="text" name="pick_up_address" id="pick_up_address_input" data-bind="value: pick_up_address"  />
 		
 		<div id="pick_up_container" class="inset_list"></div>
 
@@ -81,7 +82,7 @@
 	<div data-role="content"> 
 		
 		<label for="drop_off_address">Enter your drop-off location</label>
-		<input type="text" name="drop_off_address" id="drop_off_address_input" value=""  />
+		<input type="text" name="drop_off_address" id="drop_off_address_input" data-bind="value: pick_up_address"  />
 		
 		<div id="drop_off_container" class="inset_list"></div>
 
@@ -125,7 +126,6 @@
 	
 	    $(this).data('timeout', setTimeout(function(){
 	        vWorkTaxico.populateListFromAddressLookup($('#drop_off_address_input').val(), "drop_off");
-	
 	    }, 1000));
 	
 	}); 
@@ -136,7 +136,6 @@
 	
 	    $(this).data('timeout', setTimeout(function(){
 	        vWorkTaxico.populateListFromAddressLookup($('#pick_up_address_input').val(), "pick_up");
-	
 	    }, 1000));
 	
 	}); 
@@ -148,15 +147,14 @@
 		
 		$('#date_submit').click(function() {
 			var date = vWorkTaxico.getCurrentDateFromDateTimeEntry($('#date_entry'),$('#time_entry'));
-			$(document).data('pick_up_time', date);
-			$('#when_button').text(date.toString('dddd, MMMM ,yyyy'));
+			vWorkTaxico.setModelValue('pick_up_time', date);
 		});
 		
 	});
 	
 	$('#home').live("pagecreate", function() {
-	
-		$(document).data('pick_up_time', new Date());
+
+		vWorkTaxico.initaliseModel();
 	
 		$('#request_submit').click(function(event) {
 			
@@ -168,25 +166,12 @@
 				event.stopImmediatePropagation();
 			}
 			
-			vWorkTaxico.cookiefy();
+			vWorkTaxico.cookiefyModel();
 			vWorkTaxico.commitBooking();	
 		});
 		
-		// populate the users current address
-		vWorkTaxico.getCurrentAddress(function(result){
-			$('#pick_up_button').text(result); 
-			$(document).data('pick_up_address', result);
-		});
-		
-		vWorkTaxico.getMobileLatLng(function(result){
-			$(document).data('pick_up_location', result);
-		});
-		
-		// attempt to populate the last known dropoff location
-		if ($.cookie('drop_off_address')){
-			$('#drop_off_button').text($.cookie('drop_off_address'));
-		}
-				
+	
+					
 	});
 	
 	
