@@ -52,7 +52,7 @@
 			
 		</ul>
 		
-		<a href="map.html" id="request_submit" data-role="button">Book Now!</a>
+		<a href="#tracking" id="request_submit" data-role="button">Book Now!</a>
 		
 	</div>
 	 
@@ -117,6 +117,36 @@
 </div>
 
 
+<div id="tracking" data-role="page" data-theme="b">
+	
+	<div data-role="header"><h1 id="status" data-bind="text: driver_status">Connecting...</h1></div>
+	
+	<div data-role="content" class="item"> 
+		<div id="map_canvas"></div>
+	</div>
+	
+	<div data-role="footer" class="ui-bar" id="map_footer" style="display:none"> 
+		<a href="index.html" data-icon='alert' class="ui-btn-right" id="cancel_booking" data-role="button" onclick="vWorkTaxico.cancelBooking()">Cancel</a>
+	</div>
+	
+	<!-- this had to be in the containing div..... bug in JQMobile -->
+	<script type="text/javascript">
+	
+		$('#tracking').live("pageinit", function() {
+			vWorkTaxico.generateBaseMap($('#map_canvas'));
+		});
+		
+		$('#tracking').live("pagecreate", function() {
+			var height = $("#tracking").height() - 85;
+			$('#map_canvas').height(height);
+			google.maps.event.trigger($('#map_canvas'), 'resize');
+ 		});
+ 		
+	</script>
+
+	
+</div>
+
 
 <script type="text/javascript">
 		
@@ -139,6 +169,11 @@
 	    }, 1000));
 	
 	}); 
+	
+	$('input[type=text]').focus(function() {
+		$(this).val('');
+	});
+		
 			
 	$('#when').live("pagecreate", function() {
 		
@@ -155,6 +190,9 @@
 	$('#home').live("pagecreate", function() {
 
 		vWorkTaxico.initaliseModel();
+		vWorkTaxico.getCurrentAddress(function(result){
+			vWorkTaxico.setModelValue('pick_up_address',result);
+		});
 	
 		$('#request_submit').click(function(event) {
 			
@@ -171,6 +209,17 @@
 		});
 		
 	});
+	
+	$('#tracking').live("pageshow", function() {
+		vWorkTaxico.watchMap($('#map_canvas'));
+		vWorkTaxico.createPickupMarker($('#map_canvas'));
+		$('#map_footer').css('display','block');
+	});
+	
+	$('#tracking').live("pagehide", function() {
+		vWorkTaxico.unWatchMap();
+	});
+
 	
 	
 

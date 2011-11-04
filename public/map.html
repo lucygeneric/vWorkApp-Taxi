@@ -19,6 +19,7 @@
   <script type="text/javascript" src="js/vendor/knockout-1.2.1.js"></script>
   <!-- vWorkApp -->
   <script type="text/javascript" src="js/vWorkApp/vWorkAppGeo-1.0.0.js"></script>
+  <script type="text/javascript" src="js/vWorkApp/vWorkAppData-1.0.0.js"></script>
   
 </head> 
 <body> 
@@ -26,26 +27,29 @@
 
 <div id="tracking" data-role="page" data-theme="b" class="page-map" >
 	
-	<div data-role="header"><h1 id="status">Status: With Dispatcher</h1></div>
+	<div data-role="header"><h1 id="status" data-bind="text: driver_status">Connecting...</h1></div>
 	
 	<div data-role="content" class="item"> 
 		<div id="map_canvas"></div>
 	</div>
 	
 	<div data-role="footer" class="ui-bar" data-position="fixed"> 
-		<a href="index.html" data-icon='alert' class="ui-btn-right" id="date_submit" data-role="button" >Cancel Booking</a>
+		<a href="index.html" data-icon='alert' class="ui-btn-right" id="cancel_booking" data-role="button" onclick="vWorkTaxico.cancelBooking()">Cancel Booking</a>
 	</div>
 	
 	<!-- this had to be in the containing div..... bug in JQMobile -->
 	<script type="text/javascript">
+	
 		$('#tracking').live("pageinit", function() {
 			vWorkTaxico.generateBaseMap($('#map_canvas'));
 		});
+		
 		$('#tracking').live("pagecreate", function() {
 			var height = $("#tracking").height() - 85;
 			$('#map_canvas').height(height);
 			google.maps.event.trigger($('#map_canvas'), 'resize');
  		});
+ 		
 	</script>
 
 	

@@ -2,6 +2,10 @@ var vWorkTaxico = vWorkTaxico || {};
 
 (function() {
 
+	/**
+	Core model for Knockout binding + modely things
+	*****************************************************************/
+	
 	this.model = { 
 		pick_up_location_lat	: ko.observable(),
 		pick_up_location_lng	: ko.observable(),
@@ -9,7 +13,11 @@ var vWorkTaxico = vWorkTaxico || {};
 		pick_up_time	  		: ko.observable(),
 		drop_off_location_lat	: ko.observable(),
 		drop_off_location_lng	: ko.observable(),
-		drop_off_address  		: ko.observable()
+		drop_off_address  		: ko.observable(),
+		driver_status			: ko.observable(),
+		driver_lat				: ko.observable(),
+		driver_lng				: ko.observable(),
+		booking_id				: ko.observable()
 	};
 	
 	this.getModel = function(){
@@ -23,14 +31,17 @@ var vWorkTaxico = vWorkTaxico || {};
 	this.initaliseModel = function(){
 	
 		ko.applyBindings(this.model);
+		
+		var pick_up_address = ($.cookie('pick_up_address')) ? $.cookie('pick_up_address') : 'Finding address...';
 	
 		this.model.pick_up_location_lat($.cookie('pick_up_location_lat'));
 		this.model.pick_up_location_lng($.cookie('pick_up_location_lng'));		
 		this.model.drop_off_location_lat($.cookie('drop_off_location_lat'));
 		this.model.drop_off_location_lng($.cookie('drop_off_location_lng'));
-		this.model.pick_up_address($.cookie('pick_up_address'));
+		this.model.pick_up_address(pick_up_address);
 		this.model.drop_off_address($.cookie('drop_off_address'));
 		this.model.pick_up_time(new Date());
+		this.model.driver_status("Connecting. . .");
 	}
 	
 	this.cookiefyModel = function() {
@@ -41,10 +52,13 @@ var vWorkTaxico = vWorkTaxico || {};
     	$.cookie('drop_off_location_lng', this.model.drop_off_location_lng());
     	$.cookie('drop_off_address', this.model.drop_off_address());
     }
-	
+
+
+
 	/**
-	Validate model
-	*/
+	Validation
+	*****************************************************************/
+	
 	this.validateBookingModel = function() {
 		if (this.model.pick_up_location_lat() == null)
 			return "Oops, I can't seem to find your current location.<br/><br/>Try entering your current address manually.";
@@ -60,6 +74,11 @@ var vWorkTaxico = vWorkTaxico || {};
 			return "Hmm.. the pick-up time you have specified seems to be more than three days in the future.<br/><br/>We are hoping to have perfected teleportation by then, making your request redundant.<br/><br/>Try again with a shorter time frame.";
 			
     };
+
+
+	/**
+	Bookings
+	*****************************************************************/
     
     this.commitBooking = function(){
     
@@ -78,19 +97,54 @@ var vWorkTaxico = vWorkTaxico || {};
 			}	
 		};
 		var url = this.bookingURL();
-		console.log(url);
 		this.postAsJSON(url, payload, function(result){
-			console.log(result);
+			//todo!! error handling
+			vWorkTaxico.setModelValue("booking_id",result.booking.id);
+			vWorkTaxico.watchBooking();
 		});
-		    	
+    }
+    
+    this.cancelBooking = function(){
+    	// cancel it on the server too, dick!
+    	console.log("canceling booking. . . ");
+    	vWorkTaxico.unwatchBooking();
+    }
+    
+    this.refreshBooking = function(){
+    	var url = vWorkTaxico.bookingURL() + vWorkTaxico.model.booking_id() + ".json";
+    	console.log(url);
+    	$.get(url, function(result){
+   	    	
+    		vWorkTaxico.setModelValue("driver_status",result.booking.status);
+    		//vWorkTaxico.setModelValue("driver_lat",result.booking.driver_lat);
+    		//vWorkTaxico.setModelValue("driver_lng",result.booking.driver_lng);
+    		vWorkTaxico.setModelValue("driver_lat",'37.779536');
+    		vWorkTaxico.setModelValue("driver_lng",'-122.401503');
+    		
+    		vWorkTaxico.updateFromModelChange();
+    	});
+    	
+    	vWorkTaxico.watchBooking();
+    }
+    
+    this.bookingTimer = {};
+    
+    this.watchBooking = function(){
+    	vWorkTaxico.bookingTimer = setTimeout(vWorkTaxico.refreshBooking, 5000);
+    }
+    
+    this.unwatchBooking = function(){
+    	clearTimeout(vWorkTaxico.bookingTimer);
     }
     
     this.bookingURL = function(){
-  		// durr we are on this domain
-    	//var re = new RegExp("/(?:http://)?(?:([^.]+)\.)?lvh.me", "g");
-    	//var subDomain = re.exec(window.location)[1].replace("/","");
-    	return window.location.origin + "/bookings/";	
+  		return window.location.origin + "/bookings/";	
     }
+
+
+	/**
+	URL
+	*****************************************************************/
     
     this.postAsJSON = function(url, payload, callback) {
 		$.post(url, payload, function(data) {

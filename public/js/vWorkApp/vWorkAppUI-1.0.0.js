@@ -2,14 +2,6 @@ var vWorkTaxico = vWorkTaxico || {};
 
 (function() {
 
-	/**
-	Generates an unordered list from a street address.
-	@param address - partial match street address
-	@param target - base name for container and button targets
-	TODO - remove dependency on targets
-	TODO - pass in a data theme object
-	*/
-
 	this.populateListFromAddressLookup = function(address, target){
 		
 		var containerTarget = $("#"+target+"_container");		
@@ -62,6 +54,11 @@ var vWorkTaxico = vWorkTaxico || {};
 			$(this).remove();
 		});
 	}
+	
+	this.updateFromModelChange = function(){
+		
+	}
+	
 		
 }).apply(vWorkTaxico);
 

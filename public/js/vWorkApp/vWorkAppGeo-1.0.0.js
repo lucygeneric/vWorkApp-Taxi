@@ -4,10 +4,10 @@ var vWorkTaxico = vWorkTaxico || {};
 
 	/**
 	Instances GMAP
-	Requires: jquery.cookie.js
 	*/
 	this.generateBaseMap = function(elm){
 	
+		// todo - refactor me out of this fucking thing - not the responsibility of 'generateBaseMap'
 		var latlng = $.cookie('last_lat_lng');
 		if (latlng == null)
 			var latlng = new google.maps.LatLng('37.752296', '-122.447447');
@@ -32,7 +32,7 @@ var vWorkTaxico = vWorkTaxico || {};
 			$(elm).gmap('addMarker', { 'id': 'client', 'position': latlng, 'bounds': true });
 		} else {
 			marker.setPosition(latlng);
-			map.panTo(latlng);
+			$(elm).gmap('get', 'map').panTo(latlng);
 		}
 	}
 	
@@ -40,7 +40,7 @@ var vWorkTaxico = vWorkTaxico || {};
 	Track map control, write to cookie
 	*/
 	
-	var draglistener;
+	this.draglistener = {};
 	
 	this.trackMap = function(elm){
 		draglistener = google.maps.event.addListener($(elm),dragend, function(event){
@@ -68,7 +68,7 @@ var vWorkTaxico = vWorkTaxico || {};
 					$(elm).gmap('addMarker', { 'id': 'client', 'position': latlng, 'bounds': true });
 				} else {
 					marker.setPosition(latlng);
-					map.panTo(latlng);
+					$(elm).gmap('getMap').panTo(latlng);
 				}
 				$.cookie('last_lat_lng') = latlng;
 			}
@@ -79,7 +79,7 @@ var vWorkTaxico = vWorkTaxico || {};
 	}
 	
 	/**
-	HTML5 Geolocation for rapid geocordinate lookup
+	HTML5 Geolocation
 	**/
 	this.getMobileLatLng = function(callback){
 		
@@ -90,7 +90,7 @@ var vWorkTaxico = vWorkTaxico || {};
 					callback(latlng);
 				},
 				function(error){
-					
+					console.log('Cannot find position with this device');	
 				},
 				{timeout:10000}
 			);
