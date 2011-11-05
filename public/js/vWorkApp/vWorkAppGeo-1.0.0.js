@@ -25,10 +25,10 @@ var vWorkTaxico = vWorkTaxico || {};
 	this.updatePickupMarker = function(elm){
 	
 		var latlng = new google.maps.LatLng(vWorkTaxico.model.pick_up_location_lat(),vWorkTaxico.model.pick_up_location_lng());	
-		var marker = $(elm).gmap('get', 'markers > client');	
+		var marker = $(elm).gmap('get', 'markers > pick_up_location');	
 
 		if (!marker) {		
-			$(elm).gmap('addMarker', { 'id': 'client', 'position': latlng, 'bounds': false, 'icon':'images/male.png' });
+			$(elm).gmap('addMarker', { 'id': 'pick_up_location', 'position': latlng, 'bounds': false, 'icon':'images/flag-export.png' });
 			$(elm).gmap('get', 'map').panTo(latlng);
 		} else {
 			marker.setPosition(latlng);
@@ -60,11 +60,11 @@ var vWorkTaxico = vWorkTaxico || {};
 	this.draglistener = {};
 	
 	this.trackMap = function(elm){
-		draglistener = google.maps.event.addListener($(elm),dragend, function(event){
+		draglistener = google.maps.event.addListener($(elm).gmap('get', 'map'),'dragend', function(event){
 			console.log('drag ended biatch');
 		});
 	}
-	this.untrackMap = function(elm){
+	this.untrackMap = function(){
 		google.maps.event.removeListener(draglistener);
 	}
 	
@@ -82,17 +82,20 @@ var vWorkTaxico = vWorkTaxico || {};
 				var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 				var marker = $(elm).gmap('get', 'markers > client' );
 				if ( !marker ) {
-					$(elm).gmap('addMarker', { 'id': 'client', 'position': latlng, 'bounds': true });
+					$(elm).gmap('addMarker', { 'id': 'client', 'position': latlng, 'bounds': true, 'icon':'images/male.png' });
 				} else {
 					marker.setPosition(latlng);
-					$(elm).gmap('getMap').panTo(latlng);
+					$(elm).gmap('get', 'map').panTo(latlng);
 				}
 				$.cookie('last_lat_lng') = latlng;
 			}
-		});		
+		});	
+		
+		vWorkTaxico.trackMap(elm);	
 	}
 	this.unWatchMap = function(elm){
 		$(elm).gmap('clearWatch');
+		vWorkTaxico.unTrackMap();	
 	}
 	
 	/**
