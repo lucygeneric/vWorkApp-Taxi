@@ -56,7 +56,8 @@ var vWorkTaxico = vWorkTaxico || {};
 	}
 	
 	this.updateFromModelChange = function(){
-		
+		vWorkTaxico.updatePickupMarker($('#map_canvas'));
+		vWorkTaxico.updateDriverMarker($('#map_canvas'));
 	}
 	
 		

@@ -116,10 +116,8 @@ var vWorkTaxico = vWorkTaxico || {};
     	$.get(url, function(result){
    	    	
     		vWorkTaxico.setModelValue("driver_status",result.booking.status);
-    		//vWorkTaxico.setModelValue("driver_lat",result.booking.driver_lat);
-    		//vWorkTaxico.setModelValue("driver_lng",result.booking.driver_lng);
-    		vWorkTaxico.setModelValue("driver_lat",'37.779536');
-    		vWorkTaxico.setModelValue("driver_lng",'-122.401503');
+    		vWorkTaxico.setModelValue("driver_lat",result.booking.driver_lat);
+    		vWorkTaxico.setModelValue("driver_lng",result.booking.driver_lng);
     		
     		vWorkTaxico.updateFromModelChange();
     	});

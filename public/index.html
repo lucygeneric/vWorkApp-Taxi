@@ -19,14 +19,14 @@
   <script type="text/javascript" src="js/vendor/jquery.ui.map.extensions.js"></script>
   <script type="text/javascript" src="js/vendor/mobiscroll-1.5.2.js"></script>
   <script type="text/javascript" src="js/vendor/knockout-1.2.1.js"></script>
-  <!-- vWorkApp -->
-  <script type="text/javascript" src="js/vWorkApp/vWorkAppGeo-1.0.0.js"></script>
-  <script type="text/javascript" src="js/vWorkApp/vWorkAppUI-1.0.0.js"></script>
-  <script type="text/javascript" src="js/vWorkApp/vWorkAppData-1.0.0.js"></script>
-  <script type="text/javascript" src="js/vWorkApp/vWorkAppUtils-1.0.0.js"></script>
   
+    
 </head> 
 <body> 
+
+
+<!- Home page -->
+<!- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
 <div data-role="page" id="home" data-theme="a" >
    
@@ -59,6 +59,10 @@
 </div>
 
 
+
+<!- Pick up location entry page -->
+<!- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
 <div data-role="page" id="pick_up" data-add-back-btn="true"> 
 
 	<div data-role="header"><h1 id="status">Pick-up Location</h1></div>
@@ -75,6 +79,10 @@
 </div>
 
 
+
+<!- Drop location entry page -->
+<!- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
 <div data-role="page" id="drop_off" data-add-back-btn="true">
 
 	<div data-role="header"><h1 id="status">Drop-off Location</h1></div>
@@ -90,6 +98,9 @@
 	
 </div>
 
+
+<!- Pick up time page -->
+<!- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
 <div data-role="page" id="when" data-add-back-btn="true">
 
@@ -116,6 +127,9 @@
 	
 </div>
 
+
+<!- Map / Booking screen -->
+<!- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
 <div id="tracking" data-role="page" data-theme="b">
 	
@@ -147,85 +161,18 @@
 	
 </div>
 
-
-<script type="text/javascript">
-		
-	$('#drop_off_address_input').data('timeout', null).keyup(function(){
-	
-	    clearTimeout($(this).data('timeout'));
-	
-	    $(this).data('timeout', setTimeout(function(){
-	        vWorkTaxico.populateListFromAddressLookup($('#drop_off_address_input').val(), "drop_off");
-	    }, 1000));
-	
-	}); 
-	
-	$('#pick_up_address_input').data('timeout', null).keyup(function(){
-	
-	    clearTimeout($(this).data('timeout'));
-	
-	    $(this).data('timeout', setTimeout(function(){
-	        vWorkTaxico.populateListFromAddressLookup($('#pick_up_address_input').val(), "pick_up");
-	    }, 1000));
-	
-	}); 
-	
-	$('input[type=text]').focus(function() {
-		$(this).val('');
-	});
-		
-			
-	$('#when').live("pagecreate", function() {
-		
-		$('#time_entry').scroller({ preset: 'time', theme: 'ios', ampm: false });
-		$('#date_entry').scroller({ preset: 'date', theme: 'ios' });
-		
-		$('#date_submit').click(function() {
-			var date = vWorkTaxico.getCurrentDateFromDateTimeEntry($('#date_entry'),$('#time_entry'));
-			vWorkTaxico.setModelValue('pick_up_time', date);
-		});
-		
-	});
-	
-	$('#home').live("pagecreate", function() {
-
-		vWorkTaxico.initaliseModel();
-		vWorkTaxico.getCurrentAddress(function(result){
-			vWorkTaxico.setModelValue('pick_up_address',result);
-		});
-	
-		$('#request_submit').click(function(event) {
-			
-			var e = vWorkTaxico.validateBookingModel();
-
-			if (e != null){
-				vWorkTaxico.dialog(e);
-				event.preventDefault();
-				event.stopImmediatePropagation();
-			}
-			
-			vWorkTaxico.cookiefyModel();
-			vWorkTaxico.commitBooking();	
-		});
-		
-	});
-	
-	$('#tracking').live("pageshow", function() {
-		vWorkTaxico.watchMap($('#map_canvas'));
-		vWorkTaxico.createPickupMarker($('#map_canvas'));
-		$('#map_footer').css('display','block');
-	});
-	
-	$('#tracking').live("pagehide", function() {
-		vWorkTaxico.unWatchMap();
-	});
-
-	
-	
-
-</script>
+  <!-- vWorkApp -->
+  <script type="text/javascript" src="js/vWorkApp/vWorkAppGeo-1.0.0.js"></script>
+  <script type="text/javascript" src="js/vWorkApp/vWorkAppUI-1.0.0.js"></script>
+  <script type="text/javascript" src="js/vWorkApp/vWorkAppData-1.0.0.js"></script>
+  <script type="text/javascript" src="js/vWorkApp/vWorkAppUtils-1.0.0.js"></script>
+  <!-- controllers -->
+  <script type="text/javascript" src="js/controllers/home_controller.js"></script>
+  <script type="text/javascript" src="js/controllers/pick_up_controller.js"></script>
+  <script type="text/javascript" src="js/controllers/drop_off_controller.js"></script>
+  <script type="text/javascript" src="js/controllers/when_controller.js"></script>
+  <script type="text/javascript" src="js/controllers/booking_controller.js"></script>
 
 
- 
 </body>
 </html>

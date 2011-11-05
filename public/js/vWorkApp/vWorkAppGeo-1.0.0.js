@@ -20,26 +20,43 @@ var vWorkTaxico = vWorkTaxico || {};
 	}
 	
 	/**
-	Generate base marker for pickup
+	Create/Update pickup marker
 	*/
-	this.createPickupMarker = function(elm){
+	this.updatePickupMarker = function(elm){
 	
-		var latlng = new google.maps.LatLng(vWorkTaxico.model.pick_up_location_lat(),vWorkTaxico.model.pick_up_location_lng());
-		
+		var latlng = new google.maps.LatLng(vWorkTaxico.model.pick_up_location_lat(),vWorkTaxico.model.pick_up_location_lng());	
 		var marker = $(elm).gmap('get', 'markers > client');	
-		console.log(latlng);
+
 		if (!marker) {		
-			$(elm).gmap('addMarker', { 'id': 'client', 'position': latlng, 'bounds': true });
+			$(elm).gmap('addMarker', { 'id': 'client', 'position': latlng, 'bounds': false, 'icon':'images/male.png' });
+			$(elm).gmap('get', 'map').panTo(latlng);
 		} else {
 			marker.setPosition(latlng);
-			$(elm).gmap('get', 'map').panTo(latlng);
+		}
+	}
+	
+	/**
+	Create/Update driver marker
+	*/
+	this.updateDriverMarker = function(elm){
+
+		var latlng = new google.maps.LatLng(vWorkTaxico.model.driver_lat(),vWorkTaxico.model.driver_lng());
+		
+		if (latlng.lat() == 0)
+			return;
+		
+		var marker = $(elm).gmap('get', 'markers > cab');	
+		
+		if (!marker) {		
+			$(elm).gmap('addMarker', { 'id': 'cab', 'position': latlng, 'bounds': false, 'icon':'images/taxi.png' });
+		} else {
+			marker.setPosition(latlng);
 		}
 	}
 	
 	/**
 	Track map control, write to cookie
 	*/
-	
 	this.draglistener = {};
 	
 	this.trackMap = function(elm){
