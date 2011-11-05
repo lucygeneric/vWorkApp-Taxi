@@ -15,7 +15,9 @@
   <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
   <!-- vendor -->
   <script type="text/javascript" src="js/vendor/jquery.cookie.js"></script>
-  <script type="text/javascript" src="js/vendor/jquery.fn.gmap.min.js"></script>
+  <script type="text/javascript" src="js/vendor/jquery.ui.map.js"></script>
+  <script type="text/javascript" src="js/vendor/jquery.ui.map.overlays.js"></script>
+  <script type="text/javascript" src="js/vendor/jquery.ui.map.services.js"></script>
   <script type="text/javascript" src="js/vendor/jquery.ui.map.extensions.js"></script>
   <script type="text/javascript" src="js/vendor/mobiscroll-1.5.2.js"></script>
   <script type="text/javascript" src="js/vendor/knockout-1.2.1.js"></script>
@@ -136,11 +138,17 @@
 	<div data-role="header"><h1 id="status" data-bind="text: driver_status">Connecting...</h1></div>
 	
 	<div data-role="content" class="item"> 
-		<div id="map_canvas"></div>
+		<div id="map_canvas"></div>		
 	</div>
 	
 	<div data-role="footer" class="ui-bar" id="map_footer" style="display:none"> 
-		<a href="index.html" data-icon='alert' class="ui-btn-right" id="cancel_booking" data-role="button" onclick="vWorkTaxico.cancelBooking()">Cancel</a>
+	
+			<div data-role="controlgroup" data-type="horizontal">
+				<a href="index.html" data-icon='alert' onclick="vWorkTaxico.cancelBooking()">Cancel</a>
+				<a href="#" data-icon="plus" onclick="vWorkTaxico.showStatus()">Where is my damn cab?</a>
+			</div>
+		
+		
 	</div>
 	
 	<!-- this had to be in the containing div..... bug in JQMobile -->

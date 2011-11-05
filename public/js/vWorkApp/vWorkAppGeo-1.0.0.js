@@ -41,7 +41,7 @@ var vWorkTaxico = vWorkTaxico || {};
 	this.updateDriverMarker = function(elm){
 
 		var latlng = new google.maps.LatLng(vWorkTaxico.model.driver_lat(),vWorkTaxico.model.driver_lng());
-		
+
 		if (latlng.lat() == 0)
 			return;
 		
@@ -52,6 +52,33 @@ var vWorkTaxico = vWorkTaxico || {};
 		} else {
 			marker.setPosition(latlng);
 		}
+	}
+	
+	/**
+	Calculate the distance matrix
+	*/
+	this.updateDistanceMatrix = function(elm){
+		
+		var origin_latlng = new google.maps.LatLng(vWorkTaxico.model.driver_lat(),vWorkTaxico.model.driver_lng());
+		var destination_latlng = new google.maps.LatLng(vWorkTaxico.model.pick_up_location_lat(),vWorkTaxico.model.pick_up_location_lng());
+	
+		var request = {
+			origins: [origin_latlng],
+			destinations: [destination_latlng],
+			travelMode: google.maps.TravelMode.DRIVING,
+	        unitSystem: google.maps.UnitSystem.METRIC,
+    	    avoidHighways: false,
+        	avoidTolls: false
+		};
+		
+		$(elm).gmap('displayDistanceMatrix', request, function(result, status){
+		
+			if (result.rows[0].elements[0].status == "ZERO_RESULTS")
+				return;
+			
+			vWorkTaxico.setModelValue('driver_distance',result.rows[0].elements[0].distance.text);
+			vWorkTaxico.setModelValue('driver_eta',result.rows[0].elements[0].duration.text);
+		});
 	}
 	
 	/**

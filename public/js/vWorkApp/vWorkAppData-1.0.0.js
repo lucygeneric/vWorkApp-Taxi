@@ -17,7 +17,9 @@ var vWorkTaxico = vWorkTaxico || {};
 		driver_status			: ko.observable(),
 		driver_lat				: ko.observable(),
 		driver_lng				: ko.observable(),
-		booking_id				: ko.observable()
+		booking_id				: ko.observable(),
+		driver_eta				: ko.observable(),
+		driver_distance			: ko.observable()
 	};
 	
 	this.getModel = function(){
@@ -41,7 +43,8 @@ var vWorkTaxico = vWorkTaxico || {};
 		this.model.pick_up_address(pick_up_address);
 		this.model.drop_off_address($.cookie('drop_off_address'));
 		this.model.pick_up_time(new Date());
-		this.model.driver_status("Connecting. . .");
+		this.model.driver_status("Connecting..");
+		this.model.driver_eta("Calculating..");
 	}
 	
 	this.cookiefyModel = function() {
@@ -96,6 +99,7 @@ var vWorkTaxico = vWorkTaxico || {};
 				pick_up_lng: this.model.pick_up_location_lng()
 			}	
 		};
+		console.log(payload);
 		var url = this.bookingURL();
 		this.postAsJSON(url, payload, function(result){
 			//todo!! error handling
@@ -112,12 +116,14 @@ var vWorkTaxico = vWorkTaxico || {};
     
     this.refreshBooking = function(){
     	var url = vWorkTaxico.bookingURL() + vWorkTaxico.model.booking_id() + ".json";
-    	console.log(url);
+
     	$.get(url, function(result){
    	    	
     		vWorkTaxico.setModelValue("driver_status",result.booking.status);
     		vWorkTaxico.setModelValue("driver_lat",result.booking.driver_lat);
     		vWorkTaxico.setModelValue("driver_lng",result.booking.driver_lng);
+    		//vWorkTaxico.setModelValue("driver_lat",'-36.8829472');
+    		//vWorkTaxico.setModelValue("driver_lng",'174.9202712');
     		
     		vWorkTaxico.updateFromModelChange();
     	});

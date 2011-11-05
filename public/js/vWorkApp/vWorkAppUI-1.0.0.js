@@ -42,8 +42,17 @@ var vWorkTaxico = vWorkTaxico || {};
 		return date;
 	}
 	
-	this.dialog = function(message) {
-		$("<div class='ui-loader ui-overlay-shadow ui-body-b ui-corner-all'><h1>" + message + "</h1></div>")
+	this.dialogShown = false;
+	
+	this.dialog = function(message, timeout) {
+	
+		if (vWorkTaxico.dialogShown)
+			return;
+			
+		if (timeout)
+			setTimeout(vWorkTaxico.removeDialog, timeout);
+	
+		$("<div id='alert_dialog' class='ui-loader ui-overlay-shadow ui-body-b ui-corner-all'><h1>" + message + "</h1></div>")
 		.css({
 			display: "block",
 			opacity: 0.96,
@@ -51,13 +60,30 @@ var vWorkTaxico = vWorkTaxico || {};
 		})
 		.appendTo("body").delay(800)
 		.click(function(){
-			$(this).remove();
+			vWorkTaxico.removeDialog();
 		});
+		
+		vWorkTaxico.dialogShown = true;
+	}
+	
+	this.removeDialog = function(){
+		$('#alert_dialog').remove();
+		vWorkTaxico.dialogShown = false;
+	}
+	
+	this.showStatus = function(){
+		var eta = vWorkTaxico.model.driver_eta();
+		var distance = vWorkTaxico.model.driver_distance();
+		var e = "Your driver is "+distance+" away. <br/><br />Estimated time to arrival is<br />"+eta+".";
+		if (!distance)
+			e = "We are unable to calculate the status of your driver at this time. <br/><br />Please try again soon.";
+		vWorkTaxico.dialog(e, 5000);
 	}
 	
 	this.updateFromModelChange = function(){
 		vWorkTaxico.updatePickupMarker($('#map_canvas'));
 		vWorkTaxico.updateDriverMarker($('#map_canvas'));
+		vWorkTaxico.updateDistanceMatrix($('#map_canvas'));
 	}
 	
 		
