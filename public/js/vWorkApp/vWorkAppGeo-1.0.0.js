@@ -8,9 +8,11 @@ var vWorkTaxico = vWorkTaxico || {};
 	this.generateBaseMap = function(elm){
 	
 		// todo - refactor me out of this fucking thing - not the responsibility of 'generateBaseMap'
-		var latlng = $.cookie('last_lat_lng');
-		if (latlng == null)
-			var latlng = new google.maps.LatLng('37.752296', '-122.447447');
+		var lastLat = $.cookie('last_lat');
+		var lastLng = $.cookie('last_lng');
+		var latlng = new google.maps.LatLng(lastLat,lastLng);
+		if (lastLat == null)
+			latlng = new google.maps.LatLng('37.752296', '-122.447447');
 	
 		$(elm).gmap({'center': latlng, 'mapTypeId':  google.maps.MapTypeId.ROADMAP, 'zoom': 8});
 		
@@ -88,7 +90,10 @@ var vWorkTaxico = vWorkTaxico || {};
 	
 	this.trackMap = function(elm){
 		draglistener = google.maps.event.addListener($(elm).gmap('get', 'map'),'dragend', function(event){
-			console.log('drag ended biatch');
+			var latLng = $(elm).gmap('get', 'map').getCenter();
+			console.log(latLng.lat())
+			$.cookie('last_lat',latLng.lat());
+			$.cookie('last_lng',latLng.lng());
 		});
 	}
 	this.untrackMap = function(){
