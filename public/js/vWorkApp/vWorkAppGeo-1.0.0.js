@@ -127,7 +127,7 @@ var vWorkTaxico = vWorkTaxico || {};
 	}
 	this.unWatchMap = function(elm){
 		$(elm).gmap('clearWatch');
-		vWorkTaxico.unTrackMap();	
+		vWorkTaxico.untrackMap();	
 	}
 	
 	/**
