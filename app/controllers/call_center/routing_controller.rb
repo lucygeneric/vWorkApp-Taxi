@@ -1,11 +1,13 @@
 class CallCenter::RoutingController < ApplicationController
 
+  layout nil
+
   respond_to :html
 
   def index
     xml = <<-EOL
       <Response>
-          <Say>Hello World</Say>
+          <Say>Welcome to Joes Taxi. Please press to</Say>
           <Dial>
               <Client>jenny</Client>
           </Dial>
