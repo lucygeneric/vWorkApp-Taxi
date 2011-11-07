@@ -7,7 +7,7 @@ class CallCenter::RoutingController < ApplicationController
     xml = <<-EOL
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
-  <Gather action="/routing/redirect" method="GET">
+  <Gather action="/call_center/routing/redirect" method="GET">
       <Say>
         Welcome to Joe's Taxi. 
         Press 1 to make a booking. 
