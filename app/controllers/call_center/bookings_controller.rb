@@ -4,8 +4,15 @@ class CallCenter::BookingsController < ApplicationController
   layout nil
 
   def index
-    @bookings = Booking.new(:pick_up_address => "Hi there you guys!")
-    respond_with(@bookings)
+    @booking = Booking.new
+    respond_with(@booking)
+  end
+
+  def create
+    @booking = Booking.new(params[:booking])
+    @booking.ticket_id = @booking.contact_number
+    create_job(@booking)
+    respond_with([:call_center, @booking])
   end
 
   # def show
@@ -45,6 +52,15 @@ class CallCenter::BookingsController < ApplicationController
   #   @company = Company.where(:subdomain => request.subdomain).first
   #   VWorkApp.api_key = @company.api_key
   # end
+
+  private
+
+  def create_job(booking)
+    VWorkApp.api_key = "AtuogECLCV2R7uT-fkPg"
+    job = booking.to_job
+    job = job.create
+    booking.id = job.id
+  end
   
   
 end

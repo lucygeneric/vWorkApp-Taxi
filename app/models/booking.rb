@@ -1,8 +1,10 @@
 class Booking
   include ActiveModel::Serializers::JSON
   include ActiveModel::Serializers::Xml
+  extend ActiveModel::Naming 
+  include ActiveModel::Conversion
 
-  attr_accessor :id, :pick_up_address, :pick_up_lat, :pick_up_lng, :drop_off_address, :drop_off_lat, :drop_off_lng, :when, :contact_number
+  attr_accessor :id, :pick_up_address, :pick_up_lat, :pick_up_lng, :drop_off_address, :drop_off_lat, :drop_off_lng, :when, :contact_number, :ticket_id
   attr_accessor :status, :driver_lat, :driver_lng
   
   def initialize(attributes = {})  
@@ -22,7 +24,8 @@ class Booking
       :drop_off_lat => job.steps.last.location.lat, 
       :drop_off_lng => job.steps.last.location.lng,
       :when => job.planned_start_at,
-      :contact_number => job.custom_fields.find {|a| a.name == "Contact" }.try(:value)
+      :contact_number => job.custom_fields.find {|a| a.name == "Contact" }.try(:value),
+      :ticket_id => job.third_party_id
     )
     
     booking.status = case job.progress_state
@@ -54,7 +57,8 @@ class Booking
       'contact_number' => contact_number,
       'status' => status,
       'driver_lat' => driver_lat,
-      'driver_lng' => driver_lng
+      'driver_lng' => driver_lng,
+      'ticket_id' => ticket_id
     }
   end
 
@@ -70,10 +74,15 @@ class Booking
       [
         VWorkApp::CustomField.new("When", self.when),
         VWorkApp::CustomField.new("Contact", self.contact_number),
-      ]
+      ],
+      nil,
+      self.ticket_id
     )
   end
   
-  private 
+  # Needed to make work with action_view's form_for
+  def persisted?
+    false
+  end
   
 end

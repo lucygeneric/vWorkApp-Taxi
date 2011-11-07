@@ -1,0 +1,24 @@
+<%= form_for([:call_center, @booking]) do |f| %>
+
+  <div class="field">
+    <%= f.label :pick_up_address %>
+    <%= f.text_field :pick_up_address %>
+  </div>
+  <div class="field">
+    <%= f.label :drop_off_address %>
+    <%= f.text_field :drop_off_address %>
+  </div>
+  <div class="field">
+    <%= f.label :when %>
+    <%= f.text_field :when %>
+  </div>
+  <div class="field">
+    <%= f.label :contact_number %>
+    <%= f.text_field :contact_number %>
+  </div>
+  <br />
+  <div class="button">
+    <%= f.submit %>
+  </div>
+
+<% end %>

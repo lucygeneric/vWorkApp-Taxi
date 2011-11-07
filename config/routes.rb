@@ -6,7 +6,8 @@ VWorkAppTaxi::Application.routes.draw do
 
   namespace :call_center do
     resources :bookings
-    resources :routing
+    get 'routing/entry'
+    get 'routing/redirect'
   end
   
   # resources :companies
