@@ -5,6 +5,7 @@ class CallCenter::RoutingController < ApplicationController
   def index
     xml = <<-EOL
       <Response>
+          <Say>Hello World</Say>
           <Dial>
               <Client>jenny</Client>
           </Dial>
@@ -12,6 +13,6 @@ class CallCenter::RoutingController < ApplicationController
     EOL
         
     render :text => xml, :content_type => "text/xml"
-  end 
+  end
   
 end
