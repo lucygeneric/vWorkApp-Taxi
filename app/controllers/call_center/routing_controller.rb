@@ -34,7 +34,7 @@ EOL
     
   private 
   
-  def get_status
+  def to_call
     to_call = <<-EOL
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
@@ -45,7 +45,7 @@ EOL
 EOL
   end
 
-  def to_call
+  def get_status
     <<-EOL
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
