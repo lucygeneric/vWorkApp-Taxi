@@ -13,8 +13,16 @@ class Booking
     end  
   end  
   
-  def self.from_job(id)
-    job = VWorkApp::Job.show(id)    
+  # Take an options hash. Needs to contain one of:
+  #   :id
+  #   :ticket_id
+  def self.from_job(opts)
+    job = if (opts.has_key?(:id))
+        VWorkApp::Job.show(opts[:id])
+      else
+        VWorkApp::Job.find(:third_party_id => opts[:ticket_id]).first
+    end
+    
     booking = self.new(
       :id => job.id,
       :pick_up_address => job.steps.first.location.formatted_address,

@@ -22,11 +22,11 @@ EOL
   end
 
   def redirect
-    xml = case params[:digits]
-    when "1"
+    xml = case params[:Digits]
+    when "2"
+      get_status(params[:Caller])
+    else # "1"
       to_call
-    else "2"
-      get_status
     end
       
     render :text => xml, :content_type => "text/xml"
@@ -39,18 +39,20 @@ EOL
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
     <Dial>
-        <Client>jenny</Client>
+      <Client>jenny</Client>
     </Dial>
 </Response>
 EOL
   end
 
-  def get_status
+  def get_status(ticket_id)    
+    @booking = Booking.from_job(:ticket_id => ticket_id)
+    
     <<-EOL
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
   <Say>
-    You booking is complete!
+    Your booking status is: #{@booking.status}.
   </Say>
 </Response>
 EOL
