@@ -12,6 +12,6 @@ class CallCenter::RoutingController < ApplicationController
     EOL
         
     render :text => xml, :content_type => "text/xml"
-  end
+  end 
   
 end
