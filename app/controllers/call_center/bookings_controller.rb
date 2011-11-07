@@ -1,6 +1,7 @@
 class CallCenter::BookingsController < ApplicationController
 
   respond_to :html
+  layout nil
 
   def index
     @bookings = Booking.new(:pick_up_address => "Hi there you guys!")
