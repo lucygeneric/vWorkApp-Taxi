@@ -3,6 +3,11 @@ VWorkAppTaxi::Application.routes.draw do
   namespace :admin do
     resources :companies
   end
+
+  namespace :call_center do
+    resources :bookings
+    resources :routing
+  end
   
   # resources :companies
   resources :bookings

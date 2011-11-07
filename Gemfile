@@ -21,6 +21,9 @@ gem 'jquery-rails'
 gem 'vworkapp_ruby', :git => "git://github.com/visfleet/vworkapp_ruby.git"
 # gem 'vworkapp_ruby', :path => "/Users/aishfenton/Documents/vWorkApp/Src/vworkapp_ruby"
 
+# Fiddling around with Twillio
+gem 'twilio-ruby'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
