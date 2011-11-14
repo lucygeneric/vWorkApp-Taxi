@@ -170,9 +170,13 @@ var vWorkTaxico = vWorkTaxico || {};
 	Shorthand 'getmenow'
 	**/
 	this.getCurrentAddress = function(callback){
-		this.getMobileLatLng(function(result){
-			vWorkTaxico.getStreetAddressFromLatLng(result, function(result){
-				callback(result);	
+		this.getMobileLatLng(function(lat_lng_result){
+			vWorkTaxico.getStreetAddressFromLatLng(lat_lng_result, function(address_result){
+				callback({
+					address:address_result,
+					lat:lat_lng_result.lat(),
+					lng:lat_lng_result.lng()
+				});	
 			});
 		});
 	}

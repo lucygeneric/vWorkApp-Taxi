@@ -3,7 +3,10 @@ $('#home').live("pagecreate", function() {
 	vWorkTaxico.initaliseModel();
 	
 	vWorkTaxico.getCurrentAddress(function(result){
-		vWorkTaxico.setModelValue('pick_up_address',result);
+		console.log(result);
+		vWorkTaxico.setModelValue('pick_up_address',result.address);
+		vWorkTaxico.setModelValue('pick_up_location_lat',result.lat);
+		vWorkTaxico.setModelValue('pick_up_location_lng',result.lng);
 	});
 	
 });
