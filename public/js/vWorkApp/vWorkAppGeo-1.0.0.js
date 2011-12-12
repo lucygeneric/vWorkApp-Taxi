@@ -57,6 +57,18 @@ var vWorkTaxico = vWorkTaxico || {};
 	}
 	
 	/**
+	Drop marker
+	*/
+	this.placeMarker = function(elm, location) {
+	  var marker = new google.maps.Marker({
+		  position: location, 
+		  map: $(elm).gmap('get', 'map'),
+		  icon:'spring-hot.png'
+	  });
+	}
+	
+		
+	/**
 	Calculate the distance matrix
 	*/
 	this.updateDistanceMatrix = function(elm){
