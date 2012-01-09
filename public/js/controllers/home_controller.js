@@ -12,7 +12,7 @@ $('#home').live("pagecreate", function() {
 });
 
 $('#home').live("pageshow", function() {
-	var newLabelWidth = $(".menu_list").outerWidth() - 130;
+	var newLabelWidth = $(".menu_list").outerWidth() - 140;
 	console.log('setting width to '+newLabelWidth);
 	$(".menu_list > li").find('.split_button_text').css('maxWidth', newLabelWidth);
 	console.log($(".menu_list > li").find('.split_button_text'));

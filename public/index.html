@@ -68,12 +68,15 @@
 
 	<div data-role="header"><h1 id="status">Pick-up Location</h1></div>
 	
-	<div data-role="content"> 
+	<div data-role="content" data-theme="b">  
+
+		<div data-role="fieldcontain">
+			<label for="pick_up_address">Enter your pick-up location</label>
+			<input type="text" name="pick_up_address" id="pick_up_address_input" data-bind="value: pick_up_address"  />
 		
-		<label for="pick_up_address">Enter your pick-up location</label>
-		<input type="text" name="pick_up_address" id="pick_up_address_input" data-bind="value: pick_up_address"  />
-		
-		<div id="pick_up_container" class="inset_list"></div>
+			<div id="pick_up_container" class="inset_list"></div>
+
+		</div>
 
 	</div>	
 	
@@ -88,12 +91,16 @@
 
 	<div data-role="header"><h1 id="status">Drop-off Location</h1></div>
 	
-	<div data-role="content"> 
+	<div data-role="content" data-theme="b"> 
+	
+		<div data-role="fieldcontain">
 		
-		<label for="drop_off_address">Enter your drop-off location</label>
-		<input type="text" name="drop_off_address" id="drop_off_address_input" data-bind="value: drop_off_address"  />
+			<label for="drop_off_address">Enter your drop-off location</label>
+			<input type="text" name="drop_off_address" id="drop_off_address_input" data-bind="value: drop_off_address"  />
 		
-		<div id="drop_off_container" class="inset_list"></div>
+			<div id="drop_off_container" class="inset_list"></div>
+		
+		</div>
 
 	</div>	
 	
@@ -107,7 +114,7 @@
 
 	<div data-role="header"><h1 id="status">Pick-up time</h1></div>
 	
-	<div data-role="content"> 
+	<div data-role="content" data-theme="b"> 
 		
 		<div data-role="fieldcontain">
             
