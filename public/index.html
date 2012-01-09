@@ -11,7 +11,7 @@
   
   <!-- remote -->
   <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
-  <script type="text/javascript" src="http://code.jquery.com/mobile/1.0rc2/jquery.mobile-1.0rc2.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
   <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
   <!-- vendor -->
   <script type="text/javascript" src="js/vendor/jquery.cookie.js"></script>
@@ -37,18 +37,18 @@
 		 
 	    <h3 class='indented_heading'>Booking Details</h3>
 			
-		<ul data-role="listview" data-inset="true">
+		<ul data-role="listview" data-inset="true" class="menu_list">
 			<li>
-				<a href="#pick_up">Pickup:</a>
-				<p id="pick_up_button" class="split_button_text" data-bind="text: pick_up_address"></p>	
+				<a href="#pick_up">Pickup:
+				<p id="pick_up_button" class="split_button_text" data-bind="text: pick_up_address"></p></a>
 			</li>
 			<li>
-				<a href="#drop_off">Drop Off:</a>
-				<p id="drop_off_button" class="split_button_text" data-bind="text: drop_off_address"></p>	
+				<a href="#drop_off">Drop Off:
+				<p id="drop_off_button" class="split_button_text" data-bind="text: drop_off_address"></p></a>
 			</li>
 			<li>
 				<a href="#when">Date:</a>
-				<p id="when_button" class="split_button_text" data-bind="text: pick_up_time">Today</p>
+				<p id="when_button" class="split_button_text" data-bind="text: pick_up_time">Today</p></a>
 			</li>
 			
 		</ul>
@@ -64,7 +64,7 @@
 <!- Pick up location entry page -->
 <!- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
-<div data-role="page" id="pick_up" data-add-back-btn="true"> 
+<div data-role="page" id="pick_up" data-add-back-btn="true" data-theme="a"> 
 
 	<div data-role="header"><h1 id="status">Pick-up Location</h1></div>
 	
@@ -84,7 +84,7 @@
 <!- Drop location entry page -->
 <!- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
-<div data-role="page" id="drop_off" data-add-back-btn="true">
+<div data-role="page" id="drop_off" data-add-back-btn="true" data-theme="a">
 
 	<div data-role="header"><h1 id="status">Drop-off Location</h1></div>
 	
@@ -103,7 +103,7 @@
 <!- Pick up time page -->
 <!- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
-<div data-role="page" id="when" data-add-back-btn="true">
+<div data-role="page" id="when" data-add-back-btn="true" data-theme="a">
 
 	<div data-role="header"><h1 id="status">Pick-up time</h1></div>
 	
@@ -132,7 +132,7 @@
 <!- Map / Booking screen -->
 <!- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
-<div id="tracking" data-role="page" data-theme="b">
+<div id="tracking" data-role="page" data-theme="a">
 	
 	<div data-role="header"><h1 id="status" data-bind="text: driver_status">Connecting...</h1></div>
 	
