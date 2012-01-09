@@ -9,6 +9,8 @@ $('#home').live("pagecreate", function() {
 		vWorkTaxico.setModelValue('pick_up_location_lng',result.lng);
 	});
 	
+	
+		
 });
 
 $('#home').live("pageshow", function() {

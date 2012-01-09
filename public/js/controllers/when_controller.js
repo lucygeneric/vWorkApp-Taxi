@@ -1,10 +1,14 @@
 $('#when').live("pagecreate", function() {
-	
-	$('#time_entry').scroller({ preset: 'time', theme: 'ios', ampm: false });
-	$('#date_entry').scroller({ preset: 'date', theme: 'ios' });
-	
+		
 	$('#date_submit').click(function() {
-		var date = vWorkTaxico.getCurrentDateFromDateTimeEntry($('#date_entry'),$('#time_entry'));
+		
+		var date = $('#date_entry').data('datebox').theDate;
+		var time = $('#time_entry').data('datebox').theDate;
+		
+		date.setHours(time.getHours(),time.getMinutes(), time.getSeconds(), time.getMilliseconds());
+		
+		console.log("pickup time to be "+date);
+		
 		vWorkTaxico.setModelValue('pick_up_time', date);
 	});
 	
