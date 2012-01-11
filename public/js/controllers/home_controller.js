@@ -10,10 +10,19 @@ $('#home').live("pagecreate", function() {
 	});
 	
 	
-		
+	//var bubble = new google.bookmarkbubble.Bubble();    
+    //bubble.showIfAllowed();
+	
 });
 
 $('#home').live("pageshow", function() {
+	var newLabelWidth = $(".menu_list").outerWidth() - 140;
+	console.log('setting width to '+newLabelWidth);
+	$(".menu_list > li").find('.split_button_text').css('maxWidth', newLabelWidth);
+	console.log($(".menu_list > li").find('.split_button_text'));
+});
+
+$('#home').live("orientationchange", function() {
 	var newLabelWidth = $(".menu_list").outerWidth() - 140;
 	console.log('setting width to '+newLabelWidth);
 	$(".menu_list > li").find('.split_button_text').css('maxWidth', newLabelWidth);

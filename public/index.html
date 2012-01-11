@@ -60,7 +60,6 @@
 				<a href="#when">Date:
 				<p id="when_button" class="split_button_text" data-bind="text: pick_up_time">Today</p></a>
 			</li>
-			
 		</ul>
 		
 		<a href="#tracking" id="request_submit" data-role="button">Book Now!</a>
@@ -168,11 +167,10 @@
 	
 	<div data-role="footer" class="ui-bar" id="map_footer" style="display:none"> 
 	
-			<div data-role="controlgroup" data-type="horizontal">
-				<a href="#home" data-icon='alert' onclick="vWorkTaxico.cancelBooking()">Cancel</a>
-				<a href="#" data-icon="plus" onclick="vWorkTaxico.showStatus()">Check Your Booking Status</a>
-			</div>
-		
+		<div data-role="controlgroup" data-type="horizontal">
+			<a href="#home" data-icon='alert' onclick="vWorkTaxico.cancelBooking()">Cancel</a>
+			<a href="#" data-icon="plus" onclick="vWorkTaxico.showStatus()">Check Your Booking Status</a>
+		</div>
 		
 	</div>
 	
@@ -186,7 +184,7 @@
 		$('#tracking').live("pageshow", function() {
 			var height = $("#tracking").height() - 85;
 			$('#map_canvas').height(height);
-			google.maps.event.trigger($('#map_canvas'), 'resize');
+			google.maps.event.trigger($('#map_canvas'), 'resize');			
  		});
  		
 	</script>

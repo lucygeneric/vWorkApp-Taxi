@@ -57,7 +57,7 @@ var vWorkTaxico = vWorkTaxico || {};
 	}
 	
 	/**
-	Drop marker
+	Drop marker - not used, for prototype drag/drop
 	*/
 	this.placeMarker = function(elm, location) {
 	  var marker = new google.maps.Marker({
