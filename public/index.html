@@ -27,7 +27,6 @@
   <script type="text/javascript" src="js/vendor/jquery.ui.map.overlays.js"></script>
   <script type="text/javascript" src="js/vendor/jquery.ui.map.services.js"></script>
   <script type="text/javascript" src="js/vendor/jquery.ui.map.extensions.js"></script>
-  <script type="text/javascript" src="js/vendor/bookmark_bubble.js"></script>
   <script type="text/javascript" src="http://dev.jtsage.com/cdn/datebox/latest/jquery.mobile.datebox.min.js"></script>
   <script type="text/javascript" src="http://dev.jtsage.com/cdn/datebox/i8n/jquery.mobile.datebox.i8n.en.js"></script>
   <script type="text/javascript" src="js/vendor/knockout-1.2.1.js"></script>
@@ -87,7 +86,7 @@
 			
 			<br /><br />
 			
-			<a href="#home" data-role="button">Use this pick-up location</a>
+			<a href="#home" data-role="button" id="use_current_location_button">Use my current location</a>
 
 		</div>
 
@@ -112,11 +111,7 @@
 			<input type="text" name="drop_off_address" id="drop_off_address_input" data-bind="value: drop_off_address"  />
 		
 			<div id="drop_off_container" class="inset_list"></div>
-			
-			<br /><br />
-			
-			<a href="#home" data-role="button">Use this destination</a>
-		
+					
 		</div>
 
 	</div>	
@@ -198,12 +193,7 @@
   <script type="text/javascript" src="js/vWorkApp/vWorkAppData-1.0.0.js"></script>
   <script type="text/javascript" src="js/vWorkApp/vWorkAppUtils-1.0.0.js"></script>
   <!-- controllers -->
-  <script type="text/javascript" src="js/controllers/home_controller.js"></script>
-  <script type="text/javascript" src="js/controllers/pick_up_controller.js"></script>
-  <script type="text/javascript" src="js/controllers/drop_off_controller.js"></script>
-  <script type="text/javascript" src="js/controllers/when_controller.js"></script>
-  <script type="text/javascript" src="js/controllers/booking_controller.js"></script>
-
+  <script type="text/javascript" src="js/controllers/index_controller.js"></script>
 
 </body>
 </html>

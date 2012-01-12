@@ -6,7 +6,7 @@ var vWorkTaxico = vWorkTaxico || {};
 	Core model for Knockout binding + modely things
 	*****************************************************************/
 	
-	this.model = { 
+	this.model = {
 		pick_up_location_lat	: ko.observable(),
 		pick_up_location_lng	: ko.observable(),
 		pick_up_address			: ko.observable(),
