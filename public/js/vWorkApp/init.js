@@ -1,5 +1,6 @@
 $(document).bind("mobileinit", function(){
   $.extend(  $.mobile , {
-    touchOverflowEnabled: true
+    touchOverflowEnabled: true,
+    ajaxLinksEnabled: false
   });
 });

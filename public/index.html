@@ -35,6 +35,22 @@
 <body> 
 
 
+<!-Initialisation screen -->
+<!- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+<div data-role="page" id="startup" data-theme="a" >
+   
+	<div data-role="content" id="splash">
+		
+		<img src="images/vwork-logo.png" id="vwork-logo" />	
+		<img src="images/animated-initialiser.gif" id="vwork-init" />	
+		 		
+	</div>
+	 
+</div>
+
+
+
 <!- Home page -->
 <!- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
@@ -62,6 +78,7 @@
 		</ul>
 		
 		<a href="#tracking" id="request_submit" data-role="button">Book Now!</a>
+		<a href="#tracking" data-role="button">Show the map for testing</a>
 		
 	</div>
 	 
@@ -154,7 +171,7 @@
 
 <div id="tracking" data-role="page" data-theme="a">
 	
-	<div data-role="header"><h1 id="status" data-bind="text: driver_status">Connecting...</h1></div>
+	<div data-role="header"><h1 id="status" data-bind="text: driver_status"></h1></div>
 	
 	<div data-role="content" class="item"> 
 		<div id="map_canvas"></div>		
@@ -165,6 +182,7 @@
 		<div data-role="controlgroup" data-type="horizontal">
 			<a href="#home" data-icon='alert' onclick="vWorkTaxico.cancelBooking()">Cancel</a>
 			<a href="#" data-icon="plus" onclick="vWorkTaxico.showStatus()">Check Your Booking Status</a>
+			<a href="#home" data-icon="minus">Back</a>
 		</div>
 		
 	</div>
@@ -172,15 +190,7 @@
 	<!-- this had to be in the containing div..... bug in JQMobile -->
 	<script type="text/javascript">
 	
-		$('#tracking').live("pageinit", function() {
-			vWorkTaxico.generateBaseMap($('#map_canvas'));
-		});
 		
-		$('#tracking').live("pageshow", function() {
-			var height = $("#tracking").height() - 85;
-			$('#map_canvas').height(height);
-			google.maps.event.trigger($('#map_canvas'), 'resize');			
- 		});
  		
 	</script>
 

@@ -1,11 +1,26 @@
 
+/** INITIALISATION
+/**********************************************/
+
+$('#startup').live("pagecreate", function() {	
+	vWorkTaxico.validateEntry();
+});
+
+$('#startup').live("pageshow", function() {
+	var target = (vWorkTaxico.model.booking_id() == null) ?  "#home" : "#tracking";
+	setTimeout(function() {
+		$.mobile.changePage(target, { transition: "flip"} );
+	}, 1000);
+});
+
+
 /** HOME
 /**********************************************/
 
 $('#home').live("pagecreate", function() {
 
-	vWorkTaxico.initaliseModel();
-	
+	vWorkTaxico.validateEntry();
+
 	vWorkTaxico.getCurrentAddress(function(result){
 		vWorkTaxico.setModelValue('user_region_code',result.region);
 		vWorkTaxico.setModelValue('pick_up_address',result.address);
@@ -44,6 +59,10 @@ $('input[type=text]').focus(function() {
 /** PICKUP 
 /**********************************************/
 
+$('#pick_up').live("pagecreate", function() {
+	vWorkTaxico.validateEntry();
+});
+
 $('#pick_up_address_input').data('timeout', null).keyup(function(){
 	
     clearTimeout($(this).data('timeout'));
@@ -69,6 +88,10 @@ $('#use_current_location_button').click(function(){
 /** DROP-OFF 
 /**********************************************/
 
+$('#drop_off').live("pagecreate", function() {
+	vWorkTaxico.validateEntry();
+});
+
 $('#drop_off_address_input').data('timeout', null).keyup(function(){
 
     clearTimeout($(this).data('timeout'));
@@ -85,6 +108,8 @@ $('#drop_off_address_input').data('timeout', null).keyup(function(){
 /**********************************************/
 
 $('#when').live("pagecreate", function() {
+
+	vWorkTaxico.validateEntry();
 		
 	$('#date_submit').click(function() {
 		
@@ -103,11 +128,20 @@ $('#when').live("pagecreate", function() {
 /** BOOKING 
 /**********************************************/
 
+$('#tracking').live("pagecreate", function() {
+	vWorkTaxico.validateEntry();
+	vWorkTaxico.generateBaseMap($('#map_canvas'));
+});
+	
+
 $('#tracking').live("pageshow", function() {
 	
 	vWorkTaxico.watchMap($('#map_canvas'));
 	vWorkTaxico.updatePickupMarker($('#map_canvas'));
-		
+	
+	var height = $("#tracking").height() - 85;
+	$('#map_canvas').height(height);
+	google.maps.event.trigger($('#map_canvas'), 'resize');			
 	/* stupid hack */
 	$('#map_footer').css('display','block');
 	

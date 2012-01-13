@@ -2,6 +2,8 @@ var vWorkTaxico = vWorkTaxico || {};
 
 (function() {
 
+	this.session_key;
+
 	/**
 	Core model for Knockout binding + modely things
 	*****************************************************************/
@@ -44,6 +46,7 @@ var vWorkTaxico = vWorkTaxico || {};
 		this.model.drop_off_location_lng($.cookie('drop_off_location_lng'));
 		this.model.pick_up_address(pick_up_address);
 		this.model.drop_off_address($.cookie('drop_off_address'));
+		this.model.booking_id($.cookie('booking_id'));
 		this.model.pick_up_time(new Date());
 		this.model.driver_status("Connecting..");
 		this.model.driver_eta("Calculating..");
@@ -56,7 +59,7 @@ var vWorkTaxico = vWorkTaxico || {};
     	$.cookie('pick_up_address', this.model.pick_up_address());
     	$.cookie('drop_off_location_lat', this.model.drop_off_location_lat());
     	$.cookie('drop_off_location_lng', this.model.drop_off_location_lng());
-    	$.cookie('drop_off_address', this.model.drop_off_address());
+    	$.cookie('booking_id', this.model.booking_id());
     }
 
 
@@ -65,15 +68,20 @@ var vWorkTaxico = vWorkTaxico || {};
 	Validation
 	*****************************************************************/
 	
+	this.validateEntry = function(){
+		console.log('Loading page, session key is '+this.session_key);
+		if (!this.session_key)
+			this.initaliseModel();
+		this.session_key = "boobs";
+	}
+	
 	this.validateBookingModel = function() {
+		
+		var d = new Date();	
+		
 		if (this.model.pick_up_location_lat() == null)
 			return "Oops, I can't seem to find your current location.<br/><br/>Try entering your current address manually.";
 
-		if (this.model.drop_off_location_lat() == null)
-			//null dropoffs are OK
-			//return "Oops, I can't seem to find your desired destination.<br/><br/>Try choosing a different placemark near to where you wish to go.<br/><br/>You will be able to notify the driver of your intended route on pick-up";
-		
-		var d = new Date();		
 		if ((d.getTime() - this.model.pick_up_time().getTime()) > 600000)
 			return "Hmm.. the pick-up time you have specified seems to be in the past.<br/><br/>We are sorry but our drivers are not equipped to travel at 88mph";
         
@@ -103,7 +111,6 @@ var vWorkTaxico = vWorkTaxico || {};
 				pick_up_lng: this.model.pick_up_location_lng()
 			}	
 		};
-		console.log(payload);
 		var url = this.bookingURL();
 		this.postAsJSON(url, payload, function(result){
 			//todo!! error handling
@@ -113,9 +120,13 @@ var vWorkTaxico = vWorkTaxico || {};
     }
     
     this.cancelBooking = function(){
-    	// cancel it on the server too, dick!
     	console.log("canceling booking. . . ");
     	vWorkTaxico.unwatchBooking();
+    	vWorkTaxico.setModelValue("booking_id",null);
+    	vWorkTaxico.setModelValue("driver_status","Connecting..");
+   		vWorkTaxico.setModelValue("driver_lat",null);
+   		vWorkTaxico.setModelValue("driver_lng",null);
+   		vWorkTaxico.setModelValue("driver_eta","Calculating..");
     }
     
     this.refreshBooking = function(){
@@ -128,8 +139,7 @@ var vWorkTaxico = vWorkTaxico || {};
     		vWorkTaxico.setModelValue("driver_lng",result.booking.driver_lng);
     		//vWorkTaxico.setModelValue("driver_lat",'-36.8829472');
     		//vWorkTaxico.setModelValue("driver_lng",'174.9202712');
-    		
-    		vWorkTaxico.updateFromModelChange();
+
     	});
     	
     	vWorkTaxico.watchBooking();
@@ -138,7 +148,7 @@ var vWorkTaxico = vWorkTaxico || {};
     this.bookingTimer = {};
     
     this.watchBooking = function(){
-    	vWorkTaxico.bookingTimer = setTimeout(vWorkTaxico.refreshBooking, 5000);
+    	vWorkTaxico.bookingTimer = setTimeout(vWorkTaxico.refreshBooking, 10000);
     }
     
     this.unwatchBooking = function(){
