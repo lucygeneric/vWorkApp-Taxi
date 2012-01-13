@@ -11,7 +11,7 @@ class BookingsController < ApplicationController
 
   # http://localhost:3000/bookings/237580.xml?company=joes-taxi
   def show
-    @booking = Booking.from_job(params[:id])
+    @booking = Booking.from_job({id => params[:id]})
     respond_with(@booking)
   end
 
