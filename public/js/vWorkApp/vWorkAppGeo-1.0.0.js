@@ -103,7 +103,6 @@ var vWorkTaxico = vWorkTaxico || {};
 	this.trackMap = function(elm){
 		draglistener = google.maps.event.addListener($(elm).gmap('get', 'map'),'dragend', function(event){
 			var latLng = $(elm).gmap('get', 'map').getCenter();
-			console.log(latLng.lat())
 			$.cookie('last_lat',latLng.lat());
 			$.cookie('last_lng',latLng.lng());
 		});
@@ -171,9 +170,12 @@ var vWorkTaxico = vWorkTaxico || {};
 		if (geocoder) {
 			geocoder.geocode({ 'latLng': latlng }, function (results, status) {
 				var result = 'Unable to determine location.';
-				if (status == google.maps.GeocoderStatus.OK)
-					var result = results[0].formatted_address;	
-				successHandler(result);
+				var region = '';
+				if (status == google.maps.GeocoderStatus.OK){
+					result = results[0].formatted_address;
+					region = results[0].address_components[6].short_name;
+				}
+				successHandler(result,region);
 			});
 		}
 	}
@@ -182,15 +184,17 @@ var vWorkTaxico = vWorkTaxico || {};
 	Shorthand 'getmenow'
 	**/
 	this.getCurrentAddress = function(callback){
-		this.getMobileLatLng(function(lat_lng_result){
-			vWorkTaxico.getStreetAddressFromLatLng(lat_lng_result, function(address_result){
+		//this.getMobileLatLng(function(lat_lng_result){
+			var lat_lng_result = new google.maps.LatLng(-35.725188, 174.323456);
+ 			vWorkTaxico.getStreetAddressFromLatLng(lat_lng_result, function(address_result, region){
 				callback({
 					address:address_result,
 					lat:lat_lng_result.lat(),
-					lng:lat_lng_result.lng()
+					lng:lat_lng_result.lng(),
+					region:region
 				});	
 			});
-		});
+		//});
 	}
 	
 	/**
@@ -201,9 +205,10 @@ var vWorkTaxico = vWorkTaxico || {};
 
 		var geocoder = new google.maps.Geocoder();
 		var addressList = [];
-
+		var request_payload = { 'address': address };
+		if (this.model.user_region_code() != null) request_payload['region'] = this.model.user_region_code();
 		if (geocoder) {
-			geocoder.geocode({ 'address': address }, function (results, status) {
+			geocoder.geocode(request_payload, function (results, status) {
 				if (status == google.maps.GeocoderStatus.OK)
 					addressList = results;
 				

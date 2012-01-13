@@ -7,6 +7,7 @@ $('#home').live("pagecreate", function() {
 	vWorkTaxico.initaliseModel();
 	
 	vWorkTaxico.getCurrentAddress(function(result){
+		vWorkTaxico.setModelValue('user_region_code',result.region);
 		vWorkTaxico.setModelValue('pick_up_address',result.address);
 		vWorkTaxico.setModelValue('pick_up_location_lat',result.lat);
 		vWorkTaxico.setModelValue('pick_up_location_lng',result.lng);

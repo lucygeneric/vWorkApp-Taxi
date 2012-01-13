@@ -7,6 +7,7 @@ var vWorkTaxico = vWorkTaxico || {};
 	*****************************************************************/
 	
 	this.model = {
+		user_region_code		: ko.observable(),
 		pick_up_location_lat	: ko.observable(),
 		pick_up_location_lng	: ko.observable(),
 		pick_up_address			: ko.observable(),
@@ -29,13 +30,14 @@ var vWorkTaxico = vWorkTaxico || {};
 	this.setModelValue = function(key, value){
 		this.model[key](value);
 	}
-	
+		
 	this.initaliseModel = function(){
 	
 		ko.applyBindings(this.model);
 		
 		var pick_up_address = ($.cookie('pick_up_address')) ? $.cookie('pick_up_address') : 'Finding address...';
 	
+		this.model.user_region_code($.cookie('user_region_code'));
 		this.model.pick_up_location_lat($.cookie('pick_up_location_lat'));
 		this.model.pick_up_location_lng($.cookie('pick_up_location_lng'));		
 		this.model.drop_off_location_lat($.cookie('drop_off_location_lat'));
@@ -48,6 +50,7 @@ var vWorkTaxico = vWorkTaxico || {};
 	}
 	
 	this.cookiefyModel = function() {
+		$.cookie('user_region_code', this.model.user_region_code());
     	$.cookie('pick_up_location_lat', this.model.pick_up_location_lat());
     	$.cookie('pick_up_location_lng', this.model.pick_up_location_lng());
     	$.cookie('pick_up_address', this.model.pick_up_address());
@@ -67,7 +70,8 @@ var vWorkTaxico = vWorkTaxico || {};
 			return "Oops, I can't seem to find your current location.<br/><br/>Try entering your current address manually.";
 
 		if (this.model.drop_off_location_lat() == null)
-			return "Oops, I can't seem to find your desired destination.<br/><br/>Try choosing a different placemark near to where you wish to go.<br/><br/>You will be able to notify the driver of your intended route on pick-up";
+			//null dropoffs are OK
+			//return "Oops, I can't seem to find your desired destination.<br/><br/>Try choosing a different placemark near to where you wish to go.<br/><br/>You will be able to notify the driver of your intended route on pick-up";
 		
 		var d = new Date();		
 		if ((d.getTime() - this.model.pick_up_time().getTime()) > 600000)
