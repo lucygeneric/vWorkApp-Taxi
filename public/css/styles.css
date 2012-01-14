@@ -64,10 +64,24 @@ body {
 }
 
 .ui-input-text {
-	width: 100% !important;
-	padding: 0.4em 0!important; 
+	width: 95% !important;
 	padding-left:10px;
 	padding-right:10px;
+}
+
+.ui-br {
+	border-bottom: none;
+	border-bottom: none;
+	border-bottom-width: 0;
+	border-bottom-style: none;
+}
+
+.ui-mobile-viewport {
+	margin: 0;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: none;
+    -ms-text-size-adjust:none;
+    -webkit-tap-highlight-color: rgba(255, 128, 60, 0);
 }
 
 
@@ -85,10 +99,15 @@ body {
 }
 
 .loading-widget img {
+	display:none;
 	-webkit-animation-name:             rotate; 
 	-webkit-animation-duration:         0.5s; 
 	-webkit-animation-iteration-count:  infinite;
 	-webkit-animation-timing-function: linear;
+	float: right;
+	right: 14px;
+	position: relative;
+	top: -31px;
 }
     
 
@@ -127,7 +146,7 @@ img#vwork-logo {
 	width:134px;
 }
 
-img#vwork-footer {
+img.vwork-footer {
 	display: block;
     margin-left: auto;
     margin-right: auto;

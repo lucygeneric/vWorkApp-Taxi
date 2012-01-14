@@ -68,10 +68,16 @@ var vWorkTaxico = vWorkTaxico || {};
 	Validation
 	*****************************************************************/
 	
-	this.validateEntry = function(){
+	this.validateEntry = function(timeout){
+		if (!timeout) timeout = 0;
 		console.log('Loading page, session key is '+this.session_key);
-		if (!this.session_key)
+		if (!this.session_key){
 			this.initaliseModel();
+			var target = (vWorkTaxico.model.booking_id() == null) ?  "#home" : "#tracking";
+			setTimeout(function() {
+				$.mobile.changePage(target, { transition: "flip"} );
+			}, timeout);	
+		}
 		this.session_key = vWorkTaxico.generateGUID();
 	}
 	

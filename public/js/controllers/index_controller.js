@@ -3,16 +3,8 @@
 /**********************************************/
 
 $('#startup').live("pagecreate", function() {	
-	vWorkTaxico.validateEntry();
+	vWorkTaxico.validateEntry(1000);
 });
-
-$('#startup').live("pageshow", function() {
-	var target = (vWorkTaxico.model.booking_id() == null) ?  "#home" : "#tracking";
-	setTimeout(function() {
-		$.mobile.changePage(target, { transition: "flip"} );
-	}, 1000);
-});
-
 
 /** HOME
 /**********************************************/
@@ -31,7 +23,7 @@ $('#home').live("pagecreate", function() {
 });
 
 $('#home').live("pageshow", function() {
-	var newLabelWidth = $(".menu_list").outerWidth() - 140;
+	var newLabelWidth = $(".menu_list").outerWidth() - 170;
 	$(".menu_list > li").find('.split_button_text').css('maxWidth', newLabelWidth);
 });
 
@@ -97,7 +89,7 @@ $('#drop_off_address_input').data('timeout', null).keyup(function(){
     clearTimeout($(this).data('timeout'));
 
     $(this).data('timeout', setTimeout(function(){
-        vWorkTaxico.populateListFromAddressLookup($('#drop_off_address_input').val(), "drop_off");
+        vWorkTaxico.populateListFromAddressLookup($('#drop_off_address_input').val(), "drop_off").trigger('updatelayout');
     }, 1000));
 
 });

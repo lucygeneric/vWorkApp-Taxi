@@ -14,6 +14,7 @@
   <link rel="stylesheet" type="text/css" href="http://dev.jtsage.com/cdn/datebox/latest/jquery.mobile.datebox.min.css" /> 
   
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/themeroller.css" />
   
   <!-- remote -->
   <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
@@ -78,8 +79,8 @@
 		
 		<a href="#tracking" id="request_submit" data-role="button" data-theme="b" data-icon="arrow-r">Book Now!</a>
 		
-		<div data-role="footer" data-postion="fixed">
-			<img src="images/vwork-footer.png" id="vwork-footer" />
+		<div data-role="footer" data-postion="fixed" data-id="vworkapp-footer">
+			<img src="images/vwork-footer.png" class="vwork-footer" />
 		</div>
 		
 	</div>
@@ -95,25 +96,27 @@
 
 	<div data-role="header"><h1 id="status">Pick-up Location</h1></div>
 	
-	<div data-role="content" data-theme="b">  
+	<div data-role="content">  
 
 		<div data-role="fieldcontain">
 			<label for="pick_up_address">Enter your pick-up location</label>
 			<input type="text" name="pick_up_address" id="pick_up_address_input" data-bind="value: pick_up_address"  />
+			
+			<div class="loading-widget">
+	            <img src="images/loading-widget.png">
+    	    </div>
 		
 			<div id="pick_up_container" class="inset_list"></div>
-			
-			<br /><br />
-			
-			<a href="#home" data-role="button" id="use_current_location_button">Use my current location</a>
+						
+			<a href="#home" data-role="button" id="use_current_location_button" data-theme="e">Use my current location</a>
 
 		</div>
-		
-		<div class="loading-widget">
-            <img src="images/loading-widget.png">
-        </div>
-
+				
 	</div>	
+	
+	<div data-role="footer" data-postion="fixed" data-id="vworkapp-footer">
+		<img src="images/vwork-footer.png" class="vwork-footer" />
+	</div>
 	
 </div>
 
@@ -126,7 +129,7 @@
 
 	<div data-role="header"><h1 id="status">Drop-off Location</h1></div>
 	
-	<div data-role="content" data-theme="b"> 
+	<div data-role="content"> 
 	
 		<div data-role="fieldcontain">
 		
@@ -138,6 +141,10 @@
 		</div>
 
 	</div>	
+	
+	<div data-role="footer" data-postion="fixed" data-id="vworkapp-footer">
+		<img src="images/vwork-footer.png" class="vwork-footer" />
+	</div>
 	
 </div>
 
