@@ -1,15 +1,11 @@
-<%= form_for([:admin, @company]) do |f| %>
-  <% if @company.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@company.errors.count, "error") %> prohibited this company from being saved:</h2>
+- form_for([:admin, @company]) do |f|
+  - if @company.errors.any?
+    #error_explanation
+      %h2= pluralize(@company.errors.count, "error") + "prohibited this company from being saved:"
 
-      <ul>
-      <% @company.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+      %ul
+        - @company.errors.full_messages.each do |msg|
+        %li= msg
 
   <div class="field">
     <%= f.label :name %><br />
@@ -28,6 +24,6 @@
     <%= f.text_field :subdomain %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :class => 'btn success' %>
   </div>
 <% end %>
