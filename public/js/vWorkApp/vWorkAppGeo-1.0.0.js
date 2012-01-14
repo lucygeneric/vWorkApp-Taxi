@@ -209,8 +209,16 @@ var vWorkTaxico = vWorkTaxico || {};
 		if (this.model.user_region_code() != null) request_payload['region'] = this.model.user_region_code();
 		if (geocoder) {
 			geocoder.geocode(request_payload, function (results, status) {
-				if (status == google.maps.GeocoderStatus.OK)
+				addressList = [];		
+				if (status == google.maps.GeocoderStatus.OK){
 					addressList = results;
+					/*
+					for (var i = 0; i < 3; i++){
+						console.log(results);
+						if (results[i])
+							addressList.push(results[i]);
+					}*/	
+				}
 				
 				callback(addressList);
 			});

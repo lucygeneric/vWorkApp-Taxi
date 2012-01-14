@@ -3,15 +3,15 @@
 /**********************************************/
 
 $('#startup').live("pagecreate", function() {	
-	vWorkTaxico.validateEntry(1000);
+	vWorkTaxico.validateEntry("#home");
 });
 
 /** HOME
 /**********************************************/
 
 $('#home').live("pagecreate", function() {
-
-	vWorkTaxico.validateEntry();
+	console.log("create");
+	vWorkTaxico.validateEntry("#home");
 
 	vWorkTaxico.getCurrentAddress(function(result){
 		vWorkTaxico.setModelValue('user_region_code',result.region);
@@ -25,7 +25,10 @@ $('#home').live("pagecreate", function() {
 $('#home').live("pageshow", function() {
 	var newLabelWidth = $(".menu_list").outerWidth() - 170;
 	$(".menu_list > li").find('.split_button_text').css('maxWidth', newLabelWidth);
+	
+	vWorkTaxico.forceUpdateUI();
 });
+
 
 $('#request_submit').click(function(event) {
 			
@@ -52,15 +55,21 @@ $('input[type=text]').focus(function() {
 /**********************************************/
 
 $('#pick_up').live("pagecreate", function() {
-	vWorkTaxico.validateEntry();
+	vWorkTaxico.validateEntry("#pick_up");
 });
+
+
+$('#pick_up').live("pageshow", function() {
+	vWorkTaxico.forceUpdateUI();
+});
+
 
 $('#pick_up_address_input').data('timeout', null).keyup(function(){
 	
     clearTimeout($(this).data('timeout'));
 
     $(this).data('timeout', setTimeout(function(){
-        vWorkTaxico.populateListFromAddressLookup($('#pick_up_address_input').val(), "pick_up").trigger('updatelayout');
+        vWorkTaxico.populateListFromAddressLookup($('#pick_up_address_input').val(), "pick_up");
     }, 1000));
 
 }); 
@@ -81,15 +90,20 @@ $('#use_current_location_button').click(function(){
 /**********************************************/
 
 $('#drop_off').live("pagecreate", function() {
-	vWorkTaxico.validateEntry();
+	vWorkTaxico.validateEntry("#drop_off");
 });
+
+$('#drop_off').live("pageshow", function() {
+	vWorkTaxico.forceUpdateUI();
+});
+
 
 $('#drop_off_address_input').data('timeout', null).keyup(function(){
 
     clearTimeout($(this).data('timeout'));
 
     $(this).data('timeout', setTimeout(function(){
-        vWorkTaxico.populateListFromAddressLookup($('#drop_off_address_input').val(), "drop_off").trigger('updatelayout');
+        vWorkTaxico.populateListFromAddressLookup($('#drop_off_address_input').val(), "drop_off");
     }, 1000));
 
 });
@@ -101,7 +115,7 @@ $('#drop_off_address_input').data('timeout', null).keyup(function(){
 
 $('#when').live("pagecreate", function() {
 
-	vWorkTaxico.validateEntry();
+	vWorkTaxico.validateEntry('#when');
 		
 	$('#date_submit').click(function() {
 		
@@ -116,12 +130,18 @@ $('#when').live("pagecreate", function() {
 });
 
 
+$('#when').live("pageshow", function() {
+	vWorkTaxico.forceUpdateUI();
+});
+
+
+
 
 /** BOOKING 
 /**********************************************/
 
 $('#tracking').live("pagecreate", function() {
-	vWorkTaxico.validateEntry();
+	vWorkTaxico.validateEntry('#tracking');
 	vWorkTaxico.generateBaseMap($('#map_canvas'));
 });
 	
@@ -137,6 +157,7 @@ $('#tracking').live("pageshow", function() {
 	/* stupid hack */
 	$('#map_footer').css('display','block');
 	
+	vWorkTaxico.forceUpdateUI();
 });
 
 $('#tracking').live("pagehide", function() {

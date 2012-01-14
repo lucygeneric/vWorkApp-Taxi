@@ -10,25 +10,24 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   
   <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/icon_app.png">
-  <link rel="stylesheet" type="text/css" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
-  <link rel="stylesheet" type="text/css" href="http://dev.jtsage.com/cdn/datebox/latest/jquery.mobile.datebox.min.css" /> 
+  <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.0.min.css" />
+  <link rel="stylesheet" type="text/css" href="css/jquery.mobile.datebox.min.css" /> 
   
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/themeroller.css" />
   
   <!-- remote -->
-  <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+  <script type="text/javascript" src="js/vendor/jquery.min.js"></script>
   <script type="text/javascript" src="js/vWorkApp/init.js"></script>
-  <script type="text/javascript" src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
-  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+  <script type="text/javascript" src="js/vendor/jquery.mobile-1.0.min.js"></script>
+  <script type="text/javascript" src="js/vendor/google.js"></script>
   <!-- vendor -->
   <script type="text/javascript" src="js/vendor/jquery.cookie.js"></script>
   <script type="text/javascript" src="js/vendor/jquery.ui.map.js"></script>
   <script type="text/javascript" src="js/vendor/jquery.ui.map.overlays.js"></script>
   <script type="text/javascript" src="js/vendor/jquery.ui.map.services.js"></script>
   <script type="text/javascript" src="js/vendor/jquery.ui.map.extensions.js"></script>
-  <script type="text/javascript" src="http://dev.jtsage.com/cdn/datebox/latest/jquery.mobile.datebox.min.js"></script>
-  <script type="text/javascript" src="http://dev.jtsage.com/cdn/datebox/i8n/jquery.mobile.datebox.i8n.en.js"></script>
+  <script type="text/javascript" src="js/vendor/jquery.mobile.datebox.min.js"></script>
   <script type="text/javascript" src="js/vendor/knockout-1.2.1.js"></script>
       
 </head> 
@@ -38,12 +37,15 @@
 <!-Initialisation screen -->
 <!- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
-<div data-role="page" id="startup" data-theme="a" >
+<div data-role="page" id="startup" data-theme="a" data-fullscreen="true">
    
 	<div data-role="content" id="splash">
 		
 		<img src="images/vwork-logo.png" id="vwork-logo" />	
-		<img src="images/animated-initialiser.gif" id="vwork-init" />	
+
+		<div class="init-widget" id="vwork-init">
+            <img src="images/loading-widget.png"  />
+   	    </div>
 		 		
 	</div>
 	 
@@ -54,7 +56,7 @@
 <!- Home page -->
 <!- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
-<div data-role="page" id="home" data-theme="a" >
+<div data-role="page" id="home" data-theme="a" data-fullscreen="true">
    
 	<div data-role="content">
 	
@@ -92,9 +94,9 @@
 <!- Pick up location entry page -->
 <!- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
-<div data-role="page" id="pick_up" data-add-back-btn="true" data-theme="a"> 
+<div data-role="page" id="pick_up" data-add-back-btn="true" data-theme="a" data-fullscreen="true">  
 
-	<div data-role="header"><h1 id="status">Pick-up Location</h1></div>
+	<div data-role="header"><h1>Pick-up Location</h1></div>
 	
 	<div data-role="content">  
 
@@ -125,9 +127,9 @@
 <!- Drop location entry page -->
 <!- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
-<div data-role="page" id="drop_off" data-add-back-btn="true" data-theme="a">
+<div data-role="page" id="drop_off" data-add-back-btn="true" data-theme="a" data-fullscreen="true">
 
-	<div data-role="header"><h1 id="status">Drop-off Location</h1></div>
+	<div data-role="header"><h1>Drop-off Location</h1></div>
 	
 	<div data-role="content"> 
 	
@@ -142,7 +144,7 @@
 
 	</div>	
 	
-	<div data-role="footer" data-postion="fixed" data-id="vworkapp-footer">
+	<div data-role="footer" data-postion="fixed" data-id="vworkapp-footer" class="footer">
 		<img src="images/vwork-footer.png" class="vwork-footer" />
 	</div>
 	
@@ -152,9 +154,9 @@
 <!- Pick up time page -->
 <!- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
-<div data-role="page" id="when" data-add-back-btn="true" data-theme="a">
+<div data-role="page" id="when" data-add-back-btn="true" data-theme="a"  data-fullscreen="true">
 
-	<div data-role="header"><h1 id="status">Pick-up time</h1></div>
+	<div data-role="header"><h1>Pick-up time</h1></div>
 	
 	<div data-role="content" data-theme="b"> 
 		
@@ -173,6 +175,11 @@
             
             
         </div>
+        
+        
+        <div data-role="footer" data-postion="fixed" data-id="vworkapp-footer" class="footer">
+			<img src="images/vwork-footer.png" class="vwork-footer" />
+		</div>
 		
 		
 	</div>	
@@ -185,7 +192,7 @@
 
 <div id="tracking" data-role="page" data-theme="a">
 	
-	<div data-role="header"><h1 id="status" data-bind="text: driver_status"></h1></div>
+	<div data-role="header"><h1 data-bind="text: driver_status"></h1></div>
 	
 	<div data-role="content" class="item"> 
 		<div id="map_canvas"></div>		
