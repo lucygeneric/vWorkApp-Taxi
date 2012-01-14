@@ -184,8 +184,8 @@ var vWorkTaxico = vWorkTaxico || {};
 	Shorthand 'getmenow'
 	**/
 	this.getCurrentAddress = function(callback){
-		//this.getMobileLatLng(function(lat_lng_result){
-			var lat_lng_result = new google.maps.LatLng(-35.725188, 174.323456);
+		this.getMobileLatLng(function(lat_lng_result){
+			//var lat_lng_result = new google.maps.LatLng(-35.725188, 174.323456);
  			vWorkTaxico.getStreetAddressFromLatLng(lat_lng_result, function(address_result, region){
 				callback({
 					address:address_result,
@@ -194,7 +194,7 @@ var vWorkTaxico = vWorkTaxico || {};
 					region:region
 				});	
 			});
-		//});
+		});
 	}
 	
 	/**
@@ -211,13 +211,11 @@ var vWorkTaxico = vWorkTaxico || {};
 			geocoder.geocode(request_payload, function (results, status) {
 				addressList = [];		
 				if (status == google.maps.GeocoderStatus.OK){
-					addressList = results;
-					/*
 					for (var i = 0; i < 3; i++){
 						console.log(results);
 						if (results[i])
 							addressList.push(results[i]);
-					}*/	
+					}	
 				}
 				
 				callback(addressList);

@@ -11,6 +11,8 @@ $(document).bind("mobileinit", function(){
   });
 });
 
+
+
 // this attempts to workaround a problem with JQM. I was sometimes getting strange
 // behavior with the fixed header and footer. They would sometimes hang in the middle
 // of the page or disappear altogether. After some digging in the JQM sources, I found 

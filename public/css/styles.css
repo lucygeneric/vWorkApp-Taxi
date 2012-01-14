@@ -77,7 +77,7 @@ body {
 }
 
 .ui-mobile {
-	
+	overflow: hidden;
 }
 
 .ui-footer {
@@ -222,7 +222,7 @@ img#vwork-init {
 }
 
 #pick_up_container, #drop_off_container {
-	/*height:140px;*/
+	height:140px;
 	display:block;
 }
 
