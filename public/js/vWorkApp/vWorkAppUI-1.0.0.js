@@ -2,6 +2,28 @@ var vWorkTaxico = vWorkTaxico || {};
 
 (function() {
 
+
+
+	/**
+	Validation
+	*****************************************************************/
+	
+	this.validateEntry = function(target){
+		console.log('Loading page, session key is '+this.session_key);
+		if (!this.session_key){
+			this.initaliseModel();
+			setTimeout(function() {
+				$.mobile.changePage(target, { transition: "flip"} );
+			}, 2000);	
+		}
+		this.session_key = vWorkTaxico.generateGUID();
+	}
+	
+	
+	/**
+	Dynamic injection
+	*****************************************************************/
+
 	this.populateListFromAddressLookup = function(address, target){
 		
 		var containerTarget = $("#"+target+"_container");		
@@ -29,6 +51,7 @@ var vWorkTaxico = vWorkTaxico || {};
 				
 				$.mobile.changePage("#home");					
 			});
+			
 		});
 	}
 	
@@ -41,6 +64,10 @@ var vWorkTaxico = vWorkTaxico || {};
 		date.setHours(time[0],time[1]);
 		return date;
 	}
+	
+	/**
+	Dialogs
+	*****************************************************************/
 	
 	this.dialogShown = false;
 	
@@ -80,12 +107,9 @@ var vWorkTaxico = vWorkTaxico || {};
 		vWorkTaxico.dialog(e, 5000);
 	}
 	
-	this.updateFromModelChange = function(){
-		vWorkTaxico.updatePickupMarker($('#map_canvas'));
-		vWorkTaxico.updateDriverMarker($('#map_canvas'));
-		vWorkTaxico.updateDistanceMatrix($('#map_canvas'));
+	this.forceUpdateUI = function(){
+		$(document).find("[data-role=footer]").css("position","absolute");
 	}
-	
 		
 }).apply(vWorkTaxico);
 

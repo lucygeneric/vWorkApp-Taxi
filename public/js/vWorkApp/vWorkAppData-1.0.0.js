@@ -2,8 +2,6 @@ var vWorkTaxico = vWorkTaxico || {};
 
 (function() {
 
-	this.session_key;
-
 	/**
 	Core model for Knockout binding + modely things
 	*****************************************************************/
@@ -67,19 +65,6 @@ var vWorkTaxico = vWorkTaxico || {};
 	/**
 	Validation
 	*****************************************************************/
-	
-	this.validateEntry = function(timeout){
-		if (!timeout) timeout = 0;
-		console.log('Loading page, session key is '+this.session_key);
-		if (!this.session_key){
-			this.initaliseModel();
-			var target = (vWorkTaxico.model.booking_id() == null) ?  "#home" : "#tracking";
-			setTimeout(function() {
-				$.mobile.changePage(target, { transition: "flip"} );
-			}, timeout);	
-		}
-		this.session_key = vWorkTaxico.generateGUID();
-	}
 	
 	this.validateBookingModel = function() {
 		
@@ -149,6 +134,8 @@ var vWorkTaxico = vWorkTaxico || {};
 
     	});
     	
+    	/*TODO - can we bind/event drive this? */
+    	vWorkTaxico.updateFromModelChange();
     	vWorkTaxico.watchBooking();
     }
     
@@ -165,7 +152,12 @@ var vWorkTaxico = vWorkTaxico || {};
     this.bookingURL = function(){
   		return window.location.origin + "/bookings/";	
     }
-
+    
+    this.updateFromModelChange = function(){
+		vWorkTaxico.updatePickupMarker($('#map_canvas'));
+		vWorkTaxico.updateDriverMarker($('#map_canvas'));
+		vWorkTaxico.updateDistanceMatrix($('#map_canvas'));
+	}
 
 	/**
 	URL
