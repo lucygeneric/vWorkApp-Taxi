@@ -1,0 +1,24 @@
+%h1 Listing companies
+%table
+  %tr
+    %th Name
+    %th Phone
+    %th Api key
+    %th Subdomain
+    %th
+    %th
+    %th
+
+  - @companies.each do |company|
+    %tr
+      %td= company.name
+      %td= company.phone
+      %td= company.api_key
+      %td= company.subdomain
+      %td= link_to 'Show', admin_company_path(company), :class => 'btn'
+      %td= link_to 'Edit', edit_admin_company_path(company), :class => 'btn'
+      %td= link_to 'Destroy', admin_company_path(company), :confirm => 'Are you sure?', :method => :delete, :class => 'btn danger'
+
+%br/
+
+= link_to 'New Company', new_admin_company_path, :class => 'btn success'

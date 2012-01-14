@@ -1,8 +1,14 @@
+/* Core
+******************************************************************/
 
 body {
+	background-color: black;
 	margin:0;
 	padding:0;
 }
+
+/* Fonts
+******************************************************************/
 
 @font-face {
     font-family: 'LeagueGothicRegular';
@@ -13,7 +19,147 @@ body {
          url('../fonts/league_gothic-webfont.svg#LeagueGothicRegular') format('svg');
     font-weight: bold;
     font-style: normal;
+}
 
+
+/* JQuery Theme overrides
+******************************************************************/
+
+
+.ui-page {
+	background-repeat:repeat;
+	background: transparent url(../images/back-tile.png);
+}
+
+.ui-content {
+	padding:0;
+}
+
+.ui-content .ui-listview {
+	padding-left:15px;
+	padding-right:15px;
+}
+
+.ui-shadow {
+ 	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+.ui-btn-corner-all {
+	-moz-border-radius: 0.5em;
+	-webkit-border-radius: 0.5em;
+	border-radius: 0.5em;
+}
+
+.ui-footer {
+	height:42px;
+	background-repeat:repeat;
+	background: transparent url(../images/footer-tile.png);
+}
+
+.ui-field-contain {
+	margin-left:15px;
+	margin-right:15px;
+}
+
+.ui-input-text {
+	width: 95% !important;
+	padding-left:10px;
+	padding-right:10px;
+}
+
+.ui-br {
+	border-bottom: none;
+	border-bottom: none;
+	border-bottom-width: 0;
+	border-bottom-style: none;
+}
+
+.ui-mobile-viewport {
+	margin: 0;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: none;
+    -ms-text-size-adjust:none;
+    -webkit-tap-highlight-color: rgba(255, 128, 60, 0);
+}
+
+
+/* PickupAgent
+******************************************************************/
+
+
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to { 
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+.loading-widget img {
+	display:none;
+	-webkit-animation-name:             rotate; 
+	-webkit-animation-duration:         0.5s; 
+	-webkit-animation-iteration-count:  infinite;
+	-webkit-animation-timing-function: linear;
+	float: right;
+	right: 14px;
+	position: relative;
+	top: -31px;
+}
+    
+
+div#splash {
+	background-color:#1f1f1f;
+	display:block;
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    right:0;
+	overflow-y: auto;
+}
+
+div#logo_banner {
+	display: block;
+    background-color: white;
+    width: 100%;
+    height:150px;
+    -moz-box-shadow: 0 5px 5px #000;
+	-webkit-box-shadow: 0 5px 5px #000;
+	box-shadow: 0 5px 5px #000;
+}
+
+#logo {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+img#vwork-logo {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:100px;
+	width:134px;
+}
+
+img.vwork-footer {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:10px;
+	width:217px;
+}
+
+img#vwork-init {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:10px;
+	width:79px;
 }
 
 .split_button_text {
@@ -56,11 +202,9 @@ body {
     line-height:81%;
 }
 
-#logo {
-	display: block;
-    margin-left: auto;
-    margin-right: auto;
-	width:225px;
+#request_submit {
+	margin-left:15px;
+	margin-right:15px;
 }
 
 .center-button {

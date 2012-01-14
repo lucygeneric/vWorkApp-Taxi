@@ -37,6 +37,10 @@ GEM
       activesupport (= 3.1.1)
     activesupport (3.1.1)
       multi_json (~> 1.0)
+    anjlab-bootstrap-rails (1.4.0.14)
+      railties (~> 3.0)
+      sass
+      thor (~> 0.14)
     arel (2.2.1)
     builder (3.0.0)
     coffee-rails (3.1.1)
@@ -53,6 +57,7 @@ GEM
       hashie
       ruby-hmac
       yajl-ruby
+    haml (3.1.4)
     hashie (1.2.0)
     hike (1.2.1)
     httparty (0.8.1)
@@ -73,7 +78,7 @@ GEM
     mime-types (1.17.2)
     multi_json (1.0.3)
     multi_xml (0.4.1)
-    pg (0.11.0)
+    pg (0.12.2)
     polyglot (0.3.3)
     rack (1.3.5)
     rack-cache (1.1)
@@ -113,7 +118,7 @@ GEM
     sprockets (2.0.3)
       hike (~> 1.2)
       rack (~> 1.0)
-      tilt (!= 1.3.0, ~> 1.1)
+      tilt (~> 1.1, != 1.3.0)
     sqlite3 (1.3.4)
     therubyracer (0.9.9)
       libv8 (~> 3.3.10)
@@ -136,7 +141,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  anjlab-bootstrap-rails
   coffee-rails (~> 3.1.1)
+  haml
   jquery-rails
   json
   pg

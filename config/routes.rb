@@ -13,9 +13,9 @@ VWorkAppTaxi::Application.routes.draw do
   # resources :companies
   resources :bookings
 
-  match '/' => 'bookings#index', :constraints => { :subdomain => /.+/ }
+  # match '/' => 'bookings#index', :constraints => { :subdomain => /.+/ }
 
-  root :to => "home#show"
+  root :to => "main#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

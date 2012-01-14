@@ -30,6 +30,10 @@ gem 'vworkapp_ruby', :git => "git://github.com/visfleet/vworkapp_ruby.git"
 # Fiddling around with Twillio
 gem 'twilio-ruby'
 
+gem "haml"
+gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails'
+
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
