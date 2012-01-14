@@ -72,7 +72,7 @@ var vWorkTaxico = vWorkTaxico || {};
 		console.log('Loading page, session key is '+this.session_key);
 		if (!this.session_key)
 			this.initaliseModel();
-		this.session_key = "boobs";
+		this.session_key = vWorkTaxico.generateGUID();
 	}
 	
 	this.validateBookingModel = function() {
@@ -112,6 +112,7 @@ var vWorkTaxico = vWorkTaxico || {};
 			}	
 		};
 		var url = this.bookingURL();
+		console.log(payload);
 		this.postAsJSON(url, payload, function(result){
 			//todo!! error handling
 			vWorkTaxico.setModelValue("booking_id",result.booking.id);

@@ -14,7 +14,6 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   
   <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/icon_app.png">
-  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.css" />
   <link rel="stylesheet" type="text/css" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
   <link rel="stylesheet" type="text/css" href="http://dev.jtsage.com/cdn/datebox/latest/jquery.mobile.datebox.min.css" /> 
   
@@ -61,10 +60,10 @@
 <div data-role="page" id="home" data-theme="a" >
    
 	<div data-role="content">
-		
-		<img src="images/logo.png" id="logo" />	
-		 
-	    <h3 class='indented_heading'>Booking Details</h3>
+	
+		<div id="logo_banner">
+			<img src="images/clients/vca.png" id="logo" />	
+		</div>
 			
 		<ul data-role="listview" data-inset="true" class="menu_list">
 			<li>
@@ -81,8 +80,11 @@
 			</li>
 		</ul>
 		
-		<a href="#tracking" id="request_submit" data-role="button">Book Now!</a>
-		<a href="#tracking" data-role="button">Show the map for testing</a>
+		<a href="#tracking" id="request_submit" data-role="button" data-theme="b" data-icon="arrow-r">Book Now!</a>
+		
+		<div data-role="footer" data-postion="fixed">
+			<img src="images/vwork-footer.png" id="vwork-footer" />
+		</div>
 		
 	</div>
 	 
@@ -110,6 +112,10 @@
 			<a href="#home" data-role="button" id="use_current_location_button">Use my current location</a>
 
 		</div>
+		
+		<div class="loading-widget">
+            <img src="images/loading-widget.png">
+        </div>
 
 	</div>	
 	
@@ -156,11 +162,12 @@
             
             <label for="time_entry">Pick-up Time:</label>
 			<input name="time_entry" id="time_entry" type="date" data-role="datebox" data-options='{"mode": "timebox", "timeFormatOverride": 12}' value="Right now">
-            
-            
+                        
             <br /><br />
             
             <a href="#home" id="date_submit" data-role="button">Use these times</a>
+            
+            
             
         </div>
 		

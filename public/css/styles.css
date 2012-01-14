@@ -1,8 +1,14 @@
+/* Core
+******************************************************************/
 
 body {
+	background-color: black;
 	margin:0;
 	padding:0;
 }
+
+/* Fonts
+******************************************************************/
 
 @font-face {
     font-family: 'LeagueGothicRegular';
@@ -15,6 +21,77 @@ body {
     font-style: normal;
 }
 
+
+/* JQuery Theme overrides
+******************************************************************/
+
+
+.ui-page {
+	background-repeat:repeat;
+	background: transparent url(../images/back-tile.png);
+}
+
+.ui-content {
+	padding:0;
+}
+
+.ui-content .ui-listview {
+	padding-left:15px;
+	padding-right:15px;
+}
+
+.ui-shadow {
+ 	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+.ui-btn-corner-all {
+	-moz-border-radius: 0.5em;
+	-webkit-border-radius: 0.5em;
+	border-radius: 0.5em;
+}
+
+.ui-footer {
+	height:42px;
+	background-repeat:repeat;
+	background: transparent url(../images/footer-tile.png);
+}
+
+.ui-field-contain {
+	margin-left:15px;
+	margin-right:15px;
+}
+
+.ui-input-text {
+	width: 100% !important;
+	padding: 0.4em 0!important; 
+	padding-left:10px;
+	padding-right:10px;
+}
+
+
+/* PickupAgent
+******************************************************************/
+
+
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to { 
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+.loading-widget img {
+	-webkit-animation-name:             rotate; 
+	-webkit-animation-duration:         0.5s; 
+	-webkit-animation-iteration-count:  infinite;
+	-webkit-animation-timing-function: linear;
+}
+    
+
 div#splash {
 	background-color:#1f1f1f;
 	display:block;
@@ -26,12 +103,36 @@ div#splash {
 	overflow-y: auto;
 }
 
+div#logo_banner {
+	display: block;
+    background-color: white;
+    width: 100%;
+    height:150px;
+    -moz-box-shadow: 0 5px 5px #000;
+	-webkit-box-shadow: 0 5px 5px #000;
+	box-shadow: 0 5px 5px #000;
+}
+
+#logo {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 img#vwork-logo {
 	display: block;
     margin-left: auto;
     margin-right: auto;
     margin-top:100px;
 	width:134px;
+}
+
+img#vwork-footer {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:10px;
+	width:217px;
 }
 
 img#vwork-init {
@@ -82,11 +183,9 @@ img#vwork-init {
     line-height:81%;
 }
 
-#logo {
-	display: block;
-    margin-left: auto;
-    margin-right: auto;
-	width:225px;
+#request_submit {
+	margin-left:15px;
+	margin-right:15px;
 }
 
 .center-button {
