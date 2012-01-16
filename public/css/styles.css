@@ -64,7 +64,6 @@ body {
 }
 
 .ui-input-text {
-	width: 95% !important;
 	padding-left:10px;
 	padding-right:10px;
 }
@@ -83,6 +82,14 @@ body {
 .ui-footer {
 	position:absolute;
 	bottom:0
+}
+
+.label.ui-input-text {
+	margin: 0 0 0.5em;
+}	
+
+.ui-input-datebox {
+	margin-bottom:10px;
 }
 
 /*.ui-mobile-viewport {
@@ -119,23 +126,8 @@ body {
 	top: -31px;
 }
 
-
-.init-widget img {
-	-webkit-animation-name:             rotate; 
-	-webkit-animation-duration:         0.5s; 
-	-webkit-animation-iteration-count:  infinite;
-	-webkit-animation-timing-function: linear;
-	display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top:10px;
-	width:22px;
-	height: 22px;
-}
-    
-
 div#splash {
-	background-color:#1f1f1f;
+	background-color:#ffffff;
 	display:block;
     position:fixed;
     left:0;
@@ -166,7 +158,7 @@ img#vwork-logo {
     margin-left: auto;
     margin-right: auto;
     margin-top:100px;
-	width:134px;
+	width:42px;
 }
 
 img.vwork-footer {
@@ -222,7 +214,7 @@ img#vwork-init {
 }
 
 #pick_up_container, #drop_off_container {
-	height:140px;
+	
 	display:block;
 }
 

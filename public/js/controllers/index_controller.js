@@ -10,7 +10,7 @@ $('#startup').live("pagecreate", function() {
 /**********************************************/
 
 $('#home').live("pagecreate", function() {
-	console.log("create");
+	
 	vWorkTaxico.validateEntry("#home");
 
 	vWorkTaxico.getCurrentAddress(function(result){
