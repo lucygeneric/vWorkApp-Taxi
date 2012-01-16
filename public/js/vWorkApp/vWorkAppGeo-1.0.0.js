@@ -118,7 +118,7 @@ var vWorkTaxico = vWorkTaxico || {};
 	this.watchMap = function(elm){
 		
 		$(elm).gmap('watchPosition', function(position, status) {
-			console.log('Watch position has status '+status);
+	
 			if ( status === 'OK' ) {
 				var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 				var marker = $(elm).gmap('get', 'markers > client' );
