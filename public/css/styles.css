@@ -84,12 +84,15 @@ body {
 	bottom:0
 }
 
-.label.ui-input-text {
-	margin: 0 0 0.5em;
-}	
+
+input.ui-input-text {
+	margin-top:10px;
+	margin-bottom:10px;
+}
 
 .ui-input-datebox {
-	margin-bottom:10px;
+	margin-top: 10px;
+	margin-bottom: 10px
 }
 
 .ui-dialog.ui-overlay-a {
