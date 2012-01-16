@@ -127,6 +127,10 @@ $('#when').live("pagecreate", function() {
 		vWorkTaxico.setModelValue('pick_up_time', date);
 	});
 	
+	$('#date_entry').click(function(){
+		$('#date_entry').datebox('open');
+	});
+	
 });
 
 
