@@ -87,7 +87,7 @@ var vWorkTaxico = vWorkTaxico || {};
 	*****************************************************************/
     
     this.commitBooking = function(){
-    
+    	console.log("Making booking. . . ");
     	var when = this.model.pick_up_time();
     		when = this.ISODateString(when); 
     
@@ -109,16 +109,21 @@ var vWorkTaxico = vWorkTaxico || {};
 			vWorkTaxico.setModelValue("booking_id",result.booking.id);
 			vWorkTaxico.watchBooking();
 		});
+		
+		vWorkTaxico.cookiefyModel();
     }
     
     this.cancelBooking = function(){
-    	console.log("canceling booking. . . ");
+    	console.log("Canceling booking. . . ");
     	vWorkTaxico.unwatchBooking();
     	vWorkTaxico.setModelValue("booking_id",null);
     	vWorkTaxico.setModelValue("driver_status","Connecting..");
    		vWorkTaxico.setModelValue("driver_lat",null);
    		vWorkTaxico.setModelValue("driver_lng",null);
    		vWorkTaxico.setModelValue("driver_eta","Calculating..");
+   		
+   		vWorkTaxico.cookiefyModel();
+   		history.back();
     }
     
     this.refreshBooking = function(){

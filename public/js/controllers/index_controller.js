@@ -12,7 +12,7 @@ $('#startup').live("pagecreate", function() {
 $('#home').live("pagecreate", function() {
 	
 	vWorkTaxico.validateEntry("#home");
-
+	
 	vWorkTaxico.getCurrentAddress(function(result){
 		vWorkTaxico.setModelValue('user_region_code',result.region);
 		vWorkTaxico.setModelValue('pick_up_address',result.address);
@@ -25,6 +25,8 @@ $('#home').live("pagecreate", function() {
 $('#home').live("pageshow", function() {
 	var newLabelWidth = $(".menu_list").outerWidth() - 170;
 	$(".menu_list > li").find('.split_button_text').css('maxWidth', newLabelWidth);
+	
+	//if (vWorkTaxico.model.booking_id()
 	
 	vWorkTaxico.forceUpdateUI();
 });
@@ -40,7 +42,6 @@ $('#request_submit').click(function(event) {
 		event.stopImmediatePropagation();
 	}
 	
-	vWorkTaxico.cookiefyModel();
 	vWorkTaxico.commitBooking();	
 });
 
