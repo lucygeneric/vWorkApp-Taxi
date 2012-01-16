@@ -92,6 +92,15 @@ body {
 	margin-bottom:10px;
 }
 
+.ui-dialog.ui-overlay-a {
+	text-shadow: none;
+}
+
+.ui-body-a {
+	text-shadow: none;
+}
+
+
 /*.ui-mobile-viewport {
 	margin: 0;
     overflow-x: hidden;
@@ -249,3 +258,7 @@ img#vwork-init {
 	font-family: sans-serif;
 }
 
+#map_footer {
+	text-align: center;
+	background:none;
+}

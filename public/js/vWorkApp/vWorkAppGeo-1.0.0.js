@@ -116,9 +116,7 @@ var vWorkTaxico = vWorkTaxico || {};
 	Watches the map for positional changes
 	*/
 	this.watchMap = function(elm){
-	
-		console.log('watching map');
-	
+		
 		$(elm).gmap('watchPosition', function(position, status) {
 			console.log('Watch position has status '+status);
 			if ( status === 'OK' ) {
