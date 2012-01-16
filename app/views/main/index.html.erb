@@ -42,10 +42,6 @@
 	<div data-role="content" id="splash">
 		
 		<img src="images/vwork-logo.png" id="vwork-logo" />	
-
-		<div class="init-widget" id="vwork-init">
-            <img src="images/loading-widget.png"  />
-   	    </div>
 		 		
 	</div>
 	 
@@ -159,21 +155,19 @@
 
 	<div data-role="header"><h1>Pick-up time</h1></div>
 	
-	<div data-role="content" data-theme="b"> 
+	<div data-role="content"> 
 		
 		<div data-role="fieldcontain">
             
             <label for="date_entry">Pick-up Date:</label>
-			<input name="date_entry" id="date_entry" type="date" data-role="datebox" data-options='{"mode": "calbox", 'calTodayButton': true}' value="Today">
+			<input name="date_entry" id="date_entry" type="date" data-role="datebox" data-options='{"mode": "datebox", 'calTodayButton': true}' value="Today">
             
             <label for="time_entry">Pick-up Time:</label>
 			<input name="time_entry" id="time_entry" type="date" data-role="datebox" data-options='{"mode": "timebox", "timeFormatOverride": 12}' value="Right now">
                         
-            <br /><br />
-            
-            <a href="#home" id="date_submit" data-role="button">Use these times</a>
             
             
+            <a href="#home" id="date_submit" data-role="button" data-theme="e">Use these times</a>
             
         </div>
         
