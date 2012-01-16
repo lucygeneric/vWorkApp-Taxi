@@ -160,10 +160,10 @@
 		<div data-role="fieldcontain">
             
             <label for="date_entry">Pick-up Date:</label>
-			<input name="date_entry" id="date_entry" type="date" data-role="datebox" data-options='{"mode": "datebox", 'calTodayButton': true}' value="Today">
+			<input name="date_entry" id="date_entry" type="date" data-role="datebox" data-options='{"mode": "datebox", "calTodayButton": true, "disableManualInput": true}' value="Today">
             
             <label for="time_entry">Pick-up Time:</label>
-			<input name="time_entry" id="time_entry" type="date" data-role="datebox" data-options='{"mode": "timebox", "timeFormatOverride": 12}' value="Right now">
+			<input name="time_entry" id="time_entry" type="date" data-role="datebox" data-options='{"mode": "timebox", "timeFormatOverride": 12, "disableManualInput": true}' value="Right now">
                         
             
             
@@ -192,12 +192,11 @@
 		<div id="map_canvas"></div>		
 	</div>
 	
-	<div data-role="footer" class="ui-bar" id="map_footer" style="display:none"> 
+	<div data-role="footer" id="map_footer" data-id="vworkapp-footer">  
 	
-		<div data-role="controlgroup" data-type="horizontal">
+		<div data-role="controlgroup" data-type="horizontal" class="ui-bar" data-theme="c">
 			<a href="#home" data-icon='alert' onclick="vWorkTaxico.cancelBooking()">Cancel</a>
 			<a href="#" data-icon="plus" onclick="vWorkTaxico.showStatus()">Check Your Booking Status</a>
-			<a href="#home" data-icon="minus">Back</a>
 		</div>
 		
 	</div>
@@ -205,7 +204,9 @@
 	<!-- this had to be in the containing div..... bug in JQMobile -->
 	<script type="text/javascript">
 	
-		
+		var height = $("#tracking").height() - 85;
+		$('#map_canvas').height(height);
+			google.maps.event.trigger($('#map_canvas'), 'resize');			
  		
 	</script>
 

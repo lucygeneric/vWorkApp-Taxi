@@ -127,6 +127,14 @@ $('#when').live("pagecreate", function() {
 		vWorkTaxico.setModelValue('pick_up_time', date);
 	});
 	
+	$('#date_entry').click(function(){
+		$('#date_entry').datebox('open');
+	});
+	
+	$('#time_entry').click(function(){
+		$('#time_entry').datebox('open');
+	});
+	
 });
 
 
@@ -149,14 +157,7 @@ $('#tracking').live("pagecreate", function() {
 $('#tracking').live("pageshow", function() {
 	
 	vWorkTaxico.watchMap($('#map_canvas'));
-	vWorkTaxico.updatePickupMarker($('#map_canvas'));
-	
-	var height = $("#tracking").height() - 85;
-	$('#map_canvas').height(height);
-	google.maps.event.trigger($('#map_canvas'), 'resize');			
-	/* stupid hack */
-	$('#map_footer').css('display','block');
-	
+	vWorkTaxico.updatePickupMarker($('#map_canvas'));	
 	vWorkTaxico.forceUpdateUI();
 });
 

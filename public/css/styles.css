@@ -84,13 +84,25 @@ body {
 	bottom:0
 }
 
-.label.ui-input-text {
-	margin: 0 0 0.5em;
-}	
 
-.ui-input-datebox {
+input.ui-input-text {
+	margin-top:10px;
 	margin-bottom:10px;
 }
+
+.ui-input-datebox {
+	margin-top: 10px;
+	margin-bottom: 10px
+}
+
+.ui-dialog.ui-overlay-a {
+	text-shadow: none;
+}
+
+.ui-body-a {
+	text-shadow: none;
+}
+
 
 /*.ui-mobile-viewport {
 	margin: 0;
@@ -249,3 +261,7 @@ img#vwork-init {
 	font-family: sans-serif;
 }
 
+#map_footer {
+	text-align: center;
+	background:none;
+}
