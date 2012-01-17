@@ -16,11 +16,12 @@
       - @companies.each do |company|
         %tr
           %td   
-            %img{:src => company.logo_url, :height => 30}
+            %img{:src => logo_admin_company_path(company), :height => 30}
           %td= company.name
           %td= company.phone
           %td= company.api_key
-          %td= company.subdomain
+          %td
+            %a{:href => root_url(:subdomain => company.subdomain)}= company.subdomain
           %td= link_to 'Edit', edit_admin_company_path(company), :class => 'btn'
           %td= link_to 'Destroy', admin_company_path(company), :confirm => 'Are you sure?', :method => :delete, :class => 'btn danger'
 

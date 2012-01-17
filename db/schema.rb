@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111027004354) do
+ActiveRecord::Schema.define(:version => 20120117054917) do
 
   create_table "companies", :force => true do |t|
     t.string   "name"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(:version => 20111027004354) do
     t.string   "subdomain"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "logo_content_type"
+    t.binary   "logo_data"
   end
 
 end

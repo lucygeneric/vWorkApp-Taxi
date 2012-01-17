@@ -32,7 +32,7 @@
   .clearfix
     = f.label :Logo
     .input
-      = file_field_tag :logo
+      = f.file_field :logo
 
   .actions
     = f.submit :class => 'btn success'
