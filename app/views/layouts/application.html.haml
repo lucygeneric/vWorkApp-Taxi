@@ -1,1 +1,12 @@
-= yield
+!!! 5
+%html
+%head
+  %title VWorkAppTaxi
+  = stylesheet_link_tag "application"
+  = javascript_include_tag "application"
+  = csrf_meta_tags
+
+%body
+  .container
+    .content
+      = yield
