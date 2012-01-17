@@ -1,29 +1,39 @@
-- form_for([:admin, @company]) do |f|
+
+= form_for([:admin, @company], :html => {:multipart => true}) do |f|
+
   - if @company.errors.any?
     #error_explanation
       %h2= pluralize(@company.errors.count, "error") + "prohibited this company from being saved:"
 
       %ul
         - @company.errors.full_messages.each do |msg|
-        %li= msg
+          %li= msg
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :phone %><br />
-    <%= f.text_field :phone %>
-  </div>
-  <div class="field">
-    <%= f.label :api_key %><br />
-    <%= f.text_field :api_key %>
-  </div>
-  <div class="field">
-    <%= f.label :subdomain %><br />
-    <%= f.text_field :subdomain %>
-  </div>
-  <div class="actions">
-    <%= f.submit :class => 'btn success' %>
-  </div>
-<% end %>
+  .clearfix
+    = f.label :name
+    .input
+      = f.text_field :name
+
+  .clearfix
+    = f.label :phone
+    .input
+      = f.text_field :phone
+
+  .clearfix
+    = f.label :api_key
+    .input
+      = f.text_field :api_key
+
+  .clearfix
+    = f.label :subdomain
+    .input
+      = f.text_field :subdomain
+
+  .clearfix
+    = f.label :Logo
+    .input
+      = file_field_tag :logo
+
+  .actions
+    = f.submit :class => 'btn success'
+    = link_to 'Cancel', admin_companies_path, :class => "btn"

@@ -1,24 +1,28 @@
-%h1 Listing companies
-%table
-  %tr
-    %th Name
-    %th Phone
-    %th Api key
-    %th Subdomain
-    %th
-    %th
-    %th
+.page-header
+  %h1 Companies
 
-  - @companies.each do |company|
-    %tr
-      %td= company.name
-      %td= company.phone
-      %td= company.api_key
-      %td= company.subdomain
-      %td= link_to 'Show', admin_company_path(company), :class => 'btn'
-      %td= link_to 'Edit', edit_admin_company_path(company), :class => 'btn'
-      %td= link_to 'Destroy', admin_company_path(company), :confirm => 'Are you sure?', :method => :delete, :class => 'btn danger'
+.row
+  .span14
+    %table
+      %tr
+        %th
+        %th Name
+        %th Phone
+        %th Api key
+        %th Subdomain
+        %th
+        %th
 
-%br/
+      - @companies.each do |company|
+        %tr
+          %td   
+            %img{:src => company.logo_url, :height => 30}
+          %td= company.name
+          %td= company.phone
+          %td= company.api_key
+          %td= company.subdomain
+          %td= link_to 'Edit', edit_admin_company_path(company), :class => 'btn'
+          %td= link_to 'Destroy', admin_company_path(company), :confirm => 'Are you sure?', :method => :delete, :class => 'btn danger'
 
-= link_to 'New Company', new_admin_company_path, :class => 'btn success'
+    .actions
+      = link_to 'New Company', new_admin_company_path, :class => 'btn success'
