@@ -1,7 +1,6 @@
 class BookingsController < ApplicationController
 
   before_filter :set_api_key
-
   respond_to :json, :xml
 
   def index
@@ -11,7 +10,7 @@ class BookingsController < ApplicationController
 
   # http://localhost:3000/bookings/237580.xml?company=joes-taxi
   def show
-    @booking = Booking.from_job({id => params[:id]})
+    @booking = Booking.from_job({:id => params[:id]})
     respond_with(@booking)
   end
 

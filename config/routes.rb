@@ -6,12 +6,13 @@ VWorkAppTaxi::Application.routes.draw do
     end
   end
 
+  resources :bookings
+
   namespace :call_center do
     resources :bookings
     get 'routing/entry'
     get 'routing/redirect'
   end
-  resources :bookings
 
   root :to => "main#index"
 
