@@ -200,7 +200,7 @@ img#vwork-init {
 	text-align: right;
 }
 
-.menu_list li a {
+#menu_list li a {
 	display: block;
 }
 

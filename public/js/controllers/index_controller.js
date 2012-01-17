@@ -23,8 +23,8 @@ $('#home').live("pagecreate", function() {
 });
 
 $('#home').live("pageshow", function() {
-	var newLabelWidth = $(".menu_list").outerWidth() - 170;
-	$(".menu_list > li").find('.split_button_text').css('maxWidth', newLabelWidth);
+	var newLabelWidth = $("#menu_list").outerWidth() - 170;
+	$("#menu_list > li").find('.split_button_text').css('maxWidth', newLabelWidth);
 	
 	//if (vWorkTaxico.model.booking_id()
 	
