@@ -20,20 +20,36 @@ $('#home').live("pagecreate", function() {
 		vWorkTaxico.setModelValue('pick_up_location_lng',result.lng);
 	});
 	
+	$("#cancel_booking").click(function(){
+		vWorkTaxico.cancelBooking();
+		$("#active_booking").fadeOut('fast', function(){
+			$("#make_booking").fadeIn('fast');
+		});
+		
+	});
+		
 });
 
-$('#home').live("pageshow", function() {
-	var newLabelWidth = $("#menu_list").outerWidth() - 170;
-	$("#menu_list > li").find('.split_button_text').css('maxWidth', newLabelWidth);
+$('#home').live("pagebeforeshow", function() {
+	var has_booking = (vWorkTaxico.model.booking_id() != null);
 	
-	//if (vWorkTaxico.model.booking_id()
+	$("#active_booking").css("display",(has_booking) ? "block" : "none");
+	$("#make_booking").css("display",(has_booking) ? "none" : "block");
+	
+	if (has_booking)
+		vWorkTaxico.watchBooking();
 	
 	vWorkTaxico.forceUpdateUI();
 });
 
+$('#home').live("pageshow", function() {
+	var newLabelWidth = $("#menu_list").outerWidth() - 170;
+	$("#menu_list > li").find('.split_button_text').css('maxWidth', newLabelWidth);	
+});
+
 
 $('#request_submit').click(function(event) {
-			
+
 	var e = vWorkTaxico.validateBookingModel();
 
 	if (e != null){
@@ -42,7 +58,7 @@ $('#request_submit').click(function(event) {
 		event.stopImmediatePropagation();
 	}
 	
-	vWorkTaxico.commitBooking();	
+	vWorkTaxico.commitBooking();
 });
 
 $('input[type=text]').focus(function() {
@@ -57,6 +73,8 @@ $('input[type=text]').focus(function() {
 
 $('#pick_up').live("pagecreate", function() {
 	vWorkTaxico.validateEntry("#pick_up");
+	// override default UI behavior. JQM does its best to override me.
+	$("#pick_up_address_input").css('width',"100%");
 });
 
 
@@ -92,6 +110,8 @@ $('#use_current_location_button').click(function(){
 
 $('#drop_off').live("pagecreate", function() {
 	vWorkTaxico.validateEntry("#drop_off");
+	// override default UI behavior. JQM does its best to override me.
+	$("#drop_off_address_input").css('width',"100%");
 });
 
 $('#drop_off').live("pageshow", function() {
@@ -117,6 +137,11 @@ $('#drop_off_address_input').data('timeout', null).keyup(function(){
 $('#when').live("pagecreate", function() {
 
 	vWorkTaxico.validateEntry('#when');
+	
+	// override default UI behavior. JQM does its best to override me.
+	$("#date_entry").css('width',"100%");
+	$("#time_entry").css('width',"100%");
+
 		
 	$('#date_submit').click(function() {
 		
@@ -150,13 +175,22 @@ $('#when').live("pageshow", function() {
 /**********************************************/
 
 $('#tracking').live("pagecreate", function() {
-	vWorkTaxico.validateEntry('#tracking');
+	console.log('INSTANCING MAP');
+	vWorkTaxico.validateEntry('#home');
 	vWorkTaxico.generateBaseMap($('#map_canvas'));
+	$("#map_cancel_booking").click(function(){
+		vWorkTaxico.cancelBooking();
+		history.back();
+	});
+	
+	$("#map_show_status").click(function(){
+		vWorkTaxico.showStatus();
+	});
+
 });
 	
 
 $('#tracking').live("pageshow", function() {
-	
 	vWorkTaxico.watchMap($('#map_canvas'));
 	vWorkTaxico.updatePickupMarker($('#map_canvas'));	
 	vWorkTaxico.forceUpdateUI();

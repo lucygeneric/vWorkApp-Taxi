@@ -47,7 +47,7 @@ var vWorkTaxico = vWorkTaxico || {};
 		this.model.booking_id($.cookie('booking_id'));
 		this.model.pick_up_time(new Date());
 		this.model.driver_status("Connecting..");
-		this.model.driver_eta("Calculating..");
+		this.model.driver_eta("Not Available");
 	}
 	
 	this.cookiefyModel = function() {
@@ -58,6 +58,8 @@ var vWorkTaxico = vWorkTaxico || {};
     	$.cookie('drop_off_location_lat', this.model.drop_off_location_lat());
     	$.cookie('drop_off_location_lng', this.model.drop_off_location_lng());
     	$.cookie('booking_id', this.model.booking_id());
+    	
+    	console.log("writing to cookie booking id "+this.model.booking_id());
     }
 
 
@@ -108,9 +110,9 @@ var vWorkTaxico = vWorkTaxico || {};
 			//todo!! error handling
 			vWorkTaxico.setModelValue("booking_id",result.booking.id);
 			vWorkTaxico.watchBooking();
+			vWorkTaxico.cookiefyModel();
 		});
 		
-		vWorkTaxico.cookiefyModel();
     }
     
     this.cancelBooking = function(){
@@ -120,10 +122,9 @@ var vWorkTaxico = vWorkTaxico || {};
     	vWorkTaxico.setModelValue("driver_status","Connecting..");
    		vWorkTaxico.setModelValue("driver_lat",null);
    		vWorkTaxico.setModelValue("driver_lng",null);
-   		vWorkTaxico.setModelValue("driver_eta","Calculating..");
+   		vWorkTaxico.setModelValue("driver_eta","Not Available");
    		
    		vWorkTaxico.cookiefyModel();
-   		history.back();
     }
     
     this.refreshBooking = function(){
@@ -144,7 +145,7 @@ var vWorkTaxico = vWorkTaxico || {};
     	vWorkTaxico.watchBooking();
     }
     
-    this.bookingTimer = {};
+    this.bookingTimer;
     
     this.watchBooking = function(){
     	vWorkTaxico.bookingTimer = setTimeout(vWorkTaxico.refreshBooking, 10000);
@@ -152,6 +153,7 @@ var vWorkTaxico = vWorkTaxico || {};
     
     this.unwatchBooking = function(){
     	clearTimeout(vWorkTaxico.bookingTimer);
+    	vWorkTaxico.bookingTimer = null;
     }
     
     this.bookingURL = function(){
