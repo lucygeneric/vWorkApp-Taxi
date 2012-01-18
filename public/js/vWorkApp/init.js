@@ -8,10 +8,10 @@ vWorkTaxico.session_key;
 
 /* JQM configuration */
 $(document).bind("mobileinit", function(){
-  $.extend(  $.mobile , {
-    touchOverflowEnabled: true,
-    ajaxLinksEnabled: false,
-  });
+	$.extend(  $.mobile , {
+    	touchOverflowEnabled: true,
+    	ajaxLinksEnabled: false,	
+    });
 });
 
 // this attempts to workaround a problem with JQM. I was sometimes getting strange
