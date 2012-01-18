@@ -8,8 +8,10 @@
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
   <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/114x114.png">
+  <link rel="apple-touch-startup-image" href="/images/startup.png" />
   <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.0.min.css" />
   <link rel="stylesheet" type="text/css" href="css/jquery.mobile.datebox.min.css" /> 
   
@@ -32,21 +34,6 @@
       
 </head> 
 <body> 
-
-
-<!-Initialisation screen -->
-<!- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-
-<div data-role="page" id="startup" data-theme="a" data-fullscreen="true">
-   
-	<div data-role="content" id="splash">
-		
-		<img src="images/vwork-logo.png" id="vwork-logo" />	
-		 		
-	</div>
-	 
-</div>
-
 
 
 <!- Home page -->
@@ -79,14 +66,14 @@
 				</li>
 			</ul>
 			
-			<a href="#tracking" id="request_submit" data-role="button" data-theme="b" data-icon="arrow-r">Book Now!</a>
+			<a href="#tracking" id="request_submit" data-role="button" data-theme="b" data-icon="arrow-r" data-transition="flip">Book Now!</a>
 			
 		</div>
 		
 		<div id="active_booking">
-			<p>You have an active booking for the address</p>
+			<p class="address_label">You have an active booking for the address</p>
 			<p class="address_text" data-bind="text: pick_up_address"></p>
-			<a href="#tracking" id="show_booking" data-role="button" data-theme="b" data-icon="info">Show Booking</a>
+			<a href="#tracking" id="show_booking" data-role="button" data-theme="b" data-icon="info" data-transition="flip">Show Booking</a>
 			<a href="#" id="cancel_booking" data-role="button" data-theme="f" data-icon="alert">Cancel Booking</a>
 		</div>
 				
@@ -150,7 +137,7 @@
 		
 			<div id="drop_off_container" class="inset_list"></div>
 			
-			<a href="#home" data-role="button" id="use_no_location_button" data-theme="e">Use unknown location</a>
+			<a href="#home" data-role="button" id="use_no_location_button" data-theme="e">Use my current location</a>
 					
 		</div>
 

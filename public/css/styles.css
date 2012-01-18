@@ -99,6 +99,13 @@ input.ui-input-text {
 	text-shadow: none;
 }
 
+.ui-icon-zoom-to-bounds {
+	background-image: url("../images/contract.png");
+}
+
+.ui-icon-zoom-to-screen {
+	background-image: url("../images/expand.png");
+}
 
 
 /*.ui-mobile-viewport {
@@ -228,10 +235,15 @@ img#vwork-init {
 	text-align: center;
 }
 
-.address_text {
-	text-shadow: 0px -1px 0px #374683;
-	font-size: 22px;
 
+.address_label {
+	font-size: 11px;
+	margin-bottom:0
+}
+
+.address_text {
+	text-shadow: 0px -1px 0px #000000;
+	font-size: 18px;
 }
 
 .item { 
