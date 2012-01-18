@@ -27,7 +27,14 @@ $('#home').live("pagecreate", function() {
 		});
 		
 	});
-		
+	
+	$('#logo').load( function() {
+		var h = $(this).height();
+		$("#logo").attr("style", "padding-top:"+h / 2 + "px");
+		console.log(h);
+	}).attr('src', $('logo').attr('src'));
+
+			
 });
 
 $('#home').live("pagebeforeshow", function() {
@@ -40,6 +47,7 @@ $('#home').live("pagebeforeshow", function() {
 		vWorkTaxico.watchBooking();
 	
 	vWorkTaxico.forceUpdateUI();
+	
 });
 
 $('#home').live("pageshow", function() {
