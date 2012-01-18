@@ -12,6 +12,7 @@ var vWorkTaxico = vWorkTaxico || {};
 		console.log('Loading page, session key is '+this.session_key);
 		if (!this.session_key){
 			this.initaliseModel();
+			
 			setTimeout(function() {
 				$.mobile.changePage(target, { transition: "flip"} );
 			}, 100);	
@@ -108,7 +109,7 @@ var vWorkTaxico = vWorkTaxico || {};
 	}
 	
 	this.forceUpdateUI = function(){
-		$(document).find("[data-role=footer]").css("position","absolute");
+		$(document).find("[data-role=footer]").css("position","absolute");	
 	}
 		
 }).apply(vWorkTaxico);

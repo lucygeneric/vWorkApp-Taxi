@@ -1,10 +1,4 @@
 
-/** INITIALISATION
-/**********************************************/
-
-$('#startup').live("pagecreate", function() {	
-	vWorkTaxico.validateEntry("#home");
-});
 
 /** HOME
 /**********************************************/
@@ -31,7 +25,6 @@ $('#home').live("pagecreate", function() {
 	$('#logo').load( function() {
 		var h = 75 - ($(this).height() / 2);
 		$("#logo").attr("style", "padding-top:"+ h + "px");
-		console.log(h);
 	}).attr('src', $('logo').attr('src'));
 
 			
@@ -64,6 +57,7 @@ $('#request_submit').click(function(event) {
 		vWorkTaxico.dialog(e);
 		event.preventDefault();
 		event.stopImmediatePropagation();
+		return;
 	}
 	
 	vWorkTaxico.commitBooking();
@@ -112,7 +106,6 @@ $('#use_current_location_button').click(function(){
 });
 
 
-
 /** DROP-OFF 
 /**********************************************/
 
@@ -135,6 +128,14 @@ $('#drop_off_address_input').data('timeout', null).keyup(function(){
         vWorkTaxico.populateListFromAddressLookup($('#drop_off_address_input').val(), "drop_off");
     }, 1000));
 
+});
+
+$('#use_no_location_button').click(function(){
+	
+	vWorkTaxico.setModelValue('drop_off_address','');
+	vWorkTaxico.setModelValue('drop_off_location_lat',null);
+	vWorkTaxico.setModelValue('drop_off_location_lng',null);
+	
 });
 
 

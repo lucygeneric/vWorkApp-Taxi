@@ -1,17 +1,18 @@
 var vWorkTaxico = vWorkTaxico || {};
 
-/* setup rudimentary session key, is the app running? */
+// setup rudimentary session key, is the app running? 
+// This is useful because we want to make sure the model is initialized no matter what
+// state the application is entered from.
+
 vWorkTaxico.session_key;
 
 /* JQM configuration */
 $(document).bind("mobileinit", function(){
-  $.extend(  $.mobile , {
-    touchOverflowEnabled: true,
-    ajaxLinksEnabled: false,
-  });
+	$.extend(  $.mobile , {
+    	touchOverflowEnabled: true,
+    	ajaxLinksEnabled: false,	
+    });
 });
-
-
 
 // this attempts to workaround a problem with JQM. I was sometimes getting strange
 // behavior with the fixed header and footer. They would sometimes hang in the middle
@@ -22,3 +23,4 @@ $(window).scroll( function(){
 	$(document).find("[data-role=header],[data-role=footer]").css("z-index","1000");
 	$.mobile.fixedToolbars.show(true);
 });
+
