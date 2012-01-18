@@ -10,17 +10,6 @@ body {
 /* Fonts
 ******************************************************************/
 
-@font-face {
-    font-family: 'LeagueGothicRegular';
-    src: url('../fonts/league_gothic-webfont.eot');
-    src: url('../fonts/league_gothic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/league_gothic-webfont.woff') format('woff'),
-         url('../fonts/league_gothic-webfont.ttf') format('truetype'),
-         url('../fonts/league_gothic-webfont.svg#LeagueGothicRegular') format('svg');
-    font-weight: bold;
-    font-style: normal;
-}
-
 
 /* JQuery Theme overrides
 ******************************************************************/
@@ -263,14 +252,6 @@ img#vwork-init {
 	width:100%;
 }
 
-.indented_heading {
-	font-family: 'LeagueGothicRegular';
-    font-weight:normal;
-	margin-left:15px;
-    text-shadow: 0px -1px 0px #374683;
-    text-transform:uppercase; 
-    line-height:81%;
-}
 
 #request_submit {
 	margin-left:15px;
