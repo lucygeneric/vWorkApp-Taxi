@@ -13,14 +13,14 @@
   <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.0.min.css" />
   <link rel="stylesheet" type="text/css" href="css/jquery.mobile.datebox.min.css" /> 
   
-  <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/themeroller.css" />
+  <link rel="stylesheet" href="css/styles.css" />
   
   <!-- remote -->
   <script type="text/javascript" src="js/vendor/jquery.min.js"></script>
   <script type="text/javascript" src="js/vWorkApp/init.js"></script>
   <script type="text/javascript" src="js/vendor/jquery.mobile-1.0.min.js"></script>
-  <script type="text/javascript" src="js/vendor/google.js"></script>
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
   <!-- vendor -->
   <script type="text/javascript" src="js/vendor/jquery.cookie.js"></script>
   <script type="text/javascript" src="js/vendor/jquery.ui.map.js"></script>
@@ -59,23 +59,34 @@
 		<div id="logo_banner">
 			<img src="<%= logo_admin_company_path(@company) %>" id="logo" />	
 		</div>
-			
-		<ul data-role="listview" data-inset="true" id="menu_list">
-			<li>
-				<a href="#pick_up">Pickup:
-				<p id="pick_up_button" class="split_button_text" data-bind="text: pick_up_address"></p></a>
-			</li>
-			<li>
-				<a href="#drop_off">Drop Off:
-				<p id="drop_off_button" class="split_button_text" data-bind="text: drop_off_address"></p></a>
-			</li>
-			<li>
-				<a href="#when">Date:
-				<p id="when_button" class="split_button_text" data-bind="text: pick_up_time">Today</p></a>
-			</li>
-		</ul>
 		
-		<a href="#tracking" id="request_submit" data-role="button" data-theme="b" data-icon="arrow-r">Book Now!</a>
+		<div id="make_booking">
+				
+			<ul data-role="listview" data-inset="true" id="menu_list">
+				<li>
+					<a href="#pick_up">Pickup:
+					<p id="pick_up_button" class="split_button_text" data-bind="text: pick_up_address"></p></a>
+				</li>
+				<li>
+					<a href="#drop_off">Drop Off:
+					<p id="drop_off_button" class="split_button_text" data-bind="text: drop_off_address"></p></a>
+				</li>
+				<li>
+					<a href="#when">Date:
+					<p id="when_button" class="split_button_text" data-bind="text: pick_up_time">Today</p></a>
+				</li>
+			</ul>
+			
+			<a href="#tracking" id="request_submit" data-role="button" data-theme="b" data-icon="arrow-r">Book Now!</a>
+			
+		</div>
+		
+		<div id="active_booking">
+			<p>You have an active booking for the address</p>
+			<p class="address_text" data-bind="text: pick_up_address"></p>
+			<a href="#tracking" id="show_booking" data-role="button" data-theme="b" data-icon="info">Show Booking</a>
+			<a href="#" id="cancel_booking" data-role="button" data-theme="f" data-icon="alert">Cancel Booking</a>
+		</div>
 				
 	</div>
 	
@@ -99,7 +110,7 @@
 
 		<div data-role="fieldcontain">
 			<label for="pick_up_address">Enter your pick-up location</label>
-			<input type="text" name="pick_up_address" id="pick_up_address_input" data-bind="value: pick_up_address"  />
+			<input type="text" name="pick_up_address" id="pick_up_address_input" data-bind="value: pick_up_address" />
 			
 			<div class="loading-widget">
 	            <img src="images/loading-widget.png">
@@ -133,7 +144,7 @@
 		<div data-role="fieldcontain">
 		
 			<label for="drop_off_address">Enter your drop-off location</label>
-			<input type="text" name="drop_off_address" id="drop_off_address_input" data-bind="value: drop_off_address"  />
+			<input type="text" class="full_width" name="drop_off_address" id="drop_off_address_input" data-bind="value: drop_off_address"  />
 		
 			<div id="drop_off_container" class="inset_list"></div>
 					
@@ -159,10 +170,10 @@
 		
 		<div data-role="fieldcontain">
             
-            <label for="date_entry">Pick-up Date:</label>
+            <label for="date_entry">Date:</label>
 			<input name="date_entry" id="date_entry" type="date" data-role="datebox" data-options='{"mode": "datebox", "calTodayButton": true, "disableManualInput": true}' value="Today">
             
-            <label for="time_entry">Pick-up Time:</label>
+            <label for="time_entry">Time:</label>
 			<input name="time_entry" id="time_entry" type="date" data-role="datebox" data-options='{"mode": "timebox", "timeFormatOverride": 12, "disableManualInput": true}' value="Right now">
                         
             
@@ -193,12 +204,16 @@
 	</div>
 	
 	<div data-role="footer" id="map_footer" data-id="vworkapp-footer">  
-	
-		<div data-role="controlgroup" data-type="horizontal" class="ui-bar" data-theme="c">
-			<a href="#" data-icon="alert" onclick="vWorkTaxico.cancelBooking()">Cancel</a>
-			<a href="#" data-icon="plus" onclick="vWorkTaxico.showStatus()">Check Your Booking Status</a>
-		</div>
 		
+		<!--<div data-role="controlgroup" data-type="horizontal" class="ui-bar">
+			<a href="#" data-icon="alert" id="map_cancel_booking" data-theme="f">Cancel</a>
+			<a href="#" data-icon="plus" id="map_show_status" data-theme="a">Check Your Booking Status</a>
+		</div>-->
+		<div style="margin-top:5px">
+			<a href="#" data-icon="alert" data-role="button" id="map_cancel_booking" data-theme="f">Cancel</a>
+			<a href="#" data-icon="plus" data-role="button" id="map_show_status" data-theme="a">Check Your Booking Status</a>
+		</div>
+				
 	</div>
 	
 	<!-- this had to be in the containing div..... bug in JQMobile -->

@@ -14,9 +14,9 @@ var vWorkTaxico = vWorkTaxico || {};
 			this.initaliseModel();
 			setTimeout(function() {
 				$.mobile.changePage(target, { transition: "flip"} );
-			}, 2000);	
+			}, 100);	
+			this.session_key = vWorkTaxico.generateGUID();
 		}
-		this.session_key = vWorkTaxico.generateGUID();
 	}
 	
 	
@@ -31,9 +31,9 @@ var vWorkTaxico = vWorkTaxico || {};
 		
 		vWorkTaxico.partialAddressGeocode(address, function(results){
 
-			var addressList = '<ul id="'+target+'_list" data-role="listview" data-inset="true" data-theme="c" data-dividertheme="d">'; 
+			var addressList = '<ul id="'+target+'_list" data-role="listview" data-inset="true" data-dividertheme="d">'; 
 			for (var i = 0; i < results.length; i++){
-				addressList +=	'<li id="li">'+results[i].formatted_address+'</li>';
+				addressList +=	'<li><a href="#">'+results[i].formatted_address+'</a></li>';
 			};
 				
 			addressList += "</ul>";	
