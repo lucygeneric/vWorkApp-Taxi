@@ -123,7 +123,7 @@ var vWorkTaxico = vWorkTaxico || {};
 				var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 				var marker = $(elm).gmap('get', 'markers > client' );
 				if ( !marker ) {
-					$(elm).gmap('addMarker', { 'id': 'client', 'position': latlng, 'bounds': true, 'icon':'images/male.png' });
+					$(elm).gmap('addMarker', { 'id': 'client', 'position': latlng, 'icon':'images/male.png' });
 				} else {
 					marker.setPosition(latlng);
 					$(elm).gmap('get', 'map').panTo(latlng);
