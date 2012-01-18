@@ -12,6 +12,10 @@ jQuery.cookie = function (key, value, options) {
     // key and at least value given, set cookie...
     if (arguments.length > 1 && String(value) !== "[object Object]") {
         options = jQuery.extend({}, options);
+        
+        var date = new Date();
+		date.setTime(date.getTime() + (90 * 60 * 1000));
+		options.expires = date;
 
         if (value === null || value === undefined) {
             options.expires = -1;
@@ -23,7 +27,8 @@ jQuery.cookie = function (key, value, options) {
         }
 
         value = String(value);
-
+        
+        
         return (document.cookie = [
             encodeURIComponent(key), '=',
             options.raw ? value : encodeURIComponent(value),

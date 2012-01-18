@@ -29,8 +29,8 @@ $('#home').live("pagecreate", function() {
 	});
 	
 	$('#logo').load( function() {
-		var h = $(this).height();
-		$("#logo").attr("style", "padding-top:"+h / 2 + "px");
+		var h = 75 - ($(this).height() / 2);
+		$("#logo").attr("style", "padding-top:"+ h + "px");
 		console.log(h);
 	}).attr('src', $('logo').attr('src'));
 
