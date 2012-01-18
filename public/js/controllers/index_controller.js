@@ -1,4 +1,10 @@
 
+/** INITIALISATION
+/**********************************************/
+
+$('#startup').live("pagecreate", function() {	
+	vWorkTaxico.validateEntry("#home");
+});
 
 /** HOME
 /**********************************************/
@@ -184,7 +190,7 @@ $('#when').live("pageshow", function() {
 /**********************************************/
 
 $('#tracking').live("pagecreate", function() {
-	console.log('INSTANCING MAP');
+	
 	vWorkTaxico.validateEntry('#home');
 	vWorkTaxico.generateBaseMap($('#map_canvas'));
 	$("#map_cancel_booking").click(function(){
