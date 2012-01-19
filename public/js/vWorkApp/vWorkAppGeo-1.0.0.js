@@ -201,6 +201,9 @@ var vWorkTaxico = vWorkTaxico || {};
 	*/
 	this.partialAddressGeocode = function(address, callback){
 
+		console.log($(document).find('.loading-widget img'));
+		$(document).find('.loading-widget img').css('display', 'block');
+
 		var geocoder = new google.maps.Geocoder();
 		var addressList = [];
 		var request_payload = { 'address': address };
@@ -210,12 +213,11 @@ var vWorkTaxico = vWorkTaxico || {};
 				addressList = [];		
 				if (status == google.maps.GeocoderStatus.OK){
 					for (var i = 0; i < 3; i++){
-						console.log(results);
 						if (results[i])
 							addressList.push(results[i]);
 					}	
 				}
-				
+				$(document).find('.loading-widget img').css('display','none');
 				callback(addressList);
 			});
 		}

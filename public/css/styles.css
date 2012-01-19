@@ -137,9 +137,11 @@ input.ui-input-text {
 	-webkit-animation-iteration-count:  infinite;
 	-webkit-animation-timing-function: linear;
 	float: right;
-	right: 14px;
+	right: 10px;
 	position: relative;
-	top: -31px;
+	top: -38px;
+	width:22px;
+	height:22px;
 }
 
 div#splash {
