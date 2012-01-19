@@ -31,7 +31,8 @@ var vWorkTaxico = vWorkTaxico || {};
 	*/
 	this.updatePickupMarker = function(){
 		var latlng = new google.maps.LatLng(vWorkTaxico.model.pick_up_location_lat(),vWorkTaxico.model.pick_up_location_lng());	
-		var marker = $('#map_canvas').gmap('get', 'markers > pick_up_location');	
+		var marker = $('#map_canvas').gmap('get', 'markers > pick_up_location');
+		$('#map_canvas').gmap('get', 'map').panTo(latlng);
 		marker.setVisible(true);
 		marker.setPosition(latlng);
 	}
@@ -123,9 +124,6 @@ var vWorkTaxico = vWorkTaxico || {};
 		google.maps.event.removeListener(draglistener);
 	}
 	
-	this.geoLoc;
-	this.watchID;
-	
 	/**
 	Watches the map for positional changes
 	*/
@@ -139,6 +137,7 @@ var vWorkTaxico = vWorkTaxico || {};
                  	                       options);
 		}*/				
 		
+		$('#map_canvas').gmap('refresh');
 		vWorkTaxico.trackMap();
 		
 	}
@@ -156,7 +155,7 @@ var vWorkTaxico = vWorkTaxico || {};
 		
 	
 	this.unWatchMap = function(){
-		this.geoLoc.clearWatch(this.watchId);		
+
 		vWorkTaxico.untrackMap();	
 	}
 	

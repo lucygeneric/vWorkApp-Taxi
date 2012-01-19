@@ -180,7 +180,7 @@
 		<div data-role="fieldcontain">
             
             <label for="date_entry">Date:</label>
-			<input name="date_entry" id="date_entry" type="date" data-role="datebox" data-options='{"mode": "datebox", "calTodayButton": true, "disableManualInput": true}' value="Today">
+			<input name="date_entry" id="date_entry" type="date" data-role="datebox" data-options='{"mode": "datebox", "calTodayButton": true, "disableManualInput": true, "fullscreen": true}' value="Today">
             
             <label for="time_entry">Time:</label>
 			<input name="time_entry" id="time_entry" type="date" data-role="datebox" data-options='{"mode": "timebox", "timeFormatOverride": 12, "disableManualInput": true}' value="Right now">
@@ -224,7 +224,7 @@
 	<!-- this had to be in the containing div..... bug in JQMobile -->
 	<script type="text/javascript">
 	
-		var height = $("#tracking").height() - 85;
+		var height = $("#tracking").height();
 		$('#map_canvas').height(height);
 			google.maps.event.trigger($('#map_canvas'), 'resize');			
  		
