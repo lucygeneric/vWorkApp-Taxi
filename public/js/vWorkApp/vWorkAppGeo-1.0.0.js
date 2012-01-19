@@ -14,7 +14,7 @@ var vWorkTaxico = vWorkTaxico || {};
 		if (lastLat == null)
 			latlng = new google.maps.LatLng('37.752296', '-122.447447');
 	
-		$('#map_canvas').gmap({'center': latlng, 'mapTypeId':  google.maps.MapTypeId.ROADMAP, 'zoom': 8});
+		$('#map_canvas').gmap({'center': latlng, 'mapTypeId':  google.maps.MapTypeId.ROADMAP, 'zoom': 5});
 		
 		$('#map_canvas').gmap('addMarker', { 'id': 'pick_up_location', 'position': latlng, 'bounds': false, 'icon':'images/flag-export.png', 'visible':false });
 		$('#map_canvas').gmap('addMarker', { 'id': 'drop_off_location', 'position': latlng, 'bounds': false, 'icon':'images/flag-drop-off.png', 'visible':false });
