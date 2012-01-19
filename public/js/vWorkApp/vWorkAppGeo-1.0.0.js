@@ -81,31 +81,32 @@ var vWorkTaxico = vWorkTaxico || {};
 	*/
 	this.updateDistanceMatrix = function(){
 	
-		return;
-	
 		var origin_latlng = new google.maps.LatLng(vWorkTaxico.model.driver_lat(),vWorkTaxico.model.driver_lng());
 		var destination_latlng = new google.maps.LatLng(vWorkTaxico.model.pick_up_location_lat(),vWorkTaxico.model.pick_up_location_lng());
 	
-		if (origin_latlng.lat() == 0)
+		if ((origin_latlng.lat() == 0) || (destination_latlng.lat() == 0))
 			return;
-	
-		var request = {
+			
+		var service = new google.maps.DistanceMatrixService();
+		service.getDistanceMatrix({
 			origins: [origin_latlng],
 			destinations: [destination_latlng],
 			travelMode: google.maps.TravelMode.DRIVING,
 	        unitSystem: google.maps.UnitSystem.METRIC,
     	    avoidHighways: false,
         	avoidTolls: false
-		};
+		}, callback);
 		
-		$('#map_canvas').gmap('displayDistanceMatrix', request, function(result, status){
+		function callback(result, status) {
+			console.log(status);
+			console.log(result);
 		
 			if (result.rows[0].elements[0].status == "ZERO_RESULTS")
 				return;
 			
 			vWorkTaxico.setModelValue('driver_distance',result.rows[0].elements[0].distance.text);
 			vWorkTaxico.setModelValue('driver_eta',result.rows[0].elements[0].duration.text);
-		});
+		}
 	}
 	
 	/**
