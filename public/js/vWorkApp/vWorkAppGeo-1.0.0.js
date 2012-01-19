@@ -5,7 +5,7 @@ var vWorkTaxico = vWorkTaxico || {};
 	/**
 	Instances GMAP
 	*/
-	this.generateBaseMap = function(elm){
+	this.generateBaseMap = function(){
 	
 		// todo - refactor me out of this fucking thing - not the responsibility of 'generateBaseMap'
 		var lastLat = $.cookie('last_lat');
@@ -14,82 +14,79 @@ var vWorkTaxico = vWorkTaxico || {};
 		if (lastLat == null)
 			latlng = new google.maps.LatLng('37.752296', '-122.447447');
 	
-		$(elm).gmap({'center': latlng, 'mapTypeId':  google.maps.MapTypeId.ROADMAP, 'zoom': 8});
+		$('#map_canvas').gmap({'center': latlng, 'mapTypeId':  google.maps.MapTypeId.ROADMAP, 'zoom': 8});
 		
-		$(elm).gmap().bind('init', function(ev, map) {	        
+		$('#map_canvas').gmap('addMarker', { 'id': 'pick_up_location', 'position': latlng, 'bounds': false, 'icon':'images/flag-export.png', 'visible':false });
+		$('#map_canvas').gmap('addMarker', { 'id': 'drop_off_location', 'position': latlng, 'bounds': false, 'icon':'images/flag-drop-off.png', 'visible':false });
+		$('#map_canvas').gmap('addMarker', { 'id': 'cab', 'position': latlng, 'bounds': false, 'icon':'images/taxi.png', 'visible':false });
+		$('#map_canvas').gmap('addMarker', { 'id': 'client', 'position': latlng, 'bounds': false, 'icon':'images/male.png', 'visible':false });
+		
+		$('#map_canvas').gmap().bind('init', function(ev, map) {	        
 	        google.maps.event.trigger(map, 'resize')
 	    });
 	}
 	
 	/**
-	Create/Update pickup marker
+	Update pickup marker
 	*/
-	this.updatePickupMarker = function(elm){
-	
+	this.updatePickupMarker = function(){
 		var latlng = new google.maps.LatLng(vWorkTaxico.model.pick_up_location_lat(),vWorkTaxico.model.pick_up_location_lng());	
-		var marker = $(elm).gmap('get', 'markers > pick_up_location');	
-
-		if (!marker) {		
-			$(elm).gmap('addMarker', { 'id': 'pick_up_location', 'position': latlng, 'bounds': false, 'icon':'images/flag-export.png' });
-			$(elm).gmap('get', 'map').panTo(latlng);
-		} else {
-			marker.setPosition(latlng);
-		}
+		var marker = $('#map_canvas').gmap('get', 'markers > pick_up_location');	
+		marker.setVisible(true);
+		marker.setPosition(latlng);
 	}
 	
 	/**
-	Create/Update dropoff marker
+	Update dropoff marker
 	*/
-	this.updateDropoffMarker = function(elm){
-	
+	this.updateDropoffMarker = function(){
 		var latlng = new google.maps.LatLng(vWorkTaxico.model.drop_off_location_lat(),vWorkTaxico.model.drop_off_location_lng());	
-		var marker = $(elm).gmap('get', 'markers > drop_off_location');	
-
-		if (!marker) {		
-			$(elm).gmap('addMarker', { 'id': 'drop_off_location', 'position': latlng, 'bounds': false, 'icon':'images/flag-drop-off.png' });
-		} else {
-			marker.setPosition(latlng);
-		}
-	}
-	
-	/**
-	Create/Update driver marker
-	*/
-	this.updateDriverMarker = function(elm){
-	
-		var latlng = new google.maps.LatLng(vWorkTaxico.model.driver_lat(),vWorkTaxico.model.driver_lng());
-		
-		if (latlng.lat() == 0)
+		var marker = $('#map_canvas').gmap('get', 'markers > drop_off_location');	
+		if (latlng.lat() == 0){
+			marker.setVisible(false);
 			return;
-		
-		var marker = $(elm).gmap('get', 'markers > cab');	
-		
-		if (!marker) {		
-			$(elm).gmap('addMarker', { 'id': 'cab', 'position': latlng, 'bounds': false, 'icon':'images/taxi.png' });
-		} else {
-			marker.setPosition(latlng);
 		}
+		marker.setVisible(true);
+		marker.setPosition(latlng);
+	}
+		
+	/**
+	Update driver marker
+	*/
+	this.updateDriverMarker = function(){
+		var latlng = new google.maps.LatLng(vWorkTaxico.model.driver_lat(),vWorkTaxico.model.driver_lng());		
+		var marker = $('#map_canvas').gmap('get', 'markers > cab');	
+		if (latlng.lat() == 0){
+			marker.visible = false;
+			return;
+		}
+		marker.setVisible(true);
+		marker.setPosition(latlng);
 	}
 	
 	/**
-	Drop marker - not used, for prototype drag/drop
+	Hide the markers
 	*/
-	this.placeMarker = function(elm, location) {
-	  var marker = new google.maps.Marker({
-		  position: location, 
-		  map: $(elm).gmap('get', 'map'),
-		  icon:'spring-hot.png'
-	  });
-	}
+	this.removeAllMarkers = function(){
+		$('#map_canvas').gmap('get', 'markers > pick_up_location').setVisible(false);
+		$('#map_canvas').gmap('get', 'markers > drop_off_location').setVisible(false);	
+		$('#map_canvas').gmap('get', 'markers > cab').setVisible(false);	
+		$('#map_canvas').gmap('get', 'markers > client').setVisible(false);	
+	}	
 	
 		
 	/**
 	Calculate the distance matrix
 	*/
-	this.updateDistanceMatrix = function(elm){
-		
+	this.updateDistanceMatrix = function(){
+	
+		return;
+	
 		var origin_latlng = new google.maps.LatLng(vWorkTaxico.model.driver_lat(),vWorkTaxico.model.driver_lng());
 		var destination_latlng = new google.maps.LatLng(vWorkTaxico.model.pick_up_location_lat(),vWorkTaxico.model.pick_up_location_lng());
+	
+		if (origin_latlng.lat() == 0)
+			return;
 	
 		var request = {
 			origins: [origin_latlng],
@@ -100,7 +97,7 @@ var vWorkTaxico = vWorkTaxico || {};
         	avoidTolls: false
 		};
 		
-		$(elm).gmap('displayDistanceMatrix', request, function(result, status){
+		$('#map_canvas').gmap('displayDistanceMatrix', request, function(result, status){
 		
 			if (result.rows[0].elements[0].status == "ZERO_RESULTS")
 				return;
@@ -115,9 +112,9 @@ var vWorkTaxico = vWorkTaxico || {};
 	*/
 	this.draglistener = {};
 	
-	this.trackMap = function(elm){
-		draglistener = google.maps.event.addListener($(elm).gmap('get', 'map'),'dragend', function(event){
-			var latLng = $(elm).gmap('get', 'map').getCenter();
+	this.trackMap = function(){
+		draglistener = google.maps.event.addListener($('#map_canvas').gmap('get', 'map'),'dragend', function(event){
+			var latLng = $('#map_canvas').gmap('get', 'map').getCenter();
 			$.cookie('last_lat',latLng.lat());
 			$.cookie('last_lng',latLng.lng());
 		});
@@ -126,21 +123,40 @@ var vWorkTaxico = vWorkTaxico || {};
 		google.maps.event.removeListener(draglistener);
 	}
 	
+	this.geoLoc;
+	this.watchID;
 	
 	/**
 	Watches the map for positional changes
 	*/
-	this.watchMap = function(elm){
-						
-		$(elm).gmap('watchPosition', function(position, status) {
-			// do something useful with this info
-		});	
+	this.watchMap = function(){
+	
+		/*if(navigator.geolocation){
+			var options = {timeout:10000};
+			this.geoLoc = navigator.geolocation;
+			this.watchID = this.geoLoc.watchPosition(this.showLocation, 
+            	                           this.errorHandler,
+                 	                       options);
+		}*/				
 		
-		vWorkTaxico.trackMap(elm);
+		vWorkTaxico.trackMap();
 		
 	}
-	this.unWatchMap = function(elm){
-		$(elm).gmap('clearWatch');		
+	
+	this.showLocation = function(position){
+		var latitude = position.coords.latitude;
+		var longitude = position.coords.longitude;
+		$('#map_canvas').gmap('get', 'markers > client').setPosition(new google.maps.LatLng(latitude, longitude));
+		$('#map_canvas').gmap('get', 'markers > client').setVisible(true);
+	}
+
+	this.errorHandler = function(err) {	
+		console.log(err);
+	}
+		
+	
+	this.unWatchMap = function(){
+		this.geoLoc.clearWatch(this.watchId);		
 		vWorkTaxico.untrackMap();	
 	}
 	

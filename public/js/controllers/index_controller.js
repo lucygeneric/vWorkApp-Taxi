@@ -192,7 +192,7 @@ $('#when').live("pageshow", function() {
 $('#tracking').live("pagecreate", function() {
 	
 	vWorkTaxico.validateEntry('#home');
-	vWorkTaxico.generateBaseMap($('#map_canvas'));
+	vWorkTaxico.generateBaseMap();
 	$("#map_cancel_booking").click(function(){
 		vWorkTaxico.cancelBooking();
 		history.back();
@@ -206,9 +206,9 @@ $('#tracking').live("pagecreate", function() {
 	
 
 $('#tracking').live("pageshow", function() {
-	vWorkTaxico.watchMap($('#map_canvas'));
-	vWorkTaxico.updatePickupMarker($('#map_canvas'));	
-	vWorkTaxico.updateDropoffMarker($('#map_canvas'));
+	vWorkTaxico.watchMap();
+	vWorkTaxico.updatePickupMarker();	
+	vWorkTaxico.updateDropoffMarker();
 	vWorkTaxico.forceUpdateUI();
 });
 
