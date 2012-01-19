@@ -206,12 +206,10 @@ $('#tracking').live("pagecreate", function() {
 	
 
 $('#tracking').live("pageshow", function() {
-	vWorkTaxico.watchMap();
-	vWorkTaxico.updatePickupMarker();	
-	vWorkTaxico.updateDropoffMarker();
+	vWorkTaxico.beginTracking();
 	vWorkTaxico.forceUpdateUI();
 });
 
 $('#tracking').live("pagehide", function() {
-	vWorkTaxico.unWatchMap();
+	vWorkTaxico.endTracking();
 });

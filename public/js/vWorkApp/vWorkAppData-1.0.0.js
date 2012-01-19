@@ -89,7 +89,7 @@ var vWorkTaxico = vWorkTaxico || {};
 	*****************************************************************/
     
     this.commitBooking = function(){
-    	console.log("Making booking. . . ");
+
     	var when = this.model.pick_up_time();
     		when = this.ISODateString(when); 
     
@@ -105,7 +105,7 @@ var vWorkTaxico = vWorkTaxico || {};
 			}	
 		};
 		var url = this.bookingURL();
-		console.log(payload);
+
 		this.postAsJSON(url, payload, function(result){
 			//todo!! error handling
 			vWorkTaxico.setModelValue("booking_id",result.booking.id);
@@ -116,7 +116,7 @@ var vWorkTaxico = vWorkTaxico || {};
     }
     
     this.cancelBooking = function(){
-    	console.log("Canceling booking. . . ");
+
     	vWorkTaxico.unwatchBooking();
     	if (vWorkTaxico.bookingTimer)
 			clearTimeout(vWorkTaxico.bookingTimer);
@@ -131,14 +131,12 @@ var vWorkTaxico = vWorkTaxico || {};
    		vWorkTaxico.setModelValue("drop_off_location_lat",null);
    		vWorkTaxico.setModelValue("drop_off_location_lng",null);
    		vWorkTaxico.setModelValue("driver_eta","Not Available");   		
-				
-		vWorkTaxico.removeAllMarkers();
 		
    		vWorkTaxico.cookiefyModel();
     }
     
     this.refreshBooking = function(){
-		console.log("Refreshing..");
+
     	if (vWorkTaxico.model.booking_id() == null)
     		return;
     
@@ -174,10 +172,8 @@ var vWorkTaxico = vWorkTaxico || {};
     this.updateFromModelChange = function(){
     	console.log("Updating from model change");
     
-		vWorkTaxico.updatePickupMarker();
-		vWorkTaxico.updateDriverMarker();
-		vWorkTaxico.updateDistanceMatrix();
-		
+    	vWorkTaxico.updateMarkers();
+				
 		if (vWorkTaxico.model.driver_status() == 'Complete')
 			vWorkTaxico.completeBooking();
 	}

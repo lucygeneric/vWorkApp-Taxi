@@ -32,7 +32,6 @@ var vWorkTaxico = vWorkTaxico || {};
 	this.updatePickupMarker = function(){
 		var latlng = new google.maps.LatLng(vWorkTaxico.model.pick_up_location_lat(),vWorkTaxico.model.pick_up_location_lng());	
 		var marker = $('#map_canvas').gmap('get', 'markers > pick_up_location');
-		$('#map_canvas').gmap('get', 'map').panTo(latlng);
 		marker.setVisible(true);
 		marker.setPosition(latlng);
 	}
@@ -63,6 +62,16 @@ var vWorkTaxico = vWorkTaxico || {};
 		}
 		marker.setVisible(true);
 		marker.setPosition(latlng);
+	}
+	
+	/**
+	Update all markers
+	*/
+	this.updateMarkers = function(){
+		vWorkTaxico.updatePickupMarker();
+		vWorkTaxico.updateDropoffMarker();
+		vWorkTaxico.updateDriverMarker();
+		vWorkTaxico.updateDistanceMatrix();
 	}
 	
 	/**
@@ -128,19 +137,23 @@ var vWorkTaxico = vWorkTaxico || {};
 	/**
 	Watches the map for positional changes
 	*/
-	this.watchMap = function(){
+	this.beginTracking = function(){
 	
-		/*if(navigator.geolocation){
-			var options = {timeout:10000};
-			this.geoLoc = navigator.geolocation;
-			this.watchID = this.geoLoc.watchPosition(this.showLocation, 
-            	                           this.errorHandler,
-                 	                       options);
-		}*/				
+		vWorkTaxico.updateMarkers();	
+
+		//center the map
+		var latlng = new google.maps.LatLng(vWorkTaxico.model.pick_up_location_lat(),vWorkTaxico.model.pick_up_location_lng());	
+		$('#map_canvas').gmap('get', 'map').panTo(latlng);
+		$('#map_canvas').gmap('get', 'map').setZoom(13);
 		
 		$('#map_canvas').gmap('refresh');
 		vWorkTaxico.trackMap();
 		
+	}
+	
+	this.endTracking = function(){
+		vWorkTaxico.removeAllMarkers();
+		vWorkTaxico.untrackMap();	
 	}
 	
 	this.showLocation = function(position){
@@ -155,10 +168,7 @@ var vWorkTaxico = vWorkTaxico || {};
 	}
 		
 	
-	this.unWatchMap = function(){
-
-		vWorkTaxico.untrackMap();	
-	}
+	
 	
 	
 	/**
@@ -205,7 +215,6 @@ var vWorkTaxico = vWorkTaxico || {};
 	**/
 	this.getCurrentAddress = function(callback){
 		this.getMobileLatLng(function(lat_lng_result){
-			//var lat_lng_result = new google.maps.LatLng(-35.725188, 174.323456);
  			vWorkTaxico.getStreetAddressFromLatLng(lat_lng_result, function(address_result, region){
 				callback({
 					address:address_result,
