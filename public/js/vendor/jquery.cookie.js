@@ -14,7 +14,7 @@ jQuery.cookie = function (key, value, options) {
         options = jQuery.extend({}, options);
         
         var date = new Date();
-		date.setTime(date.getTime() + (90 * 60 * 1000));
+		date.setTime(date.getTime() + (365 * 168 * 60 * 60 * 1000));
 		options.expires = date;
 
         if (value === null || value === undefined) {
