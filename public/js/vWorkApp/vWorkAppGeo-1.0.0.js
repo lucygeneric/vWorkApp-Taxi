@@ -38,12 +38,27 @@ var vWorkTaxico = vWorkTaxico || {};
 	}
 	
 	/**
+	Create/Update dropoff marker
+	*/
+	this.updateDropoffMarker = function(elm){
+	
+		var latlng = new google.maps.LatLng(vWorkTaxico.model.drop_off_location_lat(),vWorkTaxico.model.drop_off_location_lng());	
+		var marker = $(elm).gmap('get', 'markers > drop_off_location');	
+
+		if (!marker) {		
+			$(elm).gmap('addMarker', { 'id': 'drop_off_location', 'position': latlng, 'bounds': false, 'icon':'images/flag-drop-off.png' });
+		} else {
+			marker.setPosition(latlng);
+		}
+	}
+	
+	/**
 	Create/Update driver marker
 	*/
 	this.updateDriverMarker = function(elm){
-
+	
 		var latlng = new google.maps.LatLng(vWorkTaxico.model.driver_lat(),vWorkTaxico.model.driver_lng());
-
+		
 		if (latlng.lat() == 0)
 			return;
 		
@@ -116,28 +131,19 @@ var vWorkTaxico = vWorkTaxico || {};
 	Watches the map for positional changes
 	*/
 	this.watchMap = function(elm){
-		
+						
 		$(elm).gmap('watchPosition', function(position, status) {
-	
-			if ( status === 'OK' ) {
-				var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-				var marker = $(elm).gmap('get', 'markers > client' );
-				if ( !marker ) {
-					$(elm).gmap('addMarker', { 'id': 'client', 'position': latlng, 'icon':'images/male.png' });
-				} else {
-					marker.setPosition(latlng);
-					$(elm).gmap('get', 'map').panTo(latlng);
-				}
-				$.cookie('last_lat_lng') = latlng;
-			}
+			// do something useful with this info
 		});	
 		
-		vWorkTaxico.trackMap(elm);	
+		vWorkTaxico.trackMap(elm);
+		
 	}
 	this.unWatchMap = function(elm){
-		$(elm).gmap('clearWatch');
+		$(elm).gmap('clearWatch');		
 		vWorkTaxico.untrackMap();	
 	}
+	
 	
 	/**
 	HTML5 Geolocation

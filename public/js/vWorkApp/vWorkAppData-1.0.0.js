@@ -124,10 +124,16 @@ var vWorkTaxico = vWorkTaxico || {};
    		vWorkTaxico.setModelValue("driver_lng",null);
    		vWorkTaxico.setModelValue("driver_eta","Not Available");
    		
+   		vWorkTaxico.clearDriverMarker();
+   		
    		vWorkTaxico.cookiefyModel();
     }
     
     this.refreshBooking = function(){
+
+    	if (vWorkTaxico.model.booking_id() == null)
+    		return;
+    
     	var url = vWorkTaxico.bookingURL() + vWorkTaxico.model.booking_id() + ".json";
 
     	$.get(url, function(result){

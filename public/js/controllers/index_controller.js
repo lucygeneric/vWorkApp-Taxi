@@ -208,6 +208,7 @@ $('#tracking').live("pagecreate", function() {
 $('#tracking').live("pageshow", function() {
 	vWorkTaxico.watchMap($('#map_canvas'));
 	vWorkTaxico.updatePickupMarker($('#map_canvas'));	
+	vWorkTaxico.updateDropoffMarker($('#map_canvas'));
 	vWorkTaxico.forceUpdateUI();
 });
 

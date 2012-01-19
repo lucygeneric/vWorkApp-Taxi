@@ -54,7 +54,16 @@
 			} else {
 				c._call(a, null, "NOT_SUPPORTED");
 			}
-		}	
+		},
+		
+		/**
+         * Clears any watches
+         */
+        clearWatch: function() {
+                if ( navigator.geolocation ) {
+                        navigator.geolocation.clearWatch(this.get('watch'));
+                }
+        }	
 		
 	
 	});
