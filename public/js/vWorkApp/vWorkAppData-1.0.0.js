@@ -118,16 +118,30 @@ var vWorkTaxico = vWorkTaxico || {};
     this.cancelBooking = function(){
     	console.log("Canceling booking. . . ");
     	vWorkTaxico.unwatchBooking();
+    	if (vWorkTaxico.bookingTimer)
+			clearTimeout(vWorkTaxico.bookingTimer);
+    	vWorkTaxico.clearBooking();
+    }
+    
+    this.clearBooking = function(){
     	vWorkTaxico.setModelValue("booking_id",null);
     	vWorkTaxico.setModelValue("driver_status","Connecting..");
    		vWorkTaxico.setModelValue("driver_lat",null);
    		vWorkTaxico.setModelValue("driver_lng",null);
-   		vWorkTaxico.setModelValue("driver_eta","Not Available");
-   		
+   		vWorkTaxico.setModelValue("drop_off_location_lat",null);
+   		vWorkTaxico.setModelValue("drop_off_location_lng",null);
+   		vWorkTaxico.setModelValue("driver_eta","Not Available");   		
+				
+		vWorkTaxico.removeAllMarkers();
+		
    		vWorkTaxico.cookiefyModel();
     }
     
     this.refreshBooking = function(){
+		console.log("Refreshing..");
+    	if (vWorkTaxico.model.booking_id() == null)
+    		return;
+    
     	var url = vWorkTaxico.bookingURL() + vWorkTaxico.model.booking_id() + ".json";
 
     	$.get(url, function(result){
@@ -135,20 +149,17 @@ var vWorkTaxico = vWorkTaxico || {};
     		vWorkTaxico.setModelValue("driver_status",result.booking.status);
     		vWorkTaxico.setModelValue("driver_lat",result.booking.driver_lat);
     		vWorkTaxico.setModelValue("driver_lng",result.booking.driver_lng);
-    		//vWorkTaxico.setModelValue("driver_lat",'-36.8829472');
-    		//vWorkTaxico.setModelValue("driver_lng",'174.9202712');
+	    	vWorkTaxico.updateFromModelChange();
+	    	vWorkTaxico.watchBooking();
 
     	});
     	
-    	/*TODO - can we bind/event drive this? */
-    	vWorkTaxico.updateFromModelChange();
-    	vWorkTaxico.watchBooking();
     }
     
     this.bookingTimer;
     
     this.watchBooking = function(){
-    	vWorkTaxico.bookingTimer = setTimeout(vWorkTaxico.refreshBooking, 10000);
+    	vWorkTaxico.bookingTimer = setTimeout(vWorkTaxico.refreshBooking, 5000);
     }
     
     this.unwatchBooking = function(){
@@ -161,9 +172,20 @@ var vWorkTaxico = vWorkTaxico || {};
     }
     
     this.updateFromModelChange = function(){
-		vWorkTaxico.updatePickupMarker($('#map_canvas'));
-		vWorkTaxico.updateDriverMarker($('#map_canvas'));
-		vWorkTaxico.updateDistanceMatrix($('#map_canvas'));
+    	console.log("Updating from model change");
+    
+		vWorkTaxico.updatePickupMarker();
+		vWorkTaxico.updateDriverMarker();
+		vWorkTaxico.updateDistanceMatrix();
+		
+		if (vWorkTaxico.model.driver_status() == 'Complete')
+			vWorkTaxico.completeBooking();
+	}
+	
+	this.completeBooking = function(){
+		vWorkTaxico.clearBooking();
+		$.mobile.changePage('#home', { transition: "flip"} );
+		vWorkTaxico.dialog("Your journey is complete. Thank you for using PickupAgent.");
 	}
 
 	/**

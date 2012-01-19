@@ -1,7 +1,7 @@
  /*!
- * jQuery UI Google Map 3.0-alpha
+ * jQuery UI Google Map 3.0-beta
  * http://code.google.com/p/jquery-ui-map/
- * Copyright (c) 2010 - 2011 Johan Säll Larsson
+ * Copyright (c) 2010 - 2012 Johan SÃ¤ll Larsson
  * Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
  *
  * Depends:
@@ -39,17 +39,6 @@
 		loadKML: function(a, b, c) {
 			this.get('overlays > ' + a, new google.maps.KmlLayer(b, jQuery.extend({'map': this.get('map')}, c)));
 		}
-		
-		/**
-		 * A layer that displays data from Panoramio.
-		 * @param panoramioLayerOptions:google.maps.panoramio.PanoramioLayerOptions, http://code.google.com/apis/maps/documentation/javascript/reference.html#PanoramioLayerOptions
-		 */
-		/*loadPanoramio: function(a) {
-			if ( !this.get('overlays').PanoramioLayer ) {
-				this.get('overlays').PanoramioLayer = new google.maps.panoramio.PanoramioLayer();
-			}
-			this.get('overlays').PanoramioLayer.setOptions(jQuery.extend({'map': this.get('map') }, a));
-		}*/
 	
 	});
 	
