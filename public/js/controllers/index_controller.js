@@ -70,6 +70,8 @@ $('#request_submit').click(function(event) {
 	
 	if (vWorkTaxico.model.contact_phone_number() == null){
 		$.mobile.changePage('#settings', { transition: "flip"} );
+		event.preventDefault();
+		event.stopImmediatePropagation();
 		return;
 	}
 	
