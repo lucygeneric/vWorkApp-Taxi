@@ -147,6 +147,10 @@ input.ui-input-text {
 	height:22px;
 }
 
+h3 {
+	margin:0;
+}
+
 div#splash {
 	background-color:#ffffff;
 	display:block;
