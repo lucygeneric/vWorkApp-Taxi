@@ -16,10 +16,9 @@ var vWorkTaxico = vWorkTaxico || {};
 	
 		$('#map_canvas').gmap({'center': latlng, 'mapTypeId':  google.maps.MapTypeId.ROADMAP, 'zoom': 5});
 		
-		$('#map_canvas').gmap('addMarker', { 'id': 'pick_up_location', 'position': latlng, 'bounds': false, 'icon':'images/flag-export.png', 'visible':false });
-		$('#map_canvas').gmap('addMarker', { 'id': 'drop_off_location', 'position': latlng, 'bounds': false, 'icon':'images/flag-drop-off.png', 'visible':false });
-		$('#map_canvas').gmap('addMarker', { 'id': 'cab', 'position': latlng, 'bounds': false, 'icon':'images/taxi.png', 'visible':false });
-		$('#map_canvas').gmap('addMarker', { 'id': 'client', 'position': latlng, 'bounds': false, 'icon':'images/male.png', 'visible':false });
+		$('#map_canvas').gmap('addMarker', { 'id': 'pick_up_location', 'position': latlng, 'bounds': false, 'icon':'images/pickup-icon.png', 'visible':false });
+		$('#map_canvas').gmap('addMarker', { 'id': 'drop_off_location', 'position': latlng, 'bounds': false, 'icon':'images/dropoff-icon.png', 'visible':false });
+		$('#map_canvas').gmap('addMarker', { 'id': 'cab', 'position': latlng, 'bounds': false, 'icon':'images/vehicle-icon.png', 'visible':false });
 		
 		$('#map_canvas').gmap().bind('init', function(ev, map) {	        
 	        google.maps.event.trigger(map, 'resize')
@@ -81,7 +80,6 @@ var vWorkTaxico = vWorkTaxico || {};
 		$('#map_canvas').gmap('get', 'markers > pick_up_location').setVisible(false);
 		$('#map_canvas').gmap('get', 'markers > drop_off_location').setVisible(false);	
 		$('#map_canvas').gmap('get', 'markers > cab').setVisible(false);	
-		$('#map_canvas').gmap('get', 'markers > client').setVisible(false);	
 	}	
 	
 		

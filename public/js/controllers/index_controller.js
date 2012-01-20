@@ -28,6 +28,10 @@ $('#home').live("pagecreate", function() {
 		
 	});
 	
+	$("#settings-button").click(function(){
+		$.mobile.changePage('#settings', { transition: "flip"} );
+	});
+	
 	$('#logo').load( function() {
 		var h = 75 - ($(this).height() / 2);
 		$("#logo").attr("style", "padding-top:"+ h + "px");
@@ -41,10 +45,7 @@ $('#home').live("pagebeforeshow", function() {
 	
 	$("#active_booking").css("display",(has_booking) ? "block" : "none");
 	$("#make_booking").css("display",(has_booking) ? "none" : "block");
-	
-	if (has_booking)
-		vWorkTaxico.watchBooking();
-	
+		
 	vWorkTaxico.forceUpdateUI();
 	
 });
@@ -58,11 +59,17 @@ $('#home').live("pageshow", function() {
 $('#request_submit').click(function(event) {
 
 	var e = vWorkTaxico.validateBookingModel();
-
+	
 	if (e != null){
 		vWorkTaxico.dialog(e);
 		event.preventDefault();
 		event.stopImmediatePropagation();
+		return;
+	}
+	
+	
+	if (this.model.contact_phone_number() == null){
+		$.mobile.changePage('#settings', { transition: "flip"} );
 		return;
 	}
 	
@@ -212,4 +219,26 @@ $('#tracking').live("pageshow", function() {
 
 $('#tracking').live("pagehide", function() {
 	vWorkTaxico.endTracking();
+});
+
+
+/** SETTINGS
+/**********************************************/
+
+$('#settings').live("pagecreate", function() {	
+
+	vWorkTaxico.validateEntry("settings");
+	
+	// override default UI behavior. JQM does its best to override me.
+	$("#contact_phone_number_input").css('width',"100%");
+
+	$("#contact_phone_submit").click(function(){
+		if ($('#contact_phone_number_input').val() == '')
+			return;	
+		vWorkTaxico.setModelValue('contact_phone_number',$('#contact_phone_number_input').val());				
+		vWorkTaxico.cookiefyModel();
+		$.mobile.changePage('#home', { transition: "flip"} );
+	});
+
+	vWorkTaxico.forceUpdateUI();
 });

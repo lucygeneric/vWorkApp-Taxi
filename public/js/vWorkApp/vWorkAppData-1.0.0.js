@@ -8,6 +8,7 @@ var vWorkTaxico = vWorkTaxico || {};
 	
 	this.model = {
 		user_region_code		: ko.observable(),
+		contact_phone_number    : ko.observable(),
 		pick_up_location_lat	: ko.observable(),
 		pick_up_location_lng	: ko.observable(),
 		pick_up_address			: ko.observable(),
@@ -38,6 +39,7 @@ var vWorkTaxico = vWorkTaxico || {};
 		var pick_up_address = ($.cookie('pick_up_address')) ? $.cookie('pick_up_address') : 'Finding address...';
 	
 		this.model.user_region_code($.cookie('user_region_code'));
+		this.model.contact_phone_number($.cookie('contact_phone_number'));
 		this.model.pick_up_location_lat($.cookie('pick_up_location_lat'));
 		this.model.pick_up_location_lng($.cookie('pick_up_location_lng'));		
 		this.model.drop_off_location_lat($.cookie('drop_off_location_lat'));
@@ -52,6 +54,7 @@ var vWorkTaxico = vWorkTaxico || {};
 	
 	this.cookiefyModel = function() {
 		$.cookie('user_region_code', this.model.user_region_code());
+		$.cookie('contact_phone_number', this.model.contact_phone_number());
     	$.cookie('pick_up_location_lat', this.model.pick_up_location_lat());
     	$.cookie('pick_up_location_lng', this.model.pick_up_location_lng());
     	$.cookie('pick_up_address', this.model.pick_up_address());
