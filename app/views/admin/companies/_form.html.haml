@@ -32,7 +32,18 @@
   .clearfix
     = f.label :Logo
     .input
+      - unless @company.new_record?
+        %img{:src => logo_admin_company_path(@company)}
+        %br/
       = f.file_field :logo
+
+  .clearfix
+    = f.label :Icon
+    .input
+      - unless @company.new_record?
+        %img{:src => icon_admin_company_path(@company)}
+        %br/
+      = f.file_field :icon
 
   .actions
     = f.submit :class => 'btn success'

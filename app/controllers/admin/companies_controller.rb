@@ -45,5 +45,12 @@ class Admin::CompaniesController < ApplicationController
     send_data(@image, :type => @company.logo_content_type, :disposition => 'inline')
   end
 
+  # /companies/1/icon
+  def icon
+    @company = Company.find(params[:id])
+    @image = @company.icon_data
+    send_data(@image, :type => @company.icon_content_type, :disposition => 'inline')
+  end
+
 
 end

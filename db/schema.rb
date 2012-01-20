@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120117054917) do
+ActiveRecord::Schema.define(:version => 20120120014351) do
 
   create_table "companies", :force => true do |t|
     t.string   "name"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(:version => 20120117054917) do
     t.datetime "updated_at"
     t.string   "logo_content_type"
     t.binary   "logo_data"
+    t.string   "icon_content_type"
+    t.binary   "icon_data"
   end
 
 end

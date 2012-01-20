@@ -15,8 +15,8 @@
 
       - @companies.each do |company|
         %tr
-          %td   
-            %img{:src => logo_admin_company_path(company), :height => 30}
+          %td
+            %img{:src => icon_admin_company_path(company), :height => 50}
           %td= company.name
           %td= company.phone
           %td= company.api_key
