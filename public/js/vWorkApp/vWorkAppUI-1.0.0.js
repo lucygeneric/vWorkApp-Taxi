@@ -9,7 +9,6 @@ var vWorkTaxico = vWorkTaxico || {};
 	*****************************************************************/
 	
 	this.validateEntry = function(target){
-		console.log('Loading page, session key is '+this.session_key);
 		
 		if (!this.session_key){
 			this.initaliseModel();

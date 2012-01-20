@@ -105,9 +105,7 @@ var vWorkTaxico = vWorkTaxico || {};
 		}, callback);
 		
 		function callback(result, status) {
-			console.log(status);
-			console.log(result);
-		
+			
 			if (result.rows[0].elements[0].status == "ZERO_RESULTS")
 				return;
 			
@@ -230,7 +228,6 @@ var vWorkTaxico = vWorkTaxico || {};
 	*/
 	this.partialAddressGeocode = function(address, callback){
 
-		console.log($(document).find('.loading-widget img'));
 		$(document).find('.loading-widget img').css('display', 'block');
 
 		var geocoder = new google.maps.Geocoder();

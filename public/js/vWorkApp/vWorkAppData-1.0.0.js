@@ -61,8 +61,6 @@ var vWorkTaxico = vWorkTaxico || {};
     	$.cookie('drop_off_location_lat', this.model.drop_off_location_lat());
     	$.cookie('drop_off_location_lng', this.model.drop_off_location_lng());
     	$.cookie('booking_id', this.model.booking_id());
-    	
-    	console.log("writing to cookie booking id "+this.model.booking_id());
     }
 
 
