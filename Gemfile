@@ -40,3 +40,5 @@ gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails'
 # To use debugger
 # gem 'ruby-debug'
 
+gem "sqlite3-ruby", "~> 1.3.3"
+gem "rake", "0.8.7"
