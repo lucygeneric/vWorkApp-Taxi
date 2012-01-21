@@ -115,7 +115,7 @@ var vWorkTaxico = vWorkTaxico || {};
 			};
 			var url = vWorkTaxico.bookingURL();
 			console.log('payload: '+payload);
-			vWorkTaxico.postAsJSON(url, payload, function(result){
+			vWorkTaxico.postAsJSON(url, payload, 'POST', function(result){
 				//todo!! error handling
 				vWorkTaxico.setModelValue("booking_id",result.booking.id);
 				vWorkTaxico.watchBooking();
@@ -131,7 +131,12 @@ var vWorkTaxico = vWorkTaxico || {};
     	vWorkTaxico.unwatchBooking();
     	if (vWorkTaxico.bookingTimer)
 			clearTimeout(vWorkTaxico.bookingTimer);
+			
+    	var url = vWorkTaxico.bookingURL() + vWorkTaxico.model.booking_id();
+		vWorkTaxico.postAsJSON(url, {}, 'DELETE', function(result){});
+
     	vWorkTaxico.clearBooking();
+
     }
     
     this.clearBooking = function(){
@@ -201,10 +206,18 @@ var vWorkTaxico = vWorkTaxico || {};
 	URL
 	*****************************************************************/
     
-    this.postAsJSON = function(url, payload, callback) {
-		$.post(url, payload, function(data) {
+    this.postAsJSON = function(url, payload, method, callback) {
+		$.ajax({
+			type: method,
+			url: url,
+			data: payload
+		}).done(function(data) {
 			callback(data);
 		});
+    
+		//$.post(url, payload, function(data) {
+			
+		//});
 	};
 	
 
