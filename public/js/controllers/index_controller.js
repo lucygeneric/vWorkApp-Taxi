@@ -57,7 +57,7 @@ $('#home').live("pageshow", function() {
 
 
 $('#request_submit').click(function(event) {
-
+		
 	var e = vWorkTaxico.validateBookingModel();
 	
 	if (e != null){
@@ -75,6 +75,7 @@ $('#request_submit').click(function(event) {
 		return;
 	}
 	
+
 	vWorkTaxico.commitBooking();
 });
 

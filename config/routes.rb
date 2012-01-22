@@ -3,10 +3,9 @@ VWorkAppTaxi::Application.routes.draw do
   namespace :admin do
     resources :companies do
       get 'logo', :on => :member
+      get 'icon', :on => :member
     end
   end
-
-  resources :bookings
 
   namespace :call_center do
     resources :bookings
@@ -14,8 +13,11 @@ VWorkAppTaxi::Application.routes.draw do
     get 'routing/redirect'
   end
 
-  root :to => "main#index"
-  
+  resources :bookings
 
+  match '/main/logo/:id' => 'main#logo', :as => :logo
+  match '/main/icon/:id' => 'main#icon', :as => :icon
+
+  root :to => "main#index"
 
 end

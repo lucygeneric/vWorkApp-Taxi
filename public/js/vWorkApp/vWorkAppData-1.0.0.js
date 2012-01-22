@@ -21,7 +21,9 @@ var vWorkTaxico = vWorkTaxico || {};
 		driver_lng				: ko.observable(),
 		booking_id				: ko.observable(),
 		driver_eta				: ko.observable(),
-		driver_distance			: ko.observable()
+		driver_distance			: ko.observable(),
+		trip_distance			: ko.observable(),
+		trip_duration			: ko.observable()
 	};
 	
 	this.getModel = function(){
@@ -90,30 +92,38 @@ var vWorkTaxico = vWorkTaxico || {};
 	*****************************************************************/
     
     this.commitBooking = function(){
+    
+    	console.log("commiting booking");
 
     	var when = this.model.pick_up_time();
     		when = this.ISODateString(when); 
-    
-    	var payload = {
-    		booking: {
-				drop_off_address: this.model.drop_off_address(),
-				drop_off_lat: this.model.drop_off_location_lat(),
-				pick_up_lat: this.model.pick_up_location_lat(),
-				pick_up_address: this.model.pick_up_address(),
-				when: when,
-				drop_off_lng: this.model.drop_off_location_lng(),
-				pick_up_lng: this.model.pick_up_location_lng()
-			}	
-		};
-		var url = this.bookingURL();
+    	    	
+    	vWorkTaxico.updatePointToPointDistanceMatrix(function(result){
+    		console.log("Updated p2p matrix, result is "+result['status']);
+    		var duration = (result['status'] == "OK") ? vWorkTaxico.model.trip_duration() : 7200;
+	    	var payload = {
+	    		booking: {
+					drop_off_address: vWorkTaxico.model.drop_off_address(),
+					drop_off_lat: vWorkTaxico.model.drop_off_location_lat(),
+					pick_up_lat: vWorkTaxico.model.pick_up_location_lat(),
+					pick_up_address: vWorkTaxico.model.pick_up_address(),
+					when: when,
+					drop_off_lng: vWorkTaxico.model.drop_off_location_lng(),
+					pick_up_lng: vWorkTaxico.model.pick_up_location_lng(),
+					estimated_trip_time: duration
+				}	
+			};
+			var url = vWorkTaxico.bookingURL();
+			console.log('payload: '+payload);
+			vWorkTaxico.postAsJSON(url, payload, 'POST', function(result){
+				//todo!! error handling
+				vWorkTaxico.setModelValue("booking_id",result.booking.id);
+				vWorkTaxico.watchBooking();
+				vWorkTaxico.cookiefyModel();
+			});
 
-		this.postAsJSON(url, payload, function(result){
-			//todo!! error handling
-			vWorkTaxico.setModelValue("booking_id",result.booking.id);
-			vWorkTaxico.watchBooking();
-			vWorkTaxico.cookiefyModel();
-		});
-		
+    	});
+    
     }
     
     this.cancelBooking = function(){
@@ -121,7 +131,12 @@ var vWorkTaxico = vWorkTaxico || {};
     	vWorkTaxico.unwatchBooking();
     	if (vWorkTaxico.bookingTimer)
 			clearTimeout(vWorkTaxico.bookingTimer);
+			
+    	var url = vWorkTaxico.bookingURL() + vWorkTaxico.model.booking_id();
+		vWorkTaxico.postAsJSON(url, {}, 'DELETE', function(result){});
+
     	vWorkTaxico.clearBooking();
+
     }
     
     this.clearBooking = function(){
@@ -131,7 +146,10 @@ var vWorkTaxico = vWorkTaxico || {};
    		vWorkTaxico.setModelValue("driver_lng",null);
    		vWorkTaxico.setModelValue("drop_off_location_lat",null);
    		vWorkTaxico.setModelValue("drop_off_location_lng",null);
-   		vWorkTaxico.setModelValue("driver_eta","Not Available");   		
+   		vWorkTaxico.setModelValue("driver_eta","Not Available");
+   		vWorkTaxico.setModelValue("driver_distance",null);
+   		vWorkTaxico.setModelValue("trip_duration",null);
+   		vWorkTaxico.setModelValue("trip_distance",null);
 		
    		vWorkTaxico.cookiefyModel();
     }
@@ -171,7 +189,6 @@ var vWorkTaxico = vWorkTaxico || {};
     }
     
     this.updateFromModelChange = function(){
-    	console.log("Updating from model change");
     
     	vWorkTaxico.updateMarkers();
 				
@@ -189,10 +206,18 @@ var vWorkTaxico = vWorkTaxico || {};
 	URL
 	*****************************************************************/
     
-    this.postAsJSON = function(url, payload, callback) {
-		$.post(url, payload, function(data) {
+    this.postAsJSON = function(url, payload, method, callback) {
+		$.ajax({
+			type: method,
+			url: url,
+			data: payload
+		}).done(function(data) {
 			callback(data);
 		});
+    
+		//$.post(url, payload, function(data) {
+			
+		//});
 	};
 	
 
