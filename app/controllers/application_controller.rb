@@ -4,8 +4,6 @@ class ApplicationController < ActionController::Base
   def set_api_key
     @company = Company.where(:subdomain => request.subdomain).first
     VWorkApp.api_key = @company.api_key
-    # TODO FIXME REMOVEME - temp for staging declineable
-    VWorkApp::Job.base_uri 'https://api.staging.vworkapp.com/api/2.0'
   end
 
 end

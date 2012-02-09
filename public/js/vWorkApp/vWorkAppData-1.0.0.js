@@ -13,6 +13,7 @@ var vWorkTaxico = vWorkTaxico || {};
 		pick_up_location_lng	: ko.observable(),
 		pick_up_address			: ko.observable(),
 		pick_up_time	  		: ko.observable(),
+		pick_up_time_text   : ko.observable(),
 		drop_off_location_lat	: ko.observable(),
 		drop_off_location_lng	: ko.observable(),
 		drop_off_address  		: ko.observable(),
@@ -21,6 +22,7 @@ var vWorkTaxico = vWorkTaxico || {};
 		driver_lng				: ko.observable(),
 		booking_id				: ko.observable(),
 		driver_eta				: ko.observable(),
+		driver_eta_time   : ko.observable(),
 		driver_distance			: ko.observable(),
 		trip_distance			: ko.observable(),
 		trip_duration			: ko.observable()
@@ -55,8 +57,8 @@ var vWorkTaxico = vWorkTaxico || {};
 	}
 	
 	this.cookiefyModel = function() {
-		$.cookie('user_region_code', this.model.user_region_code());
-		$.cookie('contact_phone_number', this.model.contact_phone_number());
+	  	$.cookie('user_region_code', this.model.user_region_code());
+  		$.cookie('contact_phone_number', this.model.contact_phone_number());
     	$.cookie('pick_up_location_lat', this.model.pick_up_location_lat());
     	$.cookie('pick_up_location_lng', this.model.pick_up_location_lng());
     	$.cookie('pick_up_address', this.model.pick_up_address());
@@ -99,7 +101,6 @@ var vWorkTaxico = vWorkTaxico || {};
     		when = this.ISODateString(when); 
     	    	
     	vWorkTaxico.updatePointToPointDistanceMatrix(function(result){
-    		console.log("Updated p2p matrix, result is "+result['status']);
     		var duration = (result['status'] == "OK") ? vWorkTaxico.model.trip_duration() : 7200;
 	    	var payload = {
 	    		booking: {
@@ -110,7 +111,8 @@ var vWorkTaxico = vWorkTaxico || {};
 					when: when,
 					drop_off_lng: vWorkTaxico.model.drop_off_location_lng(),
 					pick_up_lng: vWorkTaxico.model.pick_up_location_lng(),
-					estimated_trip_time: duration
+					estimated_trip_time: duration,
+					contact_number:vWorkTaxico.model.contact_phone_number()
 				}	
 			};
 			var url = vWorkTaxico.bookingURL();
@@ -150,6 +152,7 @@ var vWorkTaxico = vWorkTaxico || {};
    		vWorkTaxico.setModelValue("driver_distance",null);
    		vWorkTaxico.setModelValue("trip_duration",null);
    		vWorkTaxico.setModelValue("trip_distance",null);
+   		vWorkTaxico.setModelValue("driver_eta_time",null);
 		
    		vWorkTaxico.cookiefyModel();
     }
