@@ -28,6 +28,10 @@ $('#home').live("pagecreate", function() {
 		
 	});
 	
+	$("#show_booking").click(function(){
+	  vWorkTaxico.watchBooking();
+	});
+	
 	$("#settings-button").click(function(){
 		$.mobile.changePage('#settings', { transition: "flip"} );
 	});
@@ -176,6 +180,7 @@ $('#when').live("pagecreate", function() {
 		date.setHours(time.getHours(),time.getMinutes(), time.getSeconds(), time.getMilliseconds());
 				
 		vWorkTaxico.setModelValue('pick_up_time', date);
+		
 	});
 	
 	$('#date_entry').click(function(){

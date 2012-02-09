@@ -18,5 +18,9 @@ var vWorkTaxico = vWorkTaxico || {};
 		}
 		return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
 	} 
+	
+	this.formatTimeZoneToAddress = function(d,location){
+	  
+	}
 		
 }).apply(vWorkTaxico);
