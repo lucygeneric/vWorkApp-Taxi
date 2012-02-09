@@ -53,8 +53,16 @@ var vWorkTaxico = vWorkTaxico || {};
 	Update driver marker
 	*/
 	this.updateDriverMarker = function(){
+	  	
 		var latlng = new google.maps.LatLng(vWorkTaxico.model.driver_lat(),vWorkTaxico.model.driver_lng());		
 		var marker = $('#map_canvas').gmap('get', 'markers > cab');	
+		
+		// hide the marker if the pickup time is more than 20 minutes away
+		if (vWorkTaxico.model.driver_eta_time() > 1200){
+		  marker.setVisible(false);
+		  return;
+		}
+				
 		if (latlng.lat() == 0){
 			marker.visible = false;
 			return;
@@ -69,8 +77,8 @@ var vWorkTaxico = vWorkTaxico || {};
 	this.updateMarkers = function(){
 		vWorkTaxico.updatePickupMarker();
 		vWorkTaxico.updateDropoffMarker();
-		vWorkTaxico.updateDriverMarker();
 		vWorkTaxico.updateDriverToClientDistanceMatrix();
+		vWorkTaxico.updateDriverMarker();
 	}
 	
 	/**
@@ -93,7 +101,7 @@ var vWorkTaxico = vWorkTaxico || {};
 			origins: [origin_latlng],
 			destinations: [destination_latlng],
 			travelMode: google.maps.TravelMode.DRIVING,
-	        unitSystem: google.maps.UnitSystem.METRIC,
+	        unitSystem: google.maps.UnitSystem.IMPERIAL,
     	    avoidHighways: false,
         	avoidTolls: false
 		}, distanceCallback);
@@ -126,8 +134,10 @@ var vWorkTaxico = vWorkTaxico || {};
 			return;
 
 		this.updateDistanceMatrix(origin_latlng,destination_latlng,function(result){
+		console.log(result);
 			vWorkTaxico.setModelValue('driver_distance',result.distance);
 			vWorkTaxico.setModelValue('driver_eta',result.duration_text);			
+			vWorkTaxico.setModelValue('driver_eta_time',result.duration_value);			
 		});
 
 	}
@@ -275,7 +285,8 @@ var vWorkTaxico = vWorkTaxico || {};
 		if (this.model.user_region_code() != null) request_payload['region'] = this.model.user_region_code();
 		if (geocoder) {
 			geocoder.geocode(request_payload, function (results, status) {
-				addressList = [];		
+				addressList = [];	
+				
 				if (status == google.maps.GeocoderStatus.OK){
 					for (var i = 0; i < 3; i++){
 						if (results[i])

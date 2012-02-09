@@ -102,9 +102,13 @@ var vWorkTaxico = vWorkTaxico || {};
 	this.showStatus = function(){
 		var eta = vWorkTaxico.model.driver_eta();
 		var distance = vWorkTaxico.model.driver_distance();
+								
 		var e = "Your driver is "+distance+" away. <br/><br />Estimated time to arrival is<br />"+eta+".";
 		if (!distance)
 			e = "We are unable to calculate the status of your driver at this time. <br/><br />Please try again soon.";
+		if (vWorkTaxico.model.driver_eta_time() > 1200)
+      e = "Your driver is more than 20 minutes away. We are unable to calculate an estimated time of arrival.	<br/><br />Please try again soon.";
+		
 		vWorkTaxico.dialog(e, 5000);
 	}
 	
