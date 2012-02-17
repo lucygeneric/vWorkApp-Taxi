@@ -42,3 +42,6 @@ gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails'
 
 gem "sqlite3-ruby", "~> 1.3.3"
 gem "rake", "0.8.7"
+
+#Google LibPhoneNumber for validating nums
+gem "libphonenumber-execjs", "~> 0.0.2"

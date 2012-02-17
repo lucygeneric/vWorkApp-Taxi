@@ -62,6 +62,8 @@ GEM
     json (1.6.5)
     jwt (0.1.4)
       json (>= 1.2.4)
+    libphonenumber-execjs (0.0.2)
+      execjs
     libv8 (3.3.10.4)
     mail (2.3.0)
       i18n (>= 0.4.0)
@@ -142,6 +144,7 @@ DEPENDENCIES
   haml
   jquery-rails
   json
+  libphonenumber-execjs (~> 0.0.2)
   pg
   rails (= 3.1.1)
   rake (= 0.8.7)
